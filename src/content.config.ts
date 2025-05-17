@@ -15,4 +15,12 @@ const blog = defineCollection({
 	}),
 });
 
+const topic = defineCollection({
+	
+})
+
+const topicClass = defineCollection({
+	
+})
+
 export const collections = { blog };
