@@ -28,67 +28,101 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
           </select>
         </div>
         
-        <div class="input-group" id="radius-group">
-          <label for="radius">Radio (r):</label>
-          <div class="input-with-unit">
-            <input type="number" id="radius" placeholder="Ingresa el radio">
-            <span class="unit">m</span>
+        <div class="input-groups-container">
+          <div class="input-group" id="radius-group">
+            <label for="radius">Radio (r):</label>
+            <div class="input-with-unit">
+              <input type="number" id="radius" placeholder="Ingresa el radio">
+              <select id="radius-unit" class="unit-selector">
+                <option value="m">m</option>
+                <option value="cm">cm</option>
+                <option value="km">km</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="angular-velocity-group">
-          <label for="angular-velocity">Velocidad Angular (ω):</label>
-          <div class="input-with-unit">
-            <input type="number" id="angular-velocity" placeholder="Ingresa la velocidad angular">
-            <span class="unit">rad/s</span>
+          
+          <div class="input-group" id="angular-velocity-group">
+            <label for="angular-velocity">Velocidad Angular (ω):</label>
+            <div class="input-with-unit">
+              <input type="number" id="angular-velocity" placeholder="Ingresa la velocidad angular">
+              <select id="angular-velocity-unit" class="unit-selector">
+                <option value="rad/s">rad/s</option>
+                <option value="deg/s">°/s</option>
+                <option value="rpm">rpm</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="linear-velocity-group">
-          <label for="linear-velocity">Velocidad Lineal (v):</label>
-          <div class="input-with-unit">
-            <input type="number" id="linear-velocity" placeholder="Ingresa la velocidad lineal">
-            <span class="unit">m/s</span>
+          
+          <div class="input-group" id="linear-velocity-group">
+            <label for="linear-velocity">Velocidad Lineal (v):</label>
+            <div class="input-with-unit">
+              <input type="number" id="linear-velocity" placeholder="Ingresa la velocidad lineal">
+              <select id="linear-velocity-unit" class="unit-selector">
+                <option value="m/s">m/s</option>
+                <option value="km/h">km/h</option>
+                <option value="cm/s">cm/s</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="period-group">
-          <label for="period">Periodo (T):</label>
-          <div class="input-with-unit">
-            <input type="number" id="period" placeholder="Ingresa el periodo">
-            <span class="unit">s</span>
+          
+          <div class="input-group" id="period-group">
+            <label for="period">Periodo (T):</label>
+            <div class="input-with-unit">
+              <input type="number" id="period" placeholder="Ingresa el periodo">
+              <select id="period-unit" class="unit-selector">
+                <option value="s">s</option>
+                <option value="min">min</option>
+                <option value="h">h</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="frequency-group">
-          <label for="frequency">Frecuencia (f):</label>
-          <div class="input-with-unit">
-            <input type="number" id="frequency" placeholder="Ingresa la frecuencia">
-            <span class="unit">Hz</span>
+          
+          <div class="input-group" id="frequency-group">
+            <label for="frequency">Frecuencia (f):</label>
+            <div class="input-with-unit">
+              <input type="number" id="frequency" placeholder="Ingresa la frecuencia">
+              <select id="frequency-unit" class="unit-selector">
+                <option value="Hz">Hz</option>
+                <option value="kHz">kHz</option>
+                <option value="rpm">rpm</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="centripetal-acceleration-group">
-          <label for="centripetal-acceleration">Aceleración Centrípeta (a):</label>
-          <div class="input-with-unit">
-            <input type="number" id="centripetal-acceleration" placeholder="Ingresa la aceleración centrípeta">
-            <span class="unit">m/s²</span>
+          
+          <div class="input-group" id="centripetal-acceleration-group">
+            <label for="centripetal-acceleration">Aceleración Centrípeta (a):</label>
+            <div class="input-with-unit">
+              <input type="number" id="centripetal-acceleration" placeholder="Ingresa la aceleración centrípeta">
+              <select id="centripetal-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="time-group">
-          <label for="time">Tiempo (t):</label>
-          <div class="input-with-unit">
-            <input type="number" id="time" placeholder="Ingresa el tiempo">
-            <span class="unit">s</span>
+          
+          <div class="input-group" id="time-group">
+            <label for="time">Tiempo (t):</label>
+            <div class="input-with-unit">
+              <input type="number" id="time" placeholder="Ingresa el tiempo">
+              <select id="time-unit" class="unit-selector">
+                <option value="s">s</option>
+                <option value="min">min</option>
+                <option value="h">h</option>
+              </select>
+            </div>
           </div>
-        </div>
-        
-        <div class="input-group" id="angular-displacement-group">
-          <label for="angular-displacement">Desplazamiento Angular (θ):</label>
-          <div class="input-with-unit">
-            <input type="number" id="angular-displacement" placeholder="Ingresa el desplazamiento angular">
-            <span class="unit">rad</span>
+          
+          <div class="input-group" id="angular-displacement-group">
+            <label for="angular-displacement">Desplazamiento Angular (θ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="angular-displacement" placeholder="Ingresa el desplazamiento angular">
+              <select id="angular-displacement-unit" class="unit-selector">
+                <option value="rad">rad</option>
+                <option value="deg">°</option>
+                <option value="rev">vueltas</option>
+              </select>
+            </div>
           </div>
         </div>
         
@@ -185,37 +219,75 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
       background: #f9f9f9;
     }
 
+    .input-groups-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
     .input-group {
-      margin-bottom: 1rem;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-group:hover {
+      background-color: #f1f3f5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
     .input-group label {
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.7rem;
       font-weight: 500;
+      color: #444;
     }
 
     .input-with-unit {
       display: flex;
       align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .input-with-unit input {
       flex-grow: 1;
       padding: 0.8rem;
       border: 1px solid #ddd;
-      border-radius: 6px 0 0 6px;
+      border-right: none;
+      border-radius: 8px 0 0 8px;
       font-size: 1rem;
     }
 
-    .unit {
+    .input-with-unit input:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--accent), 0.1);
+    }
+
+    .unit-selector {
       background: #f0f0f0;
       padding: 0.8rem;
       border: 1px solid #ddd;
       border-left: none;
-      border-radius: 0 6px 6px 0;
+      border-radius: 0 8px 8px 0;
       font-size: 1rem;
-      color: #666;
+      color: #555;
+      cursor: pointer;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .unit-selector:hover {
+      background: #e5e5e5;
+    }
+
+    .unit-selector:focus {
+      outline: none;
+      border-color: var(--accent);
     }
 
     .calculate-button {
@@ -345,25 +417,106 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
         time: document.getElementById('time') as HTMLInputElement,
         angularDisplacement: document.getElementById('angular-displacement') as HTMLInputElement
       };
+      
+      const unitSelectors = {
+        radius: document.getElementById('radius-unit') as HTMLSelectElement,
+        angularVelocity: document.getElementById('angular-velocity-unit') as HTMLSelectElement,
+        linearVelocity: document.getElementById('linear-velocity-unit') as HTMLSelectElement,
+        period: document.getElementById('period-unit') as HTMLSelectElement,
+        frequency: document.getElementById('frequency-unit') as HTMLSelectElement,
+        centripetalAcceleration: document.getElementById('centripetal-acceleration-unit') as HTMLSelectElement,
+        time: document.getElementById('time-unit') as HTMLSelectElement,
+        angularDisplacement: document.getElementById('angular-displacement-unit') as HTMLSelectElement
+      };
+      
+      // Definir tipos para las claves y unidades
+      type UnitType = 'radius' | 'angularVelocity' | 'linearVelocity' | 'period' | 'frequency' | 
+                      'centripetalAcceleration' | 'time' | 'angularDisplacement';
+      
+      type UnitMap = {
+        radius: 'm' | 'cm' | 'km';
+        angularVelocity: 'rad/s' | 'deg/s' | 'rpm';
+        linearVelocity: 'm/s' | 'km/h' | 'cm/s';
+        period: 's' | 'min' | 'h';
+        frequency: 'Hz' | 'kHz' | 'rpm';
+        centripetalAcceleration: 'm/s²' | 'g' | 'cm/s²';
+        time: 's' | 'min' | 'h';
+        angularDisplacement: 'rad' | 'deg' | 'rev';
+      };
+      
+      // Factores de conversión a unidades base (SI)
+      const conversionFactors = {
+        radius: {
+          'm': 1,
+          'cm': 0.01,
+          'km': 1000
+        },
+        angularVelocity: {
+          'rad/s': 1,
+          'deg/s': Math.PI / 180,  // grados a radianes
+          'rpm': Math.PI / 30      // 1 rpm = 2π/60 rad/s
+        },
+        linearVelocity: {
+          'm/s': 1,
+          'km/h': 1/3.6,           // 1 km/h = 0.2777... m/s
+          'cm/s': 0.01
+        },
+        period: {
+          's': 1,
+          'min': 60,
+          'h': 3600
+        },
+        frequency: {
+          'Hz': 1,
+          'kHz': 1000,
+          'rpm': 1/60              // 1 rpm = 1/60 Hz
+        },
+        centripetalAcceleration: {
+          'm/s²': 1,
+          'g': 9.8,                // 1g = 9.8 m/s²
+          'cm/s²': 0.01
+        },
+        time: {
+          's': 1,
+          'min': 60,
+          'h': 3600
+        },
+        angularDisplacement: {
+          'rad': 1,
+          'deg': Math.PI / 180,    // grados a radianes
+          'rev': 2 * Math.PI       // 1 vuelta = 2π rad
+        }
+      };
 
+      // Convertir valor de unidad seleccionada a unidad base (SI)
+      function convertToBaseUnit(value: number, type: UnitType, unitSelected: string): number {
+        if (!unitSelected || !conversionFactors[type] || !(unitSelected in conversionFactors[type])) {
+          return value;  // Si no hay conversión definida, devolver el valor original
+        }
+        return value * conversionFactors[type][unitSelected as keyof typeof conversionFactors[typeof type]];
+      }
+      
+      // Convertir valor de unidad base (SI) a unidad seleccionada
+      function convertFromBaseUnit(value: number, type: UnitType, unitSelected: string): number {
+        if (!unitSelected || !conversionFactors[type] || !(unitSelected in conversionFactors[type])) {
+          return value;  // Si no hay conversión definida, devolver el valor original
+        }
+        return value / conversionFactors[type][unitSelected as keyof typeof conversionFactors[typeof type]];
+      }
       
       function updateVisibleFields() {
-
         const variableToSolve = variableToSolveSelect.value;
         
-        // Show all inputs by default
         for (const key in inputGroups) {
           if (Object.prototype.hasOwnProperty.call(inputGroups, key)) {
             inputGroups[key as keyof typeof inputGroups].style.display = 'block';
           }
         }
         
-        // Hide the input we're solving for
         if (variableToSolve in inputGroups) {
           inputGroups[variableToSolve as keyof typeof inputGroups].style.display = 'none';
         }
-        
-        // Special case handling
+
         switch (variableToSolve) {
           case 'angularDisplacement':
             inputGroups.time.style.display = 'block';
@@ -372,7 +525,6 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
             inputGroups.angularDisplacement.style.display = 'block';
             break;
           default:
-            // Hide time and angular displacement inputs for other calculations
             if (variableToSolve !== 'time' && variableToSolve !== 'angularDisplacement') {
               inputGroups.time.style.display = 'none';
               inputGroups.angularDisplacement.style.display = 'none';
@@ -385,22 +537,44 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
       calculateBtn.addEventListener('click', function() {
         const variableToSolve = variableToSolveSelect.value;
         const values: Record<string, number> = {};
+        const selectedUnits: Record<string, string> = {};
         
-        // Get all input values
+        // Recoger valores y unidades seleccionadas
         for (const key in inputs) {
           if (Object.prototype.hasOwnProperty.call(inputs, key) && 
               key !== variableToSolve && 
-              inputs[key as keyof typeof inputs].style.display !== 'none') {
-            const value = parseFloat(inputs[key as keyof typeof inputs].value);
-            if (!isNaN(value) && value !== 0) {
-              values[key] = value;
+              !inputGroups[key as keyof typeof inputGroups].style.display.includes('none')) {
+            
+            const inputValue = parseFloat(inputs[key as keyof typeof inputs].value);
+            const unitSelected = unitSelectors[key as keyof typeof unitSelectors].value;
+            
+            if (!isNaN(inputValue) && inputValue !== 0) {
+              // Guardar la unidad seleccionada para mostrarla en el resultado
+              selectedUnits[key] = unitSelected;
+              
+              // Convertir a unidad base (SI) para cálculos
+              values[key] = convertToBaseUnit(inputValue, key as UnitType, unitSelected);
+              console.log(`Convertido ${key}: ${inputValue} ${unitSelected} → ${values[key]} (unidad base)`);
             }
           }
         }
         
         const result = calculate(variableToSolve, values);
+        
         if (result.value !== null) {
-          resultDiv.innerHTML = `${result.name} = <strong>${typeof result.value === 'number' ? (result.value as number).toFixed(4) : result.value} ${result.unit}</strong>`;
+          // Obtener la unidad seleccionada para el resultado
+          const resultUnitSelected = variableToSolve in unitSelectors ? 
+                                     unitSelectors[variableToSolve as keyof typeof unitSelectors].value : 
+                                     result.unit;
+          
+          // Convertir el resultado de unidad base a unidad seleccionada
+          const displayValue = variableToSolve in unitSelectors ? 
+                              convertFromBaseUnit(result.value, variableToSolve as UnitType, resultUnitSelected) :
+                              result.value;
+                              
+          console.log(`Resultado convertido: ${result.value} (unidad base) → ${displayValue} ${resultUnitSelected}`);
+          
+          resultDiv.innerHTML = `${result.name} = <strong>${displayValue.toFixed(4)} ${resultUnitSelected}</strong>`;
           formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
         } else {
           resultDiv.innerHTML = 'No se pudo calcular. Por favor, revisa los datos ingresados.';
@@ -410,7 +584,16 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
       
       function calculate(variableToSolve: string, values: Record<string, number>) {
         const PI = Math.PI;
-        let result: { value: number | null, unit: string, name: string, formula: string } = { value: null, unit: '', name: '', formula: '' };
+        type Result = {
+          value: number | null;
+          unit: string;
+          name: string;
+          formula: string;
+        };
+        let result:Result = { value: null , unit: '', name: '', formula: '' };
+        
+        // El código de cálculo existente se mantiene igual, ya que ahora 
+        // todos los valores de entrada ya están en unidades base
         
         switch (variableToSolve) {
           case 'radius':
@@ -554,7 +737,7 @@ import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
         return result;
       }
       
-      // Initialize visible fields
+      // Inicializar campos visibles según la variable a resolver seleccionada
       updateVisibleFields();
     });
   </script>
