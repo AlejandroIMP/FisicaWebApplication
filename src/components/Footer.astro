@@ -3,7 +3,11 @@ const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} Alejandro Sunuc. All rights reserved.
+	&copy; {today.getFullYear()} GrupoPhysica. All rights reserved.
+
+	<div class="terms">
+		<a href="/terms">Terms of Service</a>
+	</div>
 	<div class="social-links">
 		<!-- <a href="https://m.webtoo.ls/@astro" target="_blank">
 			<span class="sr-only">Follow Astro on Mastodon</span>
@@ -45,6 +49,19 @@ const today = new Date();
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+	.terms {
+		margin-top: 1em;
+	}
+	.terms a {
+		text-decoration: none;
+		color: rgb(var(--gray));
+	}
+	.terms a:hover {
+		color: rgb(var(--gray-dark));
+	}
+	.terms a:visited {
+		color: rgb(var(--gray));
 	}
 	.social-links {
 		display: flex;
