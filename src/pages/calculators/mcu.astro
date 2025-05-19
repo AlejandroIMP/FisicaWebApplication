@@ -1,0 +1,561 @@
+---
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+---
+<CalculatorLayout title="Movimiento Circular Uniforme" description="Calculadora de Movimiento Circular Uniforme">
+  <h1>Movimiento Circular Uniforme</h1>
+  <p>
+    El movimiento circular uniforme (MCU) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una velocidad constante. Esto significa que la magnitud de la velocidad no cambia, aunque la dirección del movimiento sí lo hace.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <div class="calculator-header">
+        <h2>Calculadora MCU</h2>
+        <p>Selecciona la incógnita que deseas calcular y completa los valores conocidos</p>
+      </div>
+      
+      <div class="calculator-body">
+        <div class="variable-selector">
+          <label>Calcular:</label>
+          <select id="variable-to-solve">
+            <option value="radius">Radio (r)</option>
+            <option value="angularVelocity">Velocidad Angular (ω)</option>
+            <option value="linearVelocity">Velocidad Lineal (v)</option>
+            <option value="period">Periodo (T)</option>
+            <option value="frequency">Frecuencia (f)</option>
+            <option value="centripetalAcceleration">Aceleración Centrípeta (a)</option>
+            <option value="angularDisplacement">Desplazamiento Angular (θ)</option>
+          </select>
+        </div>
+        
+        <div class="input-group" id="radius-group">
+          <label for="radius">Radio (r):</label>
+          <div class="input-with-unit">
+            <input type="number" id="radius" placeholder="Ingresa el radio">
+            <span class="unit">m</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="angular-velocity-group">
+          <label for="angular-velocity">Velocidad Angular (ω):</label>
+          <div class="input-with-unit">
+            <input type="number" id="angular-velocity" placeholder="Ingresa la velocidad angular">
+            <span class="unit">rad/s</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="linear-velocity-group">
+          <label for="linear-velocity">Velocidad Lineal (v):</label>
+          <div class="input-with-unit">
+            <input type="number" id="linear-velocity" placeholder="Ingresa la velocidad lineal">
+            <span class="unit">m/s</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="period-group">
+          <label for="period">Periodo (T):</label>
+          <div class="input-with-unit">
+            <input type="number" id="period" placeholder="Ingresa el periodo">
+            <span class="unit">s</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="frequency-group">
+          <label for="frequency">Frecuencia (f):</label>
+          <div class="input-with-unit">
+            <input type="number" id="frequency" placeholder="Ingresa la frecuencia">
+            <span class="unit">Hz</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="centripetal-acceleration-group">
+          <label for="centripetal-acceleration">Aceleración Centrípeta (a):</label>
+          <div class="input-with-unit">
+            <input type="number" id="centripetal-acceleration" placeholder="Ingresa la aceleración centrípeta">
+            <span class="unit">m/s²</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="time-group">
+          <label for="time">Tiempo (t):</label>
+          <div class="input-with-unit">
+            <input type="number" id="time" placeholder="Ingresa el tiempo">
+            <span class="unit">s</span>
+          </div>
+        </div>
+        
+        <div class="input-group" id="angular-displacement-group">
+          <label for="angular-displacement">Desplazamiento Angular (θ):</label>
+          <div class="input-with-unit">
+            <input type="number" id="angular-displacement" placeholder="Ingresa el desplazamiento angular">
+            <span class="unit">rad</span>
+          </div>
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <div class="result-container">
+          <div class="result-box">
+            <h3>Resultado</h3>
+            <div id="result"></div>
+            <div id="formula-used"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="formulas-container">
+      <h3>Fórmulas del MCU</h3>
+      <div class="formula-item">
+        <span>ω = 2π / T = 2π × f</span>
+        <p>Velocidad angular en función del periodo o frecuencia</p>
+      </div>
+      <div class="formula-item">
+        <span>v = ω × r</span>
+        <p>Velocidad lineal en función de la velocidad angular y el radio</p>
+      </div>
+      <div class="formula-item">
+        <span>a = v² / r = ω² × r</span>
+        <p>Aceleración centrípeta</p>
+      </div>
+      <div class="formula-item">
+        <span>T = 2π × r / v = 2π / ω</span>
+        <p>Periodo del movimiento</p>
+      </div>
+      <div class="formula-item">
+        <span>f = 1 / T = ω / 2π</span>
+        <p>Frecuencia del movimiento</p>
+      </div>
+      <div class="formula-item">
+        <span>θ = ω × t</span>
+        <p>Desplazamiento angular en función del tiempo</p>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .calculator-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calculator {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .calculator-header {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      padding: 1.5rem;
+    }
+
+    .calculator-header h2 {
+      color: white;
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .calculator-header p {
+      margin: 0.5rem 0 0;
+      opacity: 0.9;
+    }
+
+    .calculator-body {
+      padding: 1.5rem;
+    }
+
+    .variable-selector {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .variable-selector select {
+      flex-grow: 1;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #f9f9f9;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .input-with-unit {
+      display: flex;
+      align-items: center;
+    }
+
+    .input-with-unit input {
+      flex-grow: 1;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .unit {
+      background: #f0f0f0;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-left: none;
+      border-radius: 0 6px 6px 0;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .calculate-button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin: 1.5rem 0;
+      transition: background-color 0.2s;
+    }
+
+    .calculate-button:hover {
+      background: var(--accent-dark);
+    }
+
+    .result-container {
+      margin-top: 1.5rem;
+    }
+
+    .result-box {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 1.2rem;
+      border-left: 4px solid var(--accent);
+    }
+
+    .result-box h3 {
+      margin: 0 0 0.8rem 0;
+      font-size: 1.2rem;
+    }
+
+    #result {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    #formula-used {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .formulas-container {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .formulas-container h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--accent-dark);
+    }
+
+    .formula-item {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .formula-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .formula-item span {
+      display: block;
+      font-weight: 600;
+      font-family: monospace;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .formula-item p {
+      margin: 0;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    @media (min-width: 768px) {
+      .calculator-container {
+        flex-direction: row;
+      }
+
+      .calculator {
+        flex: 2;
+      }
+
+      .formulas-container {
+        flex: 1;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const variableToSolveSelect = document.getElementById('variable-to-solve') as HTMLSelectElement;
+      const calculateBtn = document.getElementById('calculate-btn') as HTMLButtonElement;
+      const resultDiv = document.getElementById('result') as HTMLDivElement;
+      const formulaUsedDiv = document.getElementById('formula-used') as HTMLDivElement;
+      
+      const inputGroups = {
+        radius: document.getElementById('radius-group') as HTMLDivElement,
+        angularVelocity: document.getElementById('angular-velocity-group') as HTMLDivElement,
+        linearVelocity: document.getElementById('linear-velocity-group') as HTMLDivElement,
+        period: document.getElementById('period-group') as HTMLDivElement,
+        frequency: document.getElementById('frequency-group') as HTMLDivElement,
+        centripetalAcceleration: document.getElementById('centripetal-acceleration-group') as HTMLDivElement,
+        time: document.getElementById('time-group') as HTMLDivElement,
+        angularDisplacement: document.getElementById('angular-displacement-group') as HTMLDivElement,
+      };
+      
+      const inputs = {
+        radius: document.getElementById('radius') as HTMLInputElement,
+        angularVelocity: document.getElementById('angular-velocity') as HTMLInputElement,
+        linearVelocity: document.getElementById('linear-velocity') as HTMLInputElement,
+        period: document.getElementById('period') as HTMLInputElement,
+        frequency: document.getElementById('frequency') as HTMLInputElement,
+        centripetalAcceleration: document.getElementById('centripetal-acceleration') as HTMLInputElement,
+        time: document.getElementById('time') as HTMLInputElement,
+        angularDisplacement: document.getElementById('angular-displacement') as HTMLInputElement
+      };
+
+      
+      function updateVisibleFields() {
+
+        const variableToSolve = variableToSolveSelect.value;
+        
+        // Show all inputs by default
+        for (const key in inputGroups) {
+          if (Object.prototype.hasOwnProperty.call(inputGroups, key)) {
+            inputGroups[key as keyof typeof inputGroups].style.display = 'block';
+          }
+        }
+        
+        // Hide the input we're solving for
+        if (variableToSolve in inputGroups) {
+          inputGroups[variableToSolve as keyof typeof inputGroups].style.display = 'none';
+        }
+        
+        // Special case handling
+        switch (variableToSolve) {
+          case 'angularDisplacement':
+            inputGroups.time.style.display = 'block';
+            break;
+          case 'time':
+            inputGroups.angularDisplacement.style.display = 'block';
+            break;
+          default:
+            // Hide time and angular displacement inputs for other calculations
+            if (variableToSolve !== 'time' && variableToSolve !== 'angularDisplacement') {
+              inputGroups.time.style.display = 'none';
+              inputGroups.angularDisplacement.style.display = 'none';
+            }
+        }
+      }
+      
+      variableToSolveSelect.addEventListener('change', updateVisibleFields);
+      
+      calculateBtn.addEventListener('click', function() {
+        const variableToSolve = variableToSolveSelect.value;
+        const values: Record<string, number> = {};
+        
+        // Get all input values
+        for (const key in inputs) {
+          if (Object.prototype.hasOwnProperty.call(inputs, key) && 
+              key !== variableToSolve && 
+              inputs[key as keyof typeof inputs].style.display !== 'none') {
+            const value = parseFloat(inputs[key as keyof typeof inputs].value);
+            if (!isNaN(value) && value !== 0) {
+              values[key] = value;
+            }
+          }
+        }
+        
+        const result = calculate(variableToSolve, values);
+        if (result.value !== null) {
+          resultDiv.innerHTML = `${result.name} = <strong>${typeof result.value === 'number' ? (result.value as number).toFixed(4) : result.value} ${result.unit}</strong>`;
+          formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
+        } else {
+          resultDiv.innerHTML = 'No se pudo calcular. Por favor, revisa los datos ingresados.';
+          formulaUsedDiv.innerHTML = '';
+        }
+      });
+      
+      function calculate(variableToSolve: string, values: Record<string, number>) {
+        const PI = Math.PI;
+        let result: { value: number | null, unit: string, name: string, formula: string } = { value: null, unit: '', name: '', formula: '' };
+        
+        switch (variableToSolve) {
+          case 'radius':
+            if (values.linearVelocity && values.angularVelocity) {
+              result.value = values.linearVelocity / values.angularVelocity;
+              result.unit = 'm';
+              result.name = 'Radio (r)';
+              result.formula = 'r = v / ω';
+            } else if (values.linearVelocity && values.period) {
+              result.value = (values.linearVelocity * values.period) / (2 * PI);
+              result.unit = 'm';
+              result.name = 'Radio (r)';
+              result.formula = 'r = (v × T) / 2π';
+            } else if (values.centripetalAcceleration && values.angularVelocity) {
+              result.value = values.centripetalAcceleration / (values.angularVelocity * values.angularVelocity);
+              result.unit = 'm';
+              result.name = 'Radio (r)';
+              result.formula = 'r = a / ω²';
+            }
+            break;
+            
+          case 'angularVelocity':
+            if (values.period) {
+              result.value = (2 * PI) / values.period;
+              result.unit = 'rad/s';
+              result.name = 'Velocidad angular (ω)';
+              result.formula = 'ω = 2π / T';
+            } else if (values.frequency) {
+              result.value = 2 * PI * values.frequency;
+              result.unit = 'rad/s';
+              result.name = 'Velocidad angular (ω)';
+              result.formula = 'ω = 2π × f';
+            } else if (values.linearVelocity && values.radius) {
+              result.value = values.linearVelocity / values.radius;
+              result.unit = 'rad/s';
+              result.name = 'Velocidad angular (ω)';
+              result.formula = 'ω = v / r';
+            } else if (values.angularDisplacement && values.time) {
+              result.value = values.angularDisplacement / values.time;
+              result.unit = 'rad/s';
+              result.name = 'Velocidad angular (ω)';
+              result.formula = 'ω = θ / t';
+            } else if (values.centripetalAcceleration && values.radius) {
+              result.value = Math.sqrt(values.centripetalAcceleration / values.radius);
+              result.unit = 'rad/s';
+              result.name = 'Velocidad angular (ω)';
+              result.formula = 'ω = √(a / r)';
+            }
+            break;
+            
+          case 'linearVelocity':
+            if (values.angularVelocity && values.radius) {
+              result.value = values.angularVelocity * values.radius;
+              result.unit = 'm/s';
+              result.name = 'Velocidad lineal (v)';
+              result.formula = 'v = ω × r';
+            } else if (values.period && values.radius) {
+              result.value = (2 * PI * values.radius) / values.period;
+              result.unit = 'm/s';
+              result.name = 'Velocidad lineal (v)';
+              result.formula = 'v = 2πr / T';
+            } else if (values.frequency && values.radius) {
+              result.value = 2 * PI * values.frequency * values.radius;
+              result.unit = 'm/s';
+              result.name = 'Velocidad lineal (v)';
+              result.formula = 'v = 2πfr';
+            } else if (values.centripetalAcceleration && values.radius) {
+              result.value = Math.sqrt(values.centripetalAcceleration * values.radius);
+              result.unit = 'm/s';
+              result.name = 'Velocidad lineal (v)';
+              result.formula = 'v = √(a × r)';
+            }
+            break;
+            
+          case 'period':
+            if (values.angularVelocity) {
+              result.value = (2 * PI) / values.angularVelocity;
+              result.unit = 's';
+              result.name = 'Periodo (T)';
+              result.formula = 'T = 2π / ω';
+            } else if (values.frequency) {
+              result.value = 1 / values.frequency;
+              result.unit = 's';
+              result.name = 'Periodo (T)';
+              result.formula = 'T = 1 / f';
+            } else if (values.linearVelocity && values.radius) {
+              result.value = (2 * PI * values.radius) / values.linearVelocity;
+              result.unit = 's';
+              result.name = 'Periodo (T)';
+              result.formula = 'T = 2πr / v';
+            }
+            break;
+            
+          case 'frequency':
+            if (values.period) {
+              result.value = 1 / values.period;
+              result.unit = 'Hz';
+              result.name = 'Frecuencia (f)';
+              result.formula = 'f = 1 / T';
+            } else if (values.angularVelocity) {
+              result.value = values.angularVelocity / (2 * PI);
+              result.unit = 'Hz';
+              result.name = 'Frecuencia (f)';
+              result.formula = 'f = ω / 2π';
+            }
+            break;
+            
+          case 'centripetalAcceleration':
+            if (values.linearVelocity && values.radius) {
+              result.value = (values.linearVelocity * values.linearVelocity) / values.radius;
+              result.unit = 'm/s²';
+              result.name = 'Aceleración centrípeta (a)';
+              result.formula = 'a = v² / r';
+            } else if (values.angularVelocity && values.radius) {
+              result.value = values.angularVelocity * values.angularVelocity * values.radius;
+              result.unit = 'm/s²';
+              result.name = 'Aceleración centrípeta (a)';
+              result.formula = 'a = ω² × r';
+            }
+            break;
+            
+          case 'angularDisplacement':
+            if (values.angularVelocity && values.time) {
+              result.value = values.angularVelocity * values.time;
+              result.unit = 'rad';
+              result.name = 'Desplazamiento angular (θ)';
+              result.formula = 'θ = ω × t';
+            }
+            break;
+            
+          case 'time':
+            if (values.angularVelocity && values.angularDisplacement) {
+              result.value = values.angularDisplacement / values.angularVelocity;
+              result.unit = 's';
+              result.name = 'Tiempo (t)';
+              result.formula = 't = θ / ω';
+            }
+            break;
+        }
+        
+        return result;
+      }
+      
+      // Initialize visible fields
+      updateVisibleFields();
+    });
+  </script>
+</CalculatorLayout>

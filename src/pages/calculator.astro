@@ -1,0 +1,62 @@
+---
+import CalculatorLayout from "../layouts/CalculatorLayout.astro";
+import { CALCULATORS } from "../consts";
+import CalculatorCard from "../components/CalculatorCard.astro";
+---
+
+<CalculatorLayout title="Calculadora" description="Calculadora de Física">
+  <article>
+    <h1>Calculadoras</h1>
+    	<p>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
+		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
+		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
+		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
+		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
+		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+	</p>
+  </article>
+  <div class="calculators">
+    {CALCULATORS.map((calculator) => (
+      <CalculatorCard
+        key={calculator.name}
+        title={calculator.name}
+        description={calculator.description}
+        url={calculator.url}
+        image={calculator.image}
+      />
+    ))}
+  </div>
+</CalculatorLayout>
+<style>
+
+  article {
+    width: calc(100% - 4em);
+    max-width: 100%;
+    margin: 0;
+    padding: 2em;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+  }
+  .calculators {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1em;
+    padding: 2em;
+    margin: 0;
+    width: calc(100% - 4em);
+    max-width: 100%;
+    margin: 0 auto;
+    justify-items: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+  }
+</style>
