@@ -1,0 +1,43 @@
+---
+export interface UnitOption {
+  value: string;
+  label: string;
+}
+
+export interface Props {
+  id: string;
+  label: string;
+  placeholder?: string;
+  units: UnitOption[];
+  defaultUnit?: string;
+}
+
+const { id, label, placeholder = `Ingresa ${label}`, units, defaultUnit } = Astro.props;
+
+// Convertir el ID para uso como ID del grupo
+const groupId = id
+  .split(/(?=[A-Z])/)
+  .join('-')
+  .toLowerCase() + '-group';
+const inputId = id
+  .split(/(?=[A-Z])/)
+  .join('-')
+  .toLowerCase();
+const unitId = inputId + '-unit';
+---
+<div class="input-group" id={groupId}>
+  <label for={inputId}>{label}</label>
+  <div class="input-with-unit">
+    <input type="number" id={inputId} placeholder={placeholder}>
+    <select id={unitId} class="unit-selector">
+      {units.map((unit) => (
+        <option 
+          value={unit.value} 
+          selected={unit.value === defaultUnit || (!defaultUnit && unit.value === units[0].value)}
+        >
+          {unit.label}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
