@@ -12,7 +12,7 @@ import { Icon } from 'astro-icon/components';
 			<HeaderLink href="/topics">Temario</HeaderLink>
 			<HeaderLink href="/calculator">Calculadora</HeaderLink>
 			<HeaderLink href="/exercises">Ejercicios</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/acercaDe">Acerca De</HeaderLink>
 		</div>
 		<div class="menu-links">
 			<Icon name="mdi:menu" size={32}  />
@@ -22,7 +22,7 @@ import { Icon } from 'astro-icon/components';
 			<HeaderLink href="/topics">Temario</HeaderLink>
 			<HeaderLink href="/calculator">Calculadora</HeaderLink>
 			<HeaderLink href="/exercises">Ejercicios</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/acercaDe">Acerca De</HeaderLink>
 		</div>
 		<div class="social-links">
 			<a href="https://github.com/alejandroimp/FisicaWebApplication" target="_blank">
@@ -105,9 +105,15 @@ import { Icon } from 'astro-icon/components';
 		text-decoration: none;
 		border-bottom-color: var(--accent);
 	}
+
+	.social-links {
+		width: 8rem;
+		align-items: right;
+		justify-content: right;
+	}
+
 	.social-links,
 	.social-links a {
-	
 		display: flex;
 	}
 
@@ -133,7 +139,7 @@ import { Icon } from 'astro-icon/components';
 		display: flex;
 	}
 
-	@media (max-width: 720px) {
+	@media (max-width: 800px) {
 		header {
 			height: 70px;
 			align-content: center;

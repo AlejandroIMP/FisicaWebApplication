@@ -1,96 +1,194 @@
 ---
-const { title, description, url } = Astro.props;
+const { title, description, url, image = "default" } = Astro.props;
+
+// Map of calculator types to icons/colors
+const calculatorIcons = {
+  default: "📊",
+  mcu: "🔄",
+  mruv: "📈",
+  tiro: "🏹",
+  pendulo: "⏱️",
+  energia: "⚡",
+  ondas: "〰️",
+};
+
+type CalculatorType = keyof typeof calculatorIcons;
+const iconKey = (image in calculatorIcons ? image : "default") as CalculatorType;
+const icon = calculatorIcons[iconKey];
 ---
 
 <div class="card">
+  <div class="card-icon">{icon}</div>
   <div class="card-body">
     <h2>{title}</h2>
-  </div>
-  <div class="card-content">
     <p>{description}</p>
   </div>
   <div class="card-footer">
-    <button class="button">
-      <a
-        href={url}
-        rel="noopener noreferrer"
-      >
-       Ir a la calculadora
-      </a>
-    </button>
-      
+    <a href={url} class="button" rel="noopener noreferrer">
+      <span>Ir a la calculadora</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
   </div>
+</div>
+
 <style>
-
-  h2 {
-    font-size: clamp(1.5rem, 1.25vw, 3rem);
-    margin: 0;
-    padding: 0.5em;
-    text-align: center;
-    color: #333;
-  }
-
-  p {
-    font-size: clamp(1rem, 1vw, 2rem);
-    margin: 0;
-    padding: 0.5em;
-    text-align: center;
-    color: #666;
-  }
-
   .card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    max-width: 300px;
-    height: 38dvh;
-    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     background-color: #fff;
-    transition: transform 0.3s ease-in-out;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border-color: rgba(var(--accent), 0.3);
+  }
+
+  .card-icon {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-icon {
+    transform: scale(1.1) rotate(10deg);
   }
 
   .card-body {
-    align-content: center;
-    text-align: center;
-    padding: 1em 0;
-    min-height: 12vh;
-  }
-
-  .card-content {
-    font-size: clamp(1rem, 1.5vw, 2rem);
-    color: #333;
-  }
-  .card-content p {
-    text-align: left;
+    flex: 1;
+    padding: 2rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .card-footer {
-    padding: 16px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ccc;
+    padding: 1.25rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    color: rgb(var(--black));
+    line-height: 1.3;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius: 3px;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: 0;
+    color: rgba(var(--black), 0.8);
+    line-height: 1.6;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    text-decoration: none;
-    border-radius: 5px;
-    border: none;
-    transition: background-color 0.3s ease-in-out;
-  }
-
-  .button a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--accent);
     color: white;
     text-decoration: none;
-    font-size: clamp(1rem, 1vw, 2rem);
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+
   }
 
   .button:hover {
-    background-color: #0056b3;
+    background-color: var(--accent-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 
+  .button svg {
+    transition: transform 0.2s ease;
+  }
+
+  .button:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 1.75rem 1.25rem 1.25rem;
+    }
+    
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.4rem;
+      top: -10px;
+      right: 15px;
+    }
+  }
+  
+  @media (min-width: 1400px) {
+    .card-body {
+      padding: 2.25rem 1.75rem 1.75rem;
+    }
+    
+    h2 {
+      font-size: 1.7rem;
+    }
+    
+    p {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* For grid container usage */
+  :global(.calculator-grid) {
+    display: grid;
+    gap: 2.5rem;
+    width: 100%;
+    max-width: 1300px;
+  }
 </style>

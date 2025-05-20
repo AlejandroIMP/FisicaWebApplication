@@ -9,7 +9,10 @@
 │   ├── components/
 │   ├── content/
 │   ├── layouts/
-│   └── pages/
+|   ├── pages/
+│   ├── styles/
+│   ├── types/
+│   └── utils/
 ├── astro.config.mjs
 ├── README.md
 ├── package.json

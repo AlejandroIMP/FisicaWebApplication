@@ -5,68 +5,135 @@ import CalculatorCard from "../components/CalculatorCard.astro";
 ---
 
 <CalculatorLayout title="Calculadora" description="Calculadora de Física">
-  <article>
-    <h1>Calculadoras</h1>
-    	<p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-        viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-        adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-        et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-        vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-        sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	    </p>
-  </article>
-  <div class="calculators">
-    {CALCULATORS.map((calculator) => (
-      <CalculatorCard
-        key={calculator.name}
-        title={calculator.name}
-        description={calculator.description}
-        url={calculator.url}
-        image={calculator.image}
-      />
-    ))}
+  <div class="hero">
+    <h1>Calculadoras de Física</h1>
+    <div class="hero-decoration"></div>
+  </div>
+
+  <div class="calculators-container">
+    <div class="intro-section">
+      <p>
+        Las calculadoras de esta web están diseñadas para ayudar a comprender distintos tipos de movimientos en física. Cada una de ellas permite realizar cálculos específicos según el tipo de movimiento.
+      </p>
+      <p class="highlight">
+        Estas herramientas son útiles para estudiantes y profesionales que buscan resolver problemas de física de manera rápida y eficiente.
+      </p>
+    </div>
+    
+    <div class="calculator-grid">
+      {CALCULATORS.map((calculator) => (
+        <CalculatorCard
+          key={calculator.name}
+          title={calculator.name}
+          description={calculator.description}
+          url={calculator.url}
+          image={calculator.image}
+        />
+      ))}
+    </div>
   </div>
 </CalculatorLayout>
+
 <style>
-
-  article {
-    width: calc(100% - 4em);
-    max-width: 100%;
-    margin: 0;
-    padding: 2em;
-  }
-  h1 {
-    font-size: clamp(2rem, 5vw, 4rem);
-    margin: 0;
-    padding: 1em;
+  .hero {
+    position: relative;
+    padding: 4rem 0 2rem;
     text-align: center;
+    background: linear-gradient(135deg, rgba(var(--black), 0.03), rgba(var(--black), 0.06));
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    overflow: hidden;
   }
-  p{
-		font-size: clamp(1rem, 1vw, 2rem);
-	}
-  .calculators {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1em;
-    padding: 2em;
+
+  .hero h1 {
+    position: relative;
+    z-index: 2;
     margin: 0;
-    width: calc(100% - 4em);
-    max-width: 100%;
-    margin: 0 auto;
-    justify-items: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
   }
 
-  @media (min-width: 1280px) {
-    .calculators {
-      width: 70%;
-      grid-template-columns: repeat(3, 1fr);
+  .hero-decoration {
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(135deg, rgba(var(--accent), 0.1), rgba(var(--accent-dark), 0.2));
+    transform: rotate(-15deg);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    z-index: 1;
+  }
+
+  .calculators-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .intro-section {
+    margin-bottom: 3rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .intro-section p {
+    font-size: clamp(1rem, 1.1vw, 1.2rem);
+    line-height: 1.7;
+    color: rgba(var(--black), 0.85);
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .intro-section .highlight {
+    font-weight: 500;
+    color: var(--accent-dark);
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(var(--accent), 0.05), rgba(var(--accent-dark), 0.1));
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+  }
+
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 1rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .calculators-container {
+      width: 95%;
+      padding-bottom: 2rem;
+    }
+    
+    .intro-section {
+      margin-bottom: 2rem;
+    }
+    
+    .calculator-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1600px) {
+    .calculators-container {
+      max-width: 1400px;
+    }
+    
+    .calculator-grid {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     }
   }
 </style>
