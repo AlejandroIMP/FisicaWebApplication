@@ -1,1 +1,1 @@
-export { convertToBaseUnit, convertFromBaseUnit, calculate } from './mcu.util';
+export { convertToBaseUnit, convertFromBaseUnit, calculate, calculateMCUA } from './mcu.util';

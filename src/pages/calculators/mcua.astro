@@ -1,0 +1,349 @@
+---
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import '../../styles/mcu.css';
+---
+<CalculatorLayout title="Movimiento Circular Uniformemente Acelerado" description="Calculadora de Movimiento Circular Uniformemente Acelerado">
+  <h1>Movimiento Circular Uniformemente Acelerado</h1>
+  <p>
+    El movimiento circular uniformemente acelerado (MCUA) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una aceleración angular constante. Esto significa que la velocidad angular cambia uniformemente con el tiempo.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <div class="calculator-header">
+        <h2>Calculadora MCUA</h2>
+        <p>Selecciona la incógnita que deseas calcular y completa los valores conocidos</p>
+      </div>
+      
+      <div class="calculator-body">
+        <div class="variable-selector">
+          <label for="variable-to-solve">Calcular:</label>
+          <select id="variable-to-solve" name="variable-to-solve">
+            <option value="initialAngularVelocity">Velocidad Angular Inicial (ω₀)</option>
+            <option value="finalAngularVelocity">Velocidad Angular Final (ω)</option>
+            <option value="angularAcceleration">Aceleración Angular (α)</option>
+            <option value="angularDisplacement">Desplazamiento Angular (θ)</option>
+            <option value="time">Tiempo (t)</option>
+            <option value="radius">Radio (r)</option>
+            <option value="tangentialAcceleration">Aceleración Tangencial (aₜ)</option>
+            <option value="centripetalAcceleration">Aceleración Centrípeta (aₙ)</option>
+            <option value="totalAcceleration">Aceleración Total (aₜₒₜₐₗ)</option>
+          </select>
+        </div>
+        
+        <div class="input-groups-container">
+          <div class="input-group" id="radius-group">
+            <label for="radius">Radio (r):</label>
+            <div class="input-with-unit">
+              <input type="number" id="radius" placeholder="Ingresa el radio">
+              <select id="radius-unit" class="unit-selector">
+                <option value="m">m</option>
+                <option value="cm">cm</option>
+                <option value="km">km</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="initial-angular-velocity-group">
+            <label for="initial-angular-velocity">Velocidad Angular Inicial (ω₀):</label>
+            <div class="input-with-unit">
+              <input type="number" id="initial-angular-velocity" placeholder="Ingresa la velocidad angular inicial">
+              <select id="initial-angular-velocity-unit" class="unit-selector">
+                <option value="rad/s">rad/s</option>
+                <option value="deg/s">°/s</option>
+                <option value="rpm">rpm</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="final-angular-velocity-group">
+            <label for="final-angular-velocity">Velocidad Angular Final (ω):</label>
+            <div class="input-with-unit">
+              <input type="number" id="final-angular-velocity" placeholder="Ingresa la velocidad angular final">
+              <select id="final-angular-velocity-unit" class="unit-selector">
+                <option value="rad/s">rad/s</option>
+                <option value="deg/s">°/s</option>
+                <option value="rpm">rpm</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="angular-acceleration-group">
+            <label for="angular-acceleration">Aceleración Angular (α):</label>
+            <div class="input-with-unit">
+              <input type="number" id="angular-acceleration" placeholder="Ingresa la aceleración angular">
+              <select id="angular-acceleration-unit" class="unit-selector">
+                <option value="rad/s²">rad/s²</option>
+                <option value="deg/s²">°/s²</option>
+                <option value="rpm/s">rpm/s</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="angular-displacement-group">
+            <label for="angular-displacement">Desplazamiento Angular (θ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="angular-displacement" placeholder="Ingresa el desplazamiento angular">
+              <select id="angular-displacement-unit" class="unit-selector">
+                <option value="rad">rad</option>
+                <option value="deg">°</option>
+                <option value="rev">vueltas</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="time-group">
+            <label for="time">Tiempo (t):</label>
+            <div class="input-with-unit">
+              <input type="number" id="time" placeholder="Ingresa el tiempo">
+              <select id="time-unit" class="unit-selector">
+                <option value="s">s</option>
+                <option value="min">min</option>
+                <option value="h">h</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="tangential-acceleration-group">
+            <label for="tangential-acceleration">Aceleración Tangencial (aₜ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="tangential-acceleration" placeholder="Ingresa la aceleración tangencial">
+              <select id="tangential-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="centripetal-acceleration-group">
+            <label for="centripetal-acceleration">Aceleración Centrípeta (aₙ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="centripetal-acceleration" placeholder="Ingresa la aceleración centrípeta">
+              <select id="centripetal-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="total-acceleration-group">
+            <label for="total-acceleration">Aceleración Total (aₜₒₜₐₗ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="total-acceleration" placeholder="Ingresa la aceleración total">
+              <select id="total-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <div class="result-container">
+          <div class="result-box">
+            <h3>Resultado</h3>
+            <div id="result"></div>
+            <div id="formula-used"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="formulas-container">
+      <h3>Fórmulas del MCUA</h3>
+      <div class="formula-item">
+        <span>ω = ω₀ + α × t</span>
+        <p>Velocidad angular en función del tiempo</p>
+      </div>
+      <div class="formula-item">
+        <span>θ = ω₀ × t + ½ × α × t²</span>
+        <p>Desplazamiento angular en función del tiempo</p>
+      </div>
+      <div class="formula-item">
+        <span>ω² = ω₀² + 2 × α × θ</span>
+        <p>Relación entre velocidades angulares, aceleración y desplazamiento</p>
+      </div>
+      <div class="formula-item">
+        <span>aₜ = α × r</span>
+        <p>Aceleración tangencial</p>
+      </div>
+      <div class="formula-item">
+        <span>aₙ = ω² × r</span>
+        <p>Aceleración normal o centrípeta</p>
+      </div>
+      <div class="formula-item">
+        <span>aₜₒₜₐₗ = √(aₙ² + aₜ²)</span>
+        <p>Aceleración total</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { convertFromBaseUnit, calculateMCUA, convertToBaseUnit } from "../../utils/index";
+    import { type UnitType } from "../../types/index";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const variableToSolveSelect = document.getElementById('variable-to-solve') as HTMLSelectElement;
+      const calculateBtn = document.getElementById('calculate-btn') as HTMLButtonElement;
+      const resultDiv = document.getElementById('result') as HTMLDivElement;
+      const formulaUsedDiv = document.getElementById('formula-used') as HTMLDivElement;
+      
+      const inputGroups = {
+        radius: document.getElementById('radius-group') as HTMLDivElement,
+        initialAngularVelocity: document.getElementById('initial-angular-velocity-group') as HTMLDivElement,
+        finalAngularVelocity: document.getElementById('final-angular-velocity-group') as HTMLDivElement,
+        angularAcceleration: document.getElementById('angular-acceleration-group') as HTMLDivElement,
+        angularDisplacement: document.getElementById('angular-displacement-group') as HTMLDivElement,
+        time: document.getElementById('time-group') as HTMLDivElement,
+        tangentialAcceleration: document.getElementById('tangential-acceleration-group') as HTMLDivElement,
+        centripetalAcceleration: document.getElementById('centripetal-acceleration-group') as HTMLDivElement,
+        totalAcceleration: document.getElementById('total-acceleration-group') as HTMLDivElement
+      };
+      
+      const inputs = {
+        radius: document.getElementById('radius') as HTMLInputElement,
+        initialAngularVelocity: document.getElementById('initial-angular-velocity') as HTMLInputElement,
+        finalAngularVelocity: document.getElementById('final-angular-velocity') as HTMLInputElement,
+        angularAcceleration: document.getElementById('angular-acceleration') as HTMLInputElement,
+        angularDisplacement: document.getElementById('angular-displacement') as HTMLInputElement,
+        time: document.getElementById('time') as HTMLInputElement,
+        tangentialAcceleration: document.getElementById('tangential-acceleration') as HTMLInputElement,
+        centripetalAcceleration: document.getElementById('centripetal-acceleration') as HTMLInputElement,
+        totalAcceleration: document.getElementById('total-acceleration') as HTMLInputElement
+      };
+      
+      const unitSelectors = {
+        radius: document.getElementById('radius-unit') as HTMLSelectElement,
+        initialAngularVelocity: document.getElementById('initial-angular-velocity-unit') as HTMLSelectElement,
+        finalAngularVelocity: document.getElementById('final-angular-velocity-unit') as HTMLSelectElement,
+        angularAcceleration: document.getElementById('angular-acceleration-unit') as HTMLSelectElement,
+        angularDisplacement: document.getElementById('angular-displacement-unit') as HTMLSelectElement,
+        time: document.getElementById('time-unit') as HTMLSelectElement,
+        tangentialAcceleration: document.getElementById('tangential-acceleration-unit') as HTMLSelectElement,
+        centripetalAcceleration: document.getElementById('centripetal-acceleration-unit') as HTMLSelectElement,
+        totalAcceleration: document.getElementById('total-acceleration-unit') as HTMLSelectElement
+      };
+           
+      function updateVisibleFields() {
+        const variableToSolve = variableToSolveSelect.value;
+        
+        // Primero, mostrar todos los grupos
+        for (const key in inputGroups) {
+          if (Object.prototype.hasOwnProperty.call(inputGroups, key)) {
+            inputGroups[key as keyof typeof inputGroups].style.display = 'block';
+          }
+        }
+        
+        // Ocultar el grupo de la variable a resolver
+        if (variableToSolve in inputGroups) {
+          inputGroups[variableToSolve as keyof typeof inputGroups].style.display = 'none';
+        }
+
+        // Lógica específica para mostrar u ocultar campos según la variable a resolver
+        switch (variableToSolve) {
+          case 'initialAngularVelocity':
+            break;
+          case 'finalAngularVelocity':
+            break;
+          case 'angularAcceleration':
+            break;
+          case 'angularDisplacement':
+            break;
+          case 'time':
+            break;
+          case 'radius':
+            // Para calcular el radio solo necesitamos tangential acceleration y angular acceleration
+            inputGroups.initialAngularVelocity.style.display = 'none';
+            inputGroups.finalAngularVelocity.style.display = 'none';
+            inputGroups.angularDisplacement.style.display = 'none';
+            inputGroups.time.style.display = 'none';
+            inputGroups.centripetalAcceleration.style.display = 'none';
+            inputGroups.totalAcceleration.style.display = 'none';
+            break;
+          case 'tangentialAcceleration':
+            // Para calcular la aceleración tangencial solo necesitamos angular acceleration y radius
+            inputGroups.initialAngularVelocity.style.display = 'none';
+            inputGroups.finalAngularVelocity.style.display = 'none';
+            inputGroups.angularDisplacement.style.display = 'none';
+            inputGroups.time.style.display = 'none';
+            inputGroups.centripetalAcceleration.style.display = 'none';
+            inputGroups.totalAcceleration.style.display = 'none';
+            break;
+          case 'centripetalAcceleration':
+            // Para calcular la aceleración centrípeta necesitamos una velocidad angular y el radio
+            inputGroups.angularAcceleration.style.display = 'none';
+            inputGroups.angularDisplacement.style.display = 'none';
+            inputGroups.time.style.display = 'none';
+            inputGroups.tangentialAcceleration.style.display = 'none';
+            inputGroups.totalAcceleration.style.display = 'none';
+            break;
+          case 'totalAcceleration':
+            // Para calcular la aceleración total solo necesitamos centrípeta y tangencial
+            inputGroups.initialAngularVelocity.style.display = 'none';
+            inputGroups.finalAngularVelocity.style.display = 'none';
+            inputGroups.angularAcceleration.style.display = 'none';
+            inputGroups.angularDisplacement.style.display = 'none';
+            inputGroups.time.style.display = 'none';
+            inputGroups.radius.style.display = 'none';
+            break;
+        }
+      }
+      
+      variableToSolveSelect.addEventListener('change', updateVisibleFields);
+      
+      calculateBtn.addEventListener('click', function() {
+        const variableToSolve = variableToSolveSelect.value;
+        const values: Record<string, number> = {};
+        const selectedUnits: Record<string, string> = {};
+        
+        // Recoger valores y unidades seleccionadas
+        for (const key in inputs) {
+          if (Object.prototype.hasOwnProperty.call(inputs, key) && 
+              key !== variableToSolve && 
+              !inputGroups[key as keyof typeof inputGroups].style.display.includes('none')) {
+            
+            const inputValue = parseFloat(inputs[key as keyof typeof inputs].value);
+            const unitSelected = unitSelectors[key as keyof typeof unitSelectors].value;
+            
+            if (!isNaN(inputValue) && inputValue !== 0) {
+              // Guardar la unidad seleccionada para mostrarla en el resultado
+              selectedUnits[key] = unitSelected;
+              
+              // Convertir a unidad base (SI) para cálculos
+              values[key] = convertToBaseUnit(inputValue, key as UnitType, unitSelected);
+              console.log(`Convertido ${key}: ${inputValue} ${unitSelected} → ${values[key]} (unidad base)`);
+            }
+          }
+        }
+        
+        const result = calculateMCUA(variableToSolve, values);
+        
+        if (result.value !== null) {
+          // Obtener la unidad seleccionada para el resultado
+          const resultUnitSelected = variableToSolve in unitSelectors ? 
+                                     unitSelectors[variableToSolve as keyof typeof unitSelectors].value : 
+                                     result.unit;
+          
+          // Convertir el resultado de unidad base a unidad seleccionada
+          const displayValue = variableToSolve in unitSelectors ? 
+                              convertFromBaseUnit(result.value, variableToSolve as UnitType, resultUnitSelected) :
+                              result.value;
+                              
+          console.log(`Resultado convertido: ${result.value} (unidad base) → ${displayValue} ${resultUnitSelected}`);
+          
+          resultDiv.innerHTML = `${result.name} = <strong>${displayValue.toFixed(4)} ${resultUnitSelected}</strong>`;
+          formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
+        } else {
+          resultDiv.innerHTML = 'No se pudo calcular. Por favor, revisa los datos ingresados.';
+          formulaUsedDiv.innerHTML = '';
+        }
+      });
+      
+      updateVisibleFields();
+    });
+  </script>
+</CalculatorLayout>
