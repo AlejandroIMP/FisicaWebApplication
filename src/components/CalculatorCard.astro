@@ -1,18 +1,8 @@
 ---
-const { title, description, image, url } = Astro.props;
+const { title, description, url } = Astro.props;
 ---
 
 <div class="card">
-  <div class="card-header">
-    <img
-      src={image}
-      alt={`Imagen de ${title}`}
-      class="card-image"
-      loading="lazy"
-      width="100%"
-      height="auto"
-    />
-  </div>
   <div class="card-body">
     <h2>{title}</h2>
   </div>
@@ -23,18 +13,17 @@ const { title, description, image, url } = Astro.props;
     <button class="button">
       <a
         href={url}
-        target="_blank"
         rel="noopener noreferrer"
       >
        Ir a la calculadora
       </a>
     </button>
       
-</div>
+  </div>
 <style>
 
   h2 {
-    font-size: clamp(1.5rem, 1.5vw, 3rem);
+    font-size: clamp(1.5rem, 1.25vw, 3rem);
     margin: 0;
     padding: 0.5em;
     text-align: center;
@@ -56,29 +45,27 @@ const { title, description, image, url } = Astro.props;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 20px;
     max-width: 300px;
+    height: 38dvh;
     text-align: center;
     background-color: #fff;
-  }
-
-  .card-header {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card-image {
-    width: 100%;
-    height: auto;
-    display: block;
+    transition: transform 0.3s ease-in-out;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
   }
 
   .card-body {
-    padding: 16px;
+    align-content: center;
+    text-align: center;
+    padding: 1em 0;
+    min-height: 12vh;
   }
 
   .card-content {
-    padding: 16px;
     font-size: clamp(1rem, 1.5vw, 2rem);
     color: #333;
+  }
+  .card-content p {
+    text-align: left;
   }
 
   .card-footer {
@@ -92,13 +79,14 @@ const { title, description, image, url } = Astro.props;
     background-color: #007bff;
     text-decoration: none;
     border-radius: 5px;
+    border: none;
     transition: background-color 0.3s ease-in-out;
   }
 
   .button a {
     color: white;
     text-decoration: none;
-    font-size: clamp(1rem, 1.2vw, 2rem);
+    font-size: clamp(1rem, 1vw, 2rem);
   }
 
   .button:hover {
