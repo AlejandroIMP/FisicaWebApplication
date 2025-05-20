@@ -1,0 +1,12 @@
+---
+export interface Props {
+  formula: string;
+  description: string;
+}
+
+const { formula, description } = Astro.props;
+---
+<div class="formula-item">
+  <span>{formula}</span>
+  <p>{description}</p>
+</div>
