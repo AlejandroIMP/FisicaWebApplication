@@ -19,13 +19,13 @@ export const CALCULATORS = [
   {
     name: 'Movimiento Circular Uniforme (MCU)',
     description: 'Calcula el movimiento de un objeto en una trayectoria circular con velocidad constante.',
-    url: '/calculators/mcu',
+    url: '/calculators/mcu-modular',
     image: '/images/mcu.png',
   },
   {
     name: 'Movimiento Circular Uniformemente Acelerado (MCUA)',
     description: 'Calcula el movimiento de un objeto en una trayectoria circular con aceleración constante.',
-    url: '/calculators/mcua',
+    url: '/calculators/mcua-modular',
     image: '/images/mcua.png',
   },
   {
