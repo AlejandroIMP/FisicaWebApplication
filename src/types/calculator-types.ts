@@ -1,4 +1,13 @@
-export type UnitType = 'radius' | 'angularVelocity' | 'linearVelocity' | 'period' | 'frequency' | 'centripetalAcceleration' | 'time' | 'angularDisplacement' ;
+export type UnitType = 
+  // Unidades básicas compartidas
+  'radius' | 'time' | 'angularDisplacement' | 
+  
+  // Unidades MCU
+  'angularVelocity' | 'linearVelocity' | 'period' | 'frequency' | 'centripetalAcceleration' | 
+  
+  // Unidades MCUA
+  'initialAngularVelocity' | 'finalAngularVelocity' | 'angularAcceleration' | 
+  'tangentialAcceleration' | 'totalAcceleration';
 
 export type UnitMap = {
   radius: 'm' | 'cm' | 'km';
