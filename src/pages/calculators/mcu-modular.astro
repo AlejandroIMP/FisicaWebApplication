@@ -1,0 +1,115 @@
+---
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../components/calculator/FormulaItem.astro";
+import { MCU_VARIABLES, MCU_FORMULAS, UNITS } from "../../constants/calculator";
+import '../../styles/mcu.css';
+---
+<CalculatorLayout title="Movimiento Circular Uniforme" description="Calculadora de Movimiento Circular Uniforme">
+  <h1>Movimiento Circular Uniforme</h1>
+  <p>
+    El movimiento circular uniforme (MCU) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una velocidad constante. Esto significa que la magnitud de la velocidad no cambia, aunque la dirección del movimiento sí lo hace.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <div class="calculator-header">
+        <h2>Calculadora MCU</h2>
+        <p>Selecciona la incógnita que deseas calcular y completa los valores conocidos</p>
+      </div>
+      
+      <div class="calculator-body">
+        <VariableSelector options={MCU_VARIABLES} />
+        
+        <div class="input-groups-container">
+          <InputGroup 
+            id="radius" 
+            label="Radio (r):" 
+            placeholder="Ingresa el radio" 
+            units={UNITS.radius} 
+          />
+          
+          <InputGroup 
+            id="angularVelocity" 
+            label="Velocidad Angular (ω):" 
+            placeholder="Ingresa la velocidad angular" 
+            units={UNITS.angularVelocity} 
+          />
+          
+          <InputGroup 
+            id="linearVelocity" 
+            label="Velocidad Lineal (v):" 
+            placeholder="Ingresa la velocidad lineal" 
+            units={UNITS.linearVelocity} 
+          />
+          
+          <InputGroup 
+            id="period" 
+            label="Periodo (T):" 
+            placeholder="Ingresa el periodo" 
+            units={UNITS.period} 
+          />
+          
+          <InputGroup 
+            id="frequency" 
+            label="Frecuencia (f):" 
+            placeholder="Ingresa la frecuencia" 
+            units={UNITS.frequency} 
+          />
+          
+          <InputGroup 
+            id="centripetalAcceleration" 
+            label="Aceleración Centrípeta (a):" 
+            placeholder="Ingresa la aceleración centrípeta" 
+            units={UNITS.centripetalAcceleration} 
+          />
+          
+          <InputGroup 
+            id="time" 
+            label="Tiempo (t):" 
+            placeholder="Ingresa el tiempo" 
+            units={UNITS.time} 
+          />
+          
+          <InputGroup 
+            id="angularDisplacement" 
+            label="Desplazamiento Angular (θ):" 
+            placeholder="Ingresa el desplazamiento angular" 
+            units={UNITS.angularDisplacement} 
+          />
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <ResultDisplay />
+      </div>
+    </div>
+    
+    <FormulasContainer title="Fórmulas del MCU">
+      {MCU_FORMULAS.map(formula => (
+        <FormulaItem 
+          formula={formula.formula} 
+          description={formula.description} 
+        />
+      ))}
+    </FormulasContainer>
+  </div>
+
+  <script>
+    import { setupCalculator } from "../../utils/calculators/calculator-controller";
+    import { calculateMCU } from "../../utils/calculators/mcu-calculator";
+    import { MCU_CONFIG } from "../../constants/calculator";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configurar la calculadora MCU
+      setupCalculator({
+        calculateFunction: calculateMCU,
+        variableGroups: MCU_CONFIG.variableGroups
+      });
+    });
+  </script>
+</CalculatorLayout>

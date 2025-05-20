@@ -1,0 +1,167 @@
+---
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../components/calculator/FormulaItem.astro";
+import { MCUA_VARIABLES, MCUA_FORMULAS, UNITS, MCUA_CONFIG } from "../../constants/calculator";
+import '../../styles/mcu.css';
+---
+<CalculatorLayout title="Movimiento Circular Uniformemente Acelerado" description="Calculadora de Movimiento Circular Uniformemente Acelerado">
+  <h1>Movimiento Circular Uniformemente Acelerado</h1>
+  <p>
+    El movimiento circular uniformemente acelerado (MCUA) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una aceleración angular constante. Esto significa que la velocidad angular cambia uniformemente con el tiempo.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <CalculatorHeader 
+        title="Calculadora MCUA" 
+        description="Selecciona la incógnita que deseas calcular y completa los valores conocidos" 
+      />
+      
+      <div class="calculator-body">
+        <VariableSelector options={MCUA_VARIABLES} />
+        
+        <div class="input-groups-container">
+          <div class="input-group" id="radius-group">
+            <label for="radius">Radio (r):</label>
+            <div class="input-with-unit">
+              <input type="number" id="radius" placeholder="Ingresa el radio">
+              <select id="radius-unit" class="unit-selector">
+                <option value="m">m</option>
+                <option value="cm">cm</option>
+                <option value="km">km</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="initial-angular-velocity-group">
+            <label for="initial-angular-velocity">Velocidad Angular Inicial (ω₀):</label>
+            <div class="input-with-unit">
+              <input type="number" id="initial-angular-velocity" placeholder="Ingresa la velocidad angular inicial">
+              <select id="initial-angular-velocity-unit" class="unit-selector">
+                <option value="rad/s">rad/s</option>
+                <option value="deg/s">°/s</option>
+                <option value="rpm">rpm</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="final-angular-velocity-group">
+            <label for="final-angular-velocity">Velocidad Angular Final (ω):</label>
+            <div class="input-with-unit">
+              <input type="number" id="final-angular-velocity" placeholder="Ingresa la velocidad angular final">
+              <select id="final-angular-velocity-unit" class="unit-selector">
+                <option value="rad/s">rad/s</option>
+                <option value="deg/s">°/s</option>
+                <option value="rpm">rpm</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="angular-acceleration-group">
+            <label for="angular-acceleration">Aceleración Angular (α):</label>
+            <div class="input-with-unit">
+              <input type="number" id="angular-acceleration" placeholder="Ingresa la aceleración angular">
+              <select id="angular-acceleration-unit" class="unit-selector">
+                <option value="rad/s²">rad/s²</option>
+                <option value="deg/s²">°/s²</option>
+                <option value="rpm/s">rpm/s</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="angular-displacement-group">
+            <label for="angular-displacement">Desplazamiento Angular (θ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="angular-displacement" placeholder="Ingresa el desplazamiento angular">
+              <select id="angular-displacement-unit" class="unit-selector">
+                <option value="rad">rad</option>
+                <option value="deg">°</option>
+                <option value="rev">vueltas</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="time-group">
+            <label for="time">Tiempo (t):</label>
+            <div class="input-with-unit">
+              <input type="number" id="time" placeholder="Ingresa el tiempo">
+              <select id="time-unit" class="unit-selector">
+                <option value="s">s</option>
+                <option value="min">min</option>
+                <option value="h">h</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="tangential-acceleration-group">
+            <label for="tangential-acceleration">Aceleración Tangencial (aₜ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="tangential-acceleration" placeholder="Ingresa la aceleración tangencial">
+              <select id="tangential-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="centripetal-acceleration-group">
+            <label for="centripetal-acceleration">Aceleración Centrípeta (aₙ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="centripetal-acceleration" placeholder="Ingresa la aceleración centrípeta">
+              <select id="centripetal-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group" id="total-acceleration-group">
+            <label for="total-acceleration">Aceleración Total (aₜₒₜₐₗ):</label>
+            <div class="input-with-unit">
+              <input type="number" id="total-acceleration" placeholder="Ingresa la aceleración total">
+              <select id="total-acceleration-unit" class="unit-selector">
+                <option value="m/s²">m/s²</option>
+                <option value="g">g</option>
+                <option value="cm/s²">cm/s²</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <ResultDisplay />
+      </div>
+    </div>
+    
+    <FormulasContainer title="Fórmulas del MCUA">
+      {MCUA_FORMULAS.map(formula => (
+        <FormulaItem 
+          formula={formula.formula} 
+          description={formula.description} 
+        />
+      ))}
+    </FormulasContainer>
+  </div>
+
+  <script>
+    import { setupCalculator } from "../../utils/calculators/calculator-controller";
+    import { calculateMCUA } from "../../utils/calculators/mcua-calculator";
+    import { MCUA_CONFIG } from "../../constants/calculator";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configurar la calculadora MCUA usando el controlador genérico
+      setupCalculator({
+        calculateFunction: calculateMCUA,
+        variableGroups: MCUA_CONFIG.variableGroups
+      });
+    });
+  </script>
+</CalculatorLayout>

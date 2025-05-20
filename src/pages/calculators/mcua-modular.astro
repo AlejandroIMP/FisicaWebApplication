@@ -1,0 +1,122 @@
+---
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../components/calculator/FormulaItem.astro";
+import { MCUA_VARIABLES, MCUA_FORMULAS, UNITS } from "../../constants/calculator";
+import '../../styles/mcu.css';
+---
+<CalculatorLayout title="Movimiento Circular Uniformemente Acelerado" description="Calculadora de Movimiento Circular Uniformemente Acelerado">
+  <h1>Movimiento Circular Uniformemente Acelerado</h1>
+  <p>
+    El movimiento circular uniformemente acelerado (MCUA) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una aceleración angular constante. Esto significa que la velocidad angular cambia uniformemente con el tiempo.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <div class="calculator-header">
+        <h2>Calculadora MCUA</h2>
+        <p>Selecciona la incógnita que deseas calcular y completa los valores conocidos</p>
+      </div>
+      
+      <div class="calculator-body">
+        <VariableSelector options={MCUA_VARIABLES} />
+        
+        <div class="input-groups-container">
+          <InputGroup 
+            id="radius" 
+            label="Radio (r):" 
+            placeholder="Ingresa el radio" 
+            units={UNITS.radius} 
+          />
+          
+          <InputGroup 
+            id="initialAngularVelocity" 
+            label="Velocidad Angular Inicial (ω₀):" 
+            placeholder="Ingresa la velocidad angular inicial" 
+            units={UNITS.initialAngularVelocity} 
+          />
+          
+          <InputGroup 
+            id="finalAngularVelocity" 
+            label="Velocidad Angular Final (ω):" 
+            placeholder="Ingresa la velocidad angular final" 
+            units={UNITS.finalAngularVelocity} 
+          />
+          
+          <InputGroup 
+            id="angularAcceleration" 
+            label="Aceleración Angular (α):" 
+            placeholder="Ingresa la aceleración angular" 
+            units={UNITS.angularAcceleration} 
+          />
+          
+          <InputGroup 
+            id="angularDisplacement" 
+            label="Desplazamiento Angular (θ):" 
+            placeholder="Ingresa el desplazamiento angular" 
+            units={UNITS.angularDisplacement} 
+          />
+          
+          <InputGroup 
+            id="time" 
+            label="Tiempo (t):" 
+            placeholder="Ingresa el tiempo" 
+            units={UNITS.time} 
+          />
+          
+          <InputGroup 
+            id="tangentialAcceleration" 
+            label="Aceleración Tangencial (aₜ):" 
+            placeholder="Ingresa la aceleración tangencial" 
+            units={UNITS.tangentialAcceleration} 
+          />
+          
+          <InputGroup 
+            id="centripetalAcceleration" 
+            label="Aceleración Centrípeta (aₙ):" 
+            placeholder="Ingresa la aceleración centrípeta" 
+            units={UNITS.centripetalAcceleration} 
+          />
+          
+          <InputGroup 
+            id="totalAcceleration" 
+            label="Aceleración Total (aₜₒₜₐₗ):" 
+            placeholder="Ingresa la aceleración total" 
+            units={UNITS.totalAcceleration} 
+          />
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <ResultDisplay />
+      </div>
+    </div>
+    
+    <FormulasContainer title="Fórmulas del MCUA">
+      {MCUA_FORMULAS.map(formula => (
+        <FormulaItem 
+          formula={formula.formula} 
+          description={formula.description} 
+        />
+      ))}
+    </FormulasContainer>
+  </div>
+
+  <script>
+    import { setupCalculator } from "../../utils/calculators/calculator-controller";
+    import { calculateMCUA } from "../../utils/calculators/mcua-calculator";
+    import { MCUA_CONFIG } from "../../constants/calculator";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configurar la calculadora MCUA
+      setupCalculator({
+        calculateFunction: calculateMCUA,
+        variableGroups: MCUA_CONFIG.variableGroups
+      });
+    });
+  </script>
+</CalculatorLayout>
