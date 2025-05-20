@@ -6,37 +6,37 @@ export const SITE_DESCRIPTION = 'Cinematic Physics Simulation';
 export const CALCULATORS = [
   {
     name: 'Movimiento Rectilíneo Uniforme (MRU)',
-    description: 'Calculate the motion of an object in a straight line with constant speed.',
+    description: 'Calcula el movimiento de un objeto en línea recta con velocidad constante.',
     url: '/calculators/mru',
     image: '/images/mru.png',
   },
   {   
     name: 'Movimiento Rectilíneo Uniformemente Acelerado (MRUA)',
-    description: 'Calculate the motion of an object in a straight line with constant acceleration.',
+    description: 'Calcula el movimiento de un objeto en línea recta con aceleración constante.',
     url: '/calculators/mrua',
     image: '/images/mrua.png',
   },
   {
     name: 'Movimiento Circular Uniforme (MCU)',
-    description: 'Calculate the motion of an object in a circular path with constant speed.',
+    description: 'Calcula el movimiento de un objeto en una trayectoria circular con velocidad constante.',
     url: '/calculators/mcu',
     image: '/images/mcu.png',
   },
   {
     name: 'Movimiento Circular Uniformemente Acelerado (MCUA)',
-    description: 'Calculate the motion of an object in a circular path with constant acceleration.',
+    description: 'Calcula el movimiento de un objeto en una trayectoria circular con aceleración constante.',
     url: '/calculators/mcua',
     image: '/images/mcua.png',
   },
   {
     name: 'Tiro Parabólico',
-    description: 'Calculate the motion of a projectile in a parabolic trajectory.',
+    description: 'Calcula el movimiento de un objeto lanzado en una trayectoria parabólica.',
     url: '/calculators/tiro-parabolico',
     image: '/images/tiro-parabolico.png',
   },
   {
     name: 'Tiro Vertical',
-    description: 'Calculate the motion of an object thrown vertically.',
+    description: 'Calcula el movimiento de un objeto lanzado verticalmente.',
     url: '/calculators/tiro-vertical',
     image: '/images/tiro-vertical.png',
   },
