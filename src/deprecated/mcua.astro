@@ -1,12 +1,11 @@
 ---
-import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
-import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
-import VariableSelector from "../../components/calculator/VariableSelector.astro";
-import InputGroup from "../../components/calculator/InputGroup.astro";
-import ResultDisplay from "../../components/calculator/ResultDisplay.astro";
-import FormulasContainer from "../../components/calculator/FormulasContainer.astro";
-import FormulaItem from "../../components/calculator/FormulaItem.astro";
-import { MCUA_VARIABLES, MCUA_FORMULAS, UNITS, MCUA_CONFIG } from "../../constants/calculator";
+import CalculatorLayout from "../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../components/calculator/VariableSelector.astro";
+import ResultDisplay from "../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../components/calculator/FormulaItem.astro";
+import { MCUA_VARIABLES, MCUA_FORMULAS } from "../constants/calculator";
 import '../../styles/mcu.css';
 ---
 <CalculatorLayout title="Movimiento Circular Uniformemente Acelerado" description="Calculadora de Movimiento Circular Uniformemente Acelerado">
@@ -152,9 +151,9 @@ import '../../styles/mcu.css';
   </div>
 
   <script>
-    import { setupCalculator } from "../../utils/calculators/calculator-controller";
-    import { calculateMCUA } from "../../utils/calculators/mcua-calculator";
-    import { MCUA_CONFIG } from "../../constants/calculator";
+    import { setupCalculator } from "../utils/calculators/calculator-controller";
+    import { calculateMCUA } from "../utils/calculators/mcua-calculator";
+    import { MCUA_CONFIG } from "../constants/calculator";
     
     document.addEventListener('DOMContentLoaded', function() {
       // Configurar la calculadora MCUA usando el controlador genérico
