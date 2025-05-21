@@ -96,7 +96,7 @@ export const MCU_VARIABLES = [
 export const MCU_FORMULAS = [
   { 
     formula: 'ω = 2π / T = 2π × f', 
-    description: 'Velocidad angular en función del periodo o frecuencia' 
+    description: 'Velocidad angular en función del periodo o frecuencia',
   },
   { 
     formula: 'v = ω × r', 
