@@ -1,0 +1,116 @@
+/* Estilos específicos para componentes de calculadora */
+
+/* Ajustes para el selector de unidades */
+.unit-selector {
+  min-width: 100px; /* Ancho mínimo para todas las unidades - aumentado a 100px para mayor legibilidad */
+  padding: 0.8rem 0.5rem; /* Reducir el padding horizontal */
+  overflow: visible; /* Asegurar que el texto no se corte */
+  text-overflow: clip; /* No mostrar elipsis */
+  white-space: nowrap; /* Evitar saltos de línea */
+  font-family: monospace; /* Usar fuente monoespaciada para mejor legibilidad de unidades */
+  letter-spacing: -0.02em; /* Reducir ligeramente el espacio entre letras */
+}
+
+/* Mejoras para resoluciones específicas */
+/* Enfoque específico para tamaños entre 1061px y 1100px donde se detectó el problema */
+@media (max-width: 1100px) and (min-width: 1061px) {
+  .unit-selector {
+    min-width: 110px; /* Ancho mínimo aumentado para este rango específico */
+    font-size: 0.92rem; /* Fuente ligeramente más pequeña */
+  }
+}
+
+/* Demás tablets */
+@media (max-width: 1060px) and (min-width: 769px) {
+  .unit-selector {
+    min-width: 105px; /* Un poco más ancho en tablets */
+    font-size: 0.95rem; /* Fuente ligeramente más pequeña */
+  }
+  
+  .input-with-unit input {
+    padding: 0.8rem 0.5rem; /* Reducir el padding horizontal */
+  }
+}
+
+@media (max-width: 768px) {
+  .unit-selector {
+    min-width: 110px; /* Más ancho en móviles */
+    flex-shrink: 0; /* Evitar que el selector se encoja */
+  }
+  
+  .variable-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .variable-selector label {
+    margin-bottom: 0.5rem;
+  }
+  
+  .select-wrapper {
+    width: 100%;
+  }
+  
+  /* Ajustes adicionales para mejorar el layout en móviles */
+  .input-with-unit {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-with-unit input {
+    flex: 1;
+    min-width: 0; /* Permitir que el input se encoja si es necesario */
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Mejoras específicas para tamaños pequeños */
+@media (max-width: 640px) {
+  .calculator-body {
+    padding: 1rem;
+  }
+  
+  .input-group {
+    padding: 0.8rem;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  .calculator-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Ajustes específicos para la resolución problemática 621px-700px */
+@media (min-width: 621px) and (max-width: 700px) {
+  .unit-selector {
+    min-width: 115px; /* Ancho extra para esta resolución específica */
+    font-size: 0.9rem;
+    padding: 0.8rem 0.4rem;
+  }
+  
+  .input-with-unit {
+    flex-wrap: nowrap; /* Asegurar que no haya saltos de línea */
+  }
+  
+  .input-with-unit input {
+    max-width: calc(100% - 115px); /* Asegurar espacio para el selector */
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .unit-selector {
+    min-width: 80px; /* Más pequeño en pantallas muy pequeñas */
+    font-size: 0.9rem;
+  }
+  
+  .input-with-unit input {
+    font-size: 0.95rem;
+  }
+}

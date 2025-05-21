@@ -1,0 +1,118 @@
+
+/* Variables de tema para las calculadoras */
+:root {
+  /* Colores principales de la plataforma */
+  --header-color: #1E3A8A; /* Azul profundo para cabeceras */
+  --button-color: #2563EB; /* Azul eléctrico para botones/interactivos */
+  --button-hover: #1D4ED8; /* Azul eléctrico más oscuro para hover */
+  --formula-color: #F97316; /* Naranja científico para ecuaciones */
+  --error-color: #EF4444; /* Rojo coral para errores/alertas */
+  --success-color: #22C55E; /* Verde éxito para feedback positivo */
+  
+  /* Neutros */
+  --light-bg: #FFFFFF; /* Fondo principal */
+  --gray-bg: #F3F4F6; /* Fondo gris para elementos secundarios */
+  --gray-text: #6B7280; /* Texto gris */
+  --dark-text: #111827; /* Texto principal oscuro */
+  
+  /* Sombras y efectos */
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --focus-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
+  --button-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+  --button-shadow-hover: 0 4px 8px rgba(37, 99, 235, 0.4);
+  
+  /* Transiciones */
+  --transition-default: all 0.2s ease;
+}
+
+/* Estilos para mejorar la accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Estilo para los enlaces de accesibilidad para saltar al contenido principal */
+.skip-link {
+  background: var(--button-color);
+  color: white;
+  font-weight: 700;
+  left: 50%;
+  padding: 8px;
+  position: absolute;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  transform: translateY(0%);
+}
+
+/* Mejoras de enfoque para la accesibilidad con el teclado */
+:focus-visible {
+  outline: 3px solid var(--button-color);
+  outline-offset: 2px;
+}
+
+/* Estilos para modo oscuro - para futura implementación */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-bg: #1F2937;
+    --gray-bg: #374151;
+    --gray-text: #9CA3AF;
+    --dark-text: #F3F4F6;
+  }
+}
+
+/* Clases utilitarias para los colores */
+.text-header { color: var(--header-color); }
+.text-button { color: var(--button-color); }
+.text-formula { color: var(--formula-color); }
+.text-error { color: var(--error-color); }
+.text-success { color: var(--success-color); }
+.text-dark { color: var(--dark-text); }
+.text-gray { color: var(--gray-text); }
+
+.bg-header { background-color: var(--header-color); }
+.bg-button { background-color: var(--button-color); }
+.bg-formula { background-color: var(--formula-color); }
+.bg-error { background-color: var(--error-color); }
+.bg-success { background-color: var(--success-color); }
+.bg-light { background-color: var(--light-bg); }
+.bg-gray { background-color: var(--gray-bg); }
+
+/* Clases para mensajes informativos */
+.info-message {
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.info-success {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-left: 4px solid var(--success-color);
+  color: #166534;
+}
+
+.info-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-left: 4px solid var(--error-color);
+  color: #B91C1C;
+}
+
+.info-warning {
+  background-color: rgba(249, 115, 22, 0.1);
+  border-left: 4px solid var(--formula-color);
+  color: #C2410C;
+}
+
+.info-info {
+  background-color: rgba(37, 99, 235, 0.1);
+  border-left: 4px solid var(--button-color);
+  color: #1E40AF;
+}

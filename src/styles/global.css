@@ -5,11 +5,17 @@
  */
 
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
+	/* Colores principales */
+	--accent: #2563EB; /* Azul eléctrico - Botones/interactivos */
+	--accent-dark: #1E3A8A; /* Azul profundo - Cabeceras */
+	--accent-highlight: #F97316; /* Naranja científico - Ecuaciones/resaltados */
+	--accent-error: #EF4444; /* Rojo coral - Errores/alertas */
+	--accent-success: #22C55E; /* Verde éxito - Feedback positivo */
+
+	/* Grises y neutros */
 	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
+	--gray: 156, 163, 175; /* gris medio #9CA3AF */
+	--gray-light: 229, 231, 235; /* gris claro #E5E7EB */
 	--gray-dark: 34, 41, 57;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
 	--box-shadow:
