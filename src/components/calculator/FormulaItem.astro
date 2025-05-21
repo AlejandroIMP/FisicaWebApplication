@@ -2,11 +2,55 @@
 export interface Props {
   formula: string;
   description: string;
+  example?: string;
 }
 
-const { formula, description } = Astro.props;
+const { formula, description, example } = Astro.props;
 ---
 <div class="formula-item">
-  <span>{formula}</span>
-  <p>{description}</p>
+  <span class="formula">{formula}</span>
+  <p class="description">{description}</p>
+  {example && <div class="example">Ejemplo: {example}</div>}
 </div>
+
+<style>
+  .formula-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
+  }
+  
+  .formula-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .formula-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .formula {
+    display: block;
+    font-weight: 600;
+    font-family: monospace;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    color: var(--accent-highlight);
+    padding: 0.5rem 0;
+  }
+  
+  .description {
+    margin: 0;
+    color: #4B5563;
+    font-size: 0.95rem;
+  }
+  
+  .example {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #6B7280;
+    font-style: italic;
+  }
+</style>

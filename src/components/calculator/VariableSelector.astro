@@ -7,17 +7,78 @@ export interface Option {
 export interface Props {
   options: Option[];
   defaultValue?: string;
+  label?: string;
 }
 
-const { options, defaultValue } = Astro.props;
+const { options, defaultValue, label = "Calcular:" } = Astro.props;
 ---
 <div class="variable-selector">
-  <label for="variable-to-solve">Calcular:</label>
-  <select id="variable-to-solve" name="variable-to-solve">
-    {options.map((option) => (
-      <option value={option.value} selected={option.value === defaultValue}>
-        {option.label}
-      </option>
-    ))}
-  </select>
+  <label for="variable-to-solve">{label}</label>
+  <div class="select-wrapper">
+    <select id="variable-to-solve" name="variable-to-solve">
+      {options.map((option) => (
+        <option value={option.value} selected={option.value === defaultValue}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+    <span class="select-arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </span>
+  </div>
 </div>
+
+<style>
+  .variable-selector {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  label {
+    font-weight: 600;
+    color: #374151;
+    min-width: 80px;
+  }
+  
+  .select-wrapper {
+    position: relative;
+    flex-grow: 1;
+  }
+  
+  select {
+    appearance: none;
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #f9f9f9;
+    color: #1F2937;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding-right: 2.5rem;
+  }
+  
+  select:hover {
+    border-color: #bbb;
+  }
+  
+  select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    outline: none;
+  }
+  
+  .select-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6B7280;
+  }
+</style>

@@ -10,9 +10,17 @@ export interface Props {
   placeholder?: string;
   units: UnitOption[];
   defaultUnit?: string;
+  description?: string;
 }
 
-const { id, label, placeholder = `Ingresa ${label}`, units, defaultUnit } = Astro.props;
+const { 
+  id, 
+  label, 
+  placeholder = `Ingresa ${label}`, 
+  units, 
+  defaultUnit,
+  description = `Selector de unidades para ${label.replace(":", "")}`
+} = Astro.props;
 
 // Convertir el ID para uso como ID del grupo
 const groupId = id
@@ -29,10 +37,16 @@ const unitId = inputId + '-unit';
   <label for={inputId}>{label}</label>
   <div class="input-with-unit">
     <input type="number" id={inputId} placeholder={placeholder}>
-    <select id={unitId} class="unit-selector">
+    <select 
+      id={unitId} 
+      class="unit-selector" 
+      title={description}
+      aria-label={description}
+    >
       {units.map((unit) => (
         <option 
           value={unit.value} 
+          title={unit.label}
           selected={unit.value === defaultUnit || (!defaultUnit && unit.value === units[0].value)}
         >
           {unit.label}
@@ -41,3 +55,35 @@ const unitId = inputId + '-unit';
     </select>
   </div>
 </div>
+
+<style>
+  .input-with-unit {
+    display: flex;
+    align-items: stretch;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .input-with-unit input {
+    flex: 1;
+    min-width: 0; /* Evita desbordamiento en flex */
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 1rem;
+    color: #111827;
+  }
+
+  /* Soporte para pantallas pequeñas */
+  @media (max-width: 1100px) {
+    .input-with-unit {
+      flex-wrap: nowrap; /* Mantiene los elementos en una línea */
+    }
+    
+    .input-with-unit input {
+      min-width: 60px; /* Ancho mínimo reducido */
+    }
+  }
+</style>

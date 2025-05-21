@@ -8,6 +8,7 @@ import FormulasContainer from "../../components/calculator/FormulasContainer.ast
 import FormulaItem from "../../components/calculator/FormulaItem.astro";
 import { MCUA_VARIABLES, MCUA_FORMULAS, UNITS } from "../../constants/calculator";
 import '../../styles/mcu.css';
+import '../../styles/calculator-components.css';
 ---
 <CalculatorLayout title="Movimiento Circular Uniformemente Acelerado" description="Calculadora de Movimiento Circular Uniformemente Acelerado">
   <h1>Movimiento Circular Uniformemente Acelerado</h1>
@@ -110,6 +111,7 @@ import '../../styles/mcu.css';
     import { setupCalculator } from "../../utils/calculators/calculator-controller";
     import { calculateMCUA } from "../../utils/calculators/mcua-calculator";
     import { MCUA_CONFIG } from "../../constants/calculator";
+    import { initResponsiveUtils } from "../../utils/responsive-utils";
     
     document.addEventListener('DOMContentLoaded', function() {
       // Configurar la calculadora MCUA
@@ -117,6 +119,9 @@ import '../../styles/mcu.css';
         calculateFunction: calculateMCUA,
         variableGroups: MCUA_CONFIG.variableGroups
       });
+      
+      // Inicializar utilidades responsivas
+      initResponsiveUtils();
     });
   </script>
 </CalculatorLayout>

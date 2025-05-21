@@ -1,11 +1,48 @@
 ---
 export interface Props {
   title: string;
+  icon?: string;
 }
 
-const { title } = Astro.props;
+const { title, icon } = Astro.props;
 ---
 <div class="formulas-container">
-  <h3>{title}</h3>
+  <div class="formulas-header">
+    {icon && <span class="header-icon">{icon}</span>}
+    <h3>{title}</h3>
+  </div>
   <slot />
 </div>
+
+<style>
+  .formulas-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .formulas-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .header-icon {
+    font-size: 1.4rem;
+    color: var(--accent-highlight);
+  }
+  
+  h3 {
+    margin: 0;
+    color: var(--accent-dark);
+    font-weight: 700;
+  }
+  
+  @media (min-width: 768px) {
+    .formulas-container {
+      height: fit-content;
+    }
+  }
+</style>

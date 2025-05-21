@@ -6,18 +6,12 @@ import InputGroup from "../../components/calculator/InputGroup.astro";
 import ResultDisplay from "../../components/calculator/ResultDisplay.astro";
 import FormulasContainer from "../../components/calculator/FormulasContainer.astro";
 import FormulaItem from "../../components/calculator/FormulaItem.astro";
-import InfoMessage from "../../components/calculator/InfoMessage.astro";
 import { MCU_VARIABLES, MCU_FORMULAS, UNITS } from "../../constants/calculator";
 import '../../styles/mcu.css';
 import '../../styles/calculator-components.css';
 ---
 <CalculatorLayout title="Movimiento Circular Uniforme" description="Calculadora de Movimiento Circular Uniforme">
   <h1>Movimiento Circular Uniforme</h1>
-  
-  <InfoMessage type="info">
-    Esta calculadora utiliza la nueva interfaz modular con estilos mejorados y mayor accesibilidad.
-  </InfoMessage>
-  
   <p>
     El movimiento circular uniforme (MCU) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una velocidad constante. Esto significa que la magnitud de la velocidad no cambia, aunque la dirección del movimiento sí lo hace.
   </p>
@@ -25,16 +19,12 @@ import '../../styles/calculator-components.css';
   <div class="calculator-container">
     <div class="calculator">
       <CalculatorHeader 
-        title="Calculadora MCU" 
+        title="Calculadora MCU"
         description="Selecciona la incógnita que deseas calcular y completa los valores conocidos"
-        icon="🔄"
       />
       
       <div class="calculator-body">
-        <VariableSelector 
-          options={MCU_VARIABLES} 
-          label="Variable a calcular:"
-        />
+        <VariableSelector options={MCU_VARIABLES} />
         
         <div class="input-groups-container">
           <InputGroup 
@@ -96,19 +86,15 @@ import '../../styles/calculator-components.css';
         
         <button id="calculate-btn" class="calculate-button">Calcular</button>
         
-        <ResultDisplay showCopyButton={true} />
+        <ResultDisplay />
       </div>
     </div>
     
-    <FormulasContainer 
-      title="Fórmulas del MCU"
-      icon="📊"
-    >
+    <FormulasContainer title="Fórmulas del MCU">
       {MCU_FORMULAS.map(formula => (
         <FormulaItem 
           formula={formula.formula} 
-          description={formula.description}
-          example={formula.formula === 'v = ω × r' ? 'v = 5 rad/s × 2 m = 10 m/s' : undefined} 
+          description={formula.description} 
         />
       ))}
     </FormulasContainer>
