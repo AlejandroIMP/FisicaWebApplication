@@ -1,21 +1,10 @@
 ---
+import Header from "../../components/Header.astro";
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
 import "../../styles/MRU_MRUV_Style.css";
 ---
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora MRU y MRUV</title>
-</head>
-<body>
-
-<header>
-  <h1>Calculadora de MRU y MRUV</h1>
-</header>
-
-<main>
+<CalculatorLayout>
   <div class="selector">
     <label for="tipo">Selecciona el tipo de movimiento:</label>
     <select id="tipo" onchange="mostrarSeccion(this.value)">
@@ -42,6 +31,96 @@ import "../../styles/MRU_MRUV_Style.css";
   </section>
 
   <!-- MRUV -->
+  <section id="seccion_mruv" class="card" style="display:none;">
+    <h2>MRUV</h2>
+    <label>Selecciona la fórmula:</label>
+    <select id="mruv_formula" onchange="actualizarVariablesMruv()">
+      <option value="">-- Elegir fórmula --</option>
+      <option value="f1">x = x₀ + v₀ t + ½ a t²</option>
+      <option value="f2">v_f = v₀ + a t</option>
+      <option value="f3">v_f² = v₀² + 2 a d</option>
+      <option value="f4">d = ((v₀ + v_f)/2) t</option>
+      <option value="f5">a = (v_f - v₀)/t</option>
+    </select>
+
+    <label>Selecciona la variable a calcular:</label>
+    <select id="mruv_variable" onchange="mostrarCamposMruv()">
+      <option value="">-- Elegir variable --</option>
+    </select>
+
+    <div id="mruv_campos" class="campos"></div>
+
+    <button onclick="calcularMRUV()">Calcular</button>
+    <p id="resultado_mruv" class="result"></p>
+  </section>
+
+  <div id="simulacion" style="position: relative; width: 600px; height: 100px; border: 1px solid #000; overflow: hidden;">
+    <img id="auto" src="https://image.shutterstock.com/image-vector/luxury-convertible-car-high-speed-260nw-2083265371.jpg" alt="Auto" 
+       style="position: absolute; top: 30px; left: 0; width: 100px; transition: left 1s, transform 1s;">
+  </div>
+<script>
+  import { calcularMRU, calcularMRUV, mostrarCamposMRU, mostrarCamposMruv, mostrarSeccion, actualizarVariablesMruv } from "../../utils/calculators/MRU_MRUV_JavaScript.js";
+  
+  // Declarar tipos para las funciones en window
+  declare global {
+    interface Window {
+      calcularMRU: typeof calcularMRU;
+      calcularMRUV: typeof calcularMRUV;
+      mostrarCamposMRU: typeof mostrarCamposMRU;
+      mostrarCamposMruv: typeof mostrarCamposMruv;
+      mostrarSeccion: typeof mostrarSeccion;
+      actualizarVariablesMruv: typeof actualizarVariablesMruv;
+    }
+  }
+  
+  // Exponer las funciones al objeto global window para uso en eventos HTML
+  window.calcularMRU = calcularMRU;
+  window.calcularMRUV = calcularMRUV;
+  window.mostrarCamposMRU = mostrarCamposMRU;
+  window.mostrarCamposMruv = mostrarCamposMruv;
+  window.mostrarSeccion = mostrarSeccion;
+  window.actualizarVariablesMruv = actualizarVariablesMruv;
+</script>
+</CalculatorLayout>
+<!-- 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora MRU y MRUV</title>
+</head>
+<body>
+
+<Header title="Calculadora MRU y MRUV" />
+
+<main>
+  <div class="selector">
+    <label for="tipo">Selecciona el tipo de movimiento:</label>
+    <select id="tipo" onchange="mostrarSeccion(this.value)">
+      <option value="">-- Elegir --</option>
+      <option value="mru">MRU (Movimiento Rectilíneo Uniforme)</option>
+      <option value="mruv">MRUV (Movimiento Rectilíneo Uniformemente Variado)</option>
+    </select>
+  </div>
+
+  <!-- MRU 
+  <section id="seccion_mru" class="card" style="display:none;">
+    <h2>MRU</h2>
+    <label>¿Qué deseas calcular?</label>
+    <select id="mru_opcion" onchange="mostrarCamposMRU()">
+      <option value="">-- Elegir variable --</option>
+      <option value="x">Posición final (x)</option>
+      <option value="v">Velocidad (v)</option>
+      <option value="t">Tiempo (t)</option>
+      <option value="x0">Posición inicial (x₀)</option>
+    </select>
+    <div id="mru_campos" class="campos"></div>
+    <button onclick="calcularMRU()">Calcular</button>
+    <p id="resultado_mru" class="result"></p>
+  </section>
+
+  <!-- MRUV 
   <section id="seccion_mruv" class="card" style="display:none;">
     <h2>MRUV</h2>
     <label>Selecciona la fórmula:</label>
@@ -96,4 +175,4 @@ import "../../styles/MRU_MRUV_Style.css";
   window.actualizarVariablesMruv = actualizarVariablesMruv;
 </script>
 </body>
-</html>
+</html> -->
