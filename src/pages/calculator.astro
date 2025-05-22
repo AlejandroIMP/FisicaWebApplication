@@ -20,6 +20,7 @@ import CalculatorCard from "../components/CalculatorCard.astro";
       </p>
     </div>
     
+    <h2 class="calculator-grid__subtitle">Cinematica</h2>
     <div class="calculator-grid">
       {CALCULATORS.map((calculator) => (
         <CalculatorCard
@@ -35,6 +36,32 @@ import CalculatorCard from "../components/CalculatorCard.astro";
 </CalculatorLayout>
 
 <style>
+  .calculator-grid__subtitle {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: rgba(var(--black), 0.8);
+  }
+  .calculator-grid__subtitle::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: var(--accent);
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-radius: 2px;
+  }
+  .calculator-grid__subtitle::before {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: var(--accent-dark);
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-radius: 2px;
+  }
   .hero {
     position: relative;
     padding: 4rem 0 2rem;
