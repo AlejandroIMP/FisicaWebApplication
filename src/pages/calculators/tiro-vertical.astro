@@ -1,7 +1,45 @@
 ---
 import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import "../../styles/estilovertical.css";
 ---
 
 <CalculatorLayout>
-  
+    <h1>Calculadora de Tiro Vertical</h1>
+
+  <label for="selectVariable">Selecciona la variable a calcular:</label>
+  <select id="selectVariable">
+    <option value="">-- Selecciona --</option>
+    <option value="h_t">Altura en t (h(t))</option>
+    <option value="v_t">Velocidad en t (v(t))</option>
+    <option value="h_max">Altura máxima (h_max)</option>
+    <option value="t_subida">Tiempo de subida (t_subida)</option>
+    <option value="t_total">Tiempo total de vuelo (t_total)</option>
+    <option value="v0">Velocidad inicial (v₀)</option>
+    <option value="h0">Altura inicial (h₀)</option>
+    <option value="g">Gravedad (g)</option>
+    <option value="t">Tiempo (t)</option>
+  </select>
+
+  <br><br>
+
+  <label for="selectFormula">Selecciona la fórmula:</label>
+  <select id="selectFormula">
+    <option value="">-- Primero selecciona variable --</option>
+  </select>
+
+  <hr>
+
+  <div id="inputs">
+    <div data-key="h"  style="display:none;"><label>h (m):</label><input type="number" id="h" step="any"><br></div>
+    <div data-key="h0" style="display:none;"><label>h₀ (m):</label><input type="number" id="h0" step="any"><br></div>
+    <div data-key="h_max" style="display:none;"><label>hₘₐₓ (m):</label><input type="number" id="h_max" step="any"><br></div>
+    <div data-key="v0" style="display:none;"><label>v₀ (m/s):</label><input type="number" id="v0" step="any"><br></div>
+    <div data-key="vt" style="display:none;"><label>v(t) (m/s):</label><input type="number" id="vt" step="any"><br></div>
+    <div data-key="t"  style="display:none;"><label>t (s):</label><input type="number" id="t" step="any"><br></div>
+    <div data-key="g"  style="display:none;"><label>g (m/s²):</label><input type="number" id="g" step="any" placeholder="9.8"><br></div>
+  </div>
+
+  <button onclick="calcular()">Calcular</button>
+  <div id="resultado"></div>
+  <script src="../../utils/calculators/mainvertical.js"></script>
 </CalculatorLayout>

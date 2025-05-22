@@ -1,7 +1,53 @@
 ---
 import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import "../../styles/estiloparabolico.css";
 ---
 
 <CalculatorLayout>
-  
+  <h1>Tiro Parabólico(Oblicuo)</h1>
+    
+    <label for="selectVariable">Selecciona una Variable a calcular</label>
+    <select id="selectVariable">
+        <option value="">-- Selecciona --</option>
+        <option value="x_t">Posición en x (x(t))</option>
+        <option value="y_t">Posición en y (y(t))</option>
+        <option value="vx">Velocidad en x (vₓ)</option>
+        <option value="vy_t">Velocidad en y (vᵧ(t))</option>
+        <option value="v_t">Velocidad total (v(t))</option>
+        <option value="theta">Ángulo de lanzamiento (θ)</option>
+        <option value="y_max">Altura máxima (y_max)</option>
+        <option value="t_subida">Tiempo de subida (t_subida)</option>
+        <option value="t_total">Tiempo total de vuelo (t_total)</option>
+        <option value="R">Alcance horizontal (R)</option>
+        <option value="v0">Velocidad inicial (v₀)</option>
+        <option value="v0x">Componente horizontal de v₀ (v₀ₓ)</option>
+        <option value="v0y">Componente vertical de v₀ (v₀ᵧ)</option>
+    </select>
+
+
+    <label for="selectVariable">Selecciona la formula a utilizar</label>
+    <select id="selectFormula">
+        <option value="">-- Seleccionar fórmula --</option>
+    </select>
+
+    <hr>
+
+    <div id="inputs">
+        <div data-key="x"    style="display:none;"><label>x (m):</label><input type="number" id="x" step="any"></div>
+        <div data-key="y"    style="display:none;"><label>y (m):</label><input type="number" id="y" step="any"></div>
+        <div data-key="v0"   style="display:none;"><label>v₀ (m/s):</label><input type="number" id="v0" step="any"></div>
+        <div data-key="vx"   style="display:none;"><label>vₓ (m/s):</label><input type="number" id="vx" step="any"></div>
+        <div data-key="vy"   style="display:none;"><label>vᵧ (m/s):</label><input type="number" id="vy" step="any"></div>
+        <div data-key="v0x"  style="display:none;"><label>v₀ₓ (m/s):</label><input type="number" id="v0x" step="any"></div>
+        <div data-key="v0y"  style="display:none;"><label>v₀ᵧ (m/s):</label><input type="number" id="v0y" step="any"></div>
+        <div data-key="theta" style="display:none;"><label>θ (°):</label><input type="number" id="theta" step="any"></div>
+        <div data-key="t"    style="display:none;"><label>t (s):</label><input type="number" id="t" step="any"></div>
+        <div data-key="g"    style="display:none;"><label>g (m/s²):</label><input type="number" id="g" step="any" placeholder="9.8"></div>
+    </div>
+
+    <button onclick="calcular()">Calcular</button>
+    <div id="resultado"></div>
+    <script src="../../utils/calculators/mainparabolico.js">
+    import { calcular } from "../../utils/calculators/mainparabolico.js";
+    </script>
 </CalculatorLayout>
