@@ -73,7 +73,7 @@ import "../../styles/MRU_MRUV_Style.css";
 </main>
 
 <script>
-  import { calcularMRU, calcularMRUV, mostrarCamposMRU, mostrarCamposMruv, mostrarSeccion, actualizarVariablesMruv } from "../../utils/calculators/MRU_MRUV_JavaScript.ts";
+  import { calcularMRU, calcularMRUV, mostrarCamposMRU, mostrarCamposMruv, mostrarSeccion, actualizarVariablesMruv } from "../../utils/calculators/MRU_MRUV_JavaScript.js";
   
   // Declarar tipos para las funciones en window
   declare global {
@@ -87,6 +87,7 @@ import "../../styles/MRU_MRUV_Style.css";
     }
   }
   
+  // Exponer las funciones al objeto global window para uso en eventos HTML
   window.calcularMRU = calcularMRU;
   window.calcularMRUV = calcularMRUV;
   window.mostrarCamposMRU = mostrarCamposMRU;
