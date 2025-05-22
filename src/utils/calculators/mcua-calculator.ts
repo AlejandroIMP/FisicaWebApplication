@@ -7,7 +7,6 @@ import { type CalculationResult } from './mcu-calculator';
  * @returns Resultado del cálculo con valor, unidad, nombre y fórmula
  */
 export function calculateMCUA(variableToSolve: string, values: Record<string, number>): CalculationResult {
-  const PI = Math.PI;
   let result: CalculationResult = { value: null, unit: '', name: '', formula: '' };
   
   switch (variableToSolve) {

@@ -87,14 +87,14 @@ h1 {
 }
 
 .input-group {
-  background-color: rgb(var(--gray-light)); /* Usando el gris claro definido en variables */
+  background-color: rgb(var(--gray-light));
   border-radius: 8px;
   padding: 1rem;
   transition: all 0.3s ease;
 }
 
 .input-group:hover {
-  background-color: #F3F4F6; /* Un tono un poco más oscuro al hacer hover */
+  background-color: #F3F4F6;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -102,7 +102,7 @@ h1 {
   display: block;
   margin-bottom: 0.7rem;
   font-weight: 500;
-  color: #374151; /* Gris oscuro para mejor legibilidad */
+  color: #374151; 
 }
 
 /* Estos estilos serán reemplazados por los del componente InputGroup */
@@ -130,7 +130,7 @@ h1 {
 .input-with-unit input:focus {
   border-color: var(--accent);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2); /* Azul eléctrico con transparencia */
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .unit-selector {
@@ -140,14 +140,14 @@ h1 {
   border-left: none;
   border-radius: 0 8px 8px 0;
   font-size: 1rem;
-  color: #4B5563; /* Gris más oscuro para mejor legibilidad */
+  color: #4B5563; 
   cursor: pointer;
-  min-width: 90px; /* Incrementado de 80px a 90px */
-  width: auto; /* Permitir que el ancho se ajuste al contenido */
+  min-width: 90px; 
+  width: auto;
   text-align: center;
   transition: all 0.2s ease;
-  white-space: nowrap; /* Evitar el salto de línea en textos largos */
-  overflow: visible; /* Asegurar que el texto no se corte */
+  white-space: nowrap; 
+  overflow: visible; 
 }
 
 .unit-selector:hover {
@@ -157,11 +157,11 @@ h1 {
 .unit-selector:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent); /* Resaltar con borde de color acento */
+  box-shadow: 0 0 0 1px var(--accent); 
 }
 
 .calculate-button {
-  background: var(--accent); /* Azul eléctrico */
+  background: var(--accent);
   color: white;
   border: none;
   padding: 1rem;
@@ -176,7 +176,7 @@ h1 {
 }
 
 .calculate-button:hover {
-  background: #1D4ED8; /* Un poco más oscuro que el azul eléctrico */
+  background: #1D4ED8; 
   box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
   transform: translateY(-1px);
 }
@@ -189,7 +189,7 @@ h1 {
   background: #f9f9f9;
   border-radius: 8px;
   padding: 1.2rem;
-  border-left: 4px solid var(--accent-success); /* Verde éxito para resultados */
+  border-left: 4px solid var(--accent-success); 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -202,7 +202,7 @@ h1 {
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #111827; /* Color oscuro para mejor legibilidad */
+  color: #111827;
 }
 
 /* Estilos para mensajes de error */
@@ -231,7 +231,7 @@ h1 {
 .formulas-container h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: var(--accent-dark); /* Azul profundo para cabeceras */
+  color: var(--accent-dark); 
   font-weight: 700;
 }
 
@@ -253,7 +253,7 @@ h1 {
   font-family: monospace;
   font-size: 1.1rem;
   margin-bottom: 0.3rem;
-  color: var(--accent-highlight); /* Naranja científico para ecuaciones */
+  color: var(--accent-highlight);
 }
 
 .formula-item p {

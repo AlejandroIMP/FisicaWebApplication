@@ -2,40 +2,39 @@
 
 /* Ajustes para el selector de unidades */
 .unit-selector {
-  min-width: 100px; /* Ancho mínimo para todas las unidades - aumentado a 100px para mayor legibilidad */
-  padding: 0.8rem 0.5rem; /* Reducir el padding horizontal */
-  overflow: visible; /* Asegurar que el texto no se corte */
-  text-overflow: clip; /* No mostrar elipsis */
-  white-space: nowrap; /* Evitar saltos de línea */
-  font-family: monospace; /* Usar fuente monoespaciada para mejor legibilidad de unidades */
-  letter-spacing: -0.02em; /* Reducir ligeramente el espacio entre letras */
+  min-width: 100px; 
+  padding: 0.8rem 0.5rem; 
+  overflow: visible; 
+  text-overflow: clip; 
+  white-space: nowrap; 
+  font-family: monospace; 
+  letter-spacing: -0.02em; 
 }
 
-/* Mejoras para resoluciones específicas */
-/* Enfoque específico para tamaños entre 1061px y 1100px donde se detectó el problema */
+
 @media (max-width: 1100px) and (min-width: 1061px) {
   .unit-selector {
-    min-width: 110px; /* Ancho mínimo aumentado para este rango específico */
-    font-size: 0.92rem; /* Fuente ligeramente más pequeña */
+    min-width: 110px;
+    font-size: 0.92rem; 
   }
 }
 
 /* Demás tablets */
 @media (max-width: 1060px) and (min-width: 769px) {
   .unit-selector {
-    min-width: 105px; /* Un poco más ancho en tablets */
-    font-size: 0.95rem; /* Fuente ligeramente más pequeña */
+    min-width: 105px; 
+    font-size: 0.95rem; 
   }
   
   .input-with-unit input {
-    padding: 0.8rem 0.5rem; /* Reducir el padding horizontal */
+    padding: 0.8rem 0.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .unit-selector {
-    min-width: 110px; /* Más ancho en móviles */
-    flex-shrink: 0; /* Evitar que el selector se encoja */
+    min-width: 110px; 
+    flex-shrink: 0; 
   }
   
   .variable-selector {
@@ -51,7 +50,7 @@
     width: 100%;
   }
   
-  /* Ajustes adicionales para mejorar el layout en móviles */
+ 
   .input-with-unit {
     display: flex;
     align-items: center;
@@ -59,7 +58,7 @@
   
   .input-with-unit input {
     flex: 1;
-    min-width: 0; /* Permitir que el input se encoja si es necesario */
+    min-width: 0; 
   }
   
   .input-group {
@@ -67,7 +66,7 @@
   }
 }
 
-/* Mejoras específicas para tamaños pequeños */
+
 @media (max-width: 640px) {
   .calculator-body {
     padding: 1rem;
@@ -86,27 +85,27 @@
   }
 }
 
-/* Ajustes específicos para la resolución problemática 621px-700px */
+
 @media (min-width: 621px) and (max-width: 700px) {
   .unit-selector {
-    min-width: 115px; /* Ancho extra para esta resolución específica */
+    min-width: 115px; 
     font-size: 0.9rem;
     padding: 0.8rem 0.4rem;
   }
   
   .input-with-unit {
-    flex-wrap: nowrap; /* Asegurar que no haya saltos de línea */
+    flex-wrap: nowrap; 
   }
   
   .input-with-unit input {
-    max-width: calc(100% - 115px); /* Asegurar espacio para el selector */
+    max-width: calc(100% - 115px); 
   }
 }
 
-/* Ajustes para pantallas muy pequeñas */
+
 @media (max-width: 400px) {
   .unit-selector {
-    min-width: 80px; /* Más pequeño en pantallas muy pequeñas */
+    min-width: 80px; 
     font-size: 0.9rem;
   }
   
