@@ -7,13 +7,13 @@ export const CALCULATORS = [
   {
     name: 'Movimiento Rectilíneo Uniforme (MRU)',
     description: 'Calcula el movimiento de un objeto en línea recta con velocidad constante.',
-    url: '/calculators/mru',
+    url: '/calculators/mru_mruv',
     image: '/images/mru.png',
   },
   {   
     name: 'Movimiento Rectilíneo Uniformemente Acelerado (MRUA)',
     description: 'Calcula el movimiento de un objeto en línea recta con aceleración constante.',
-    url: '/calculators/mrua',
+    url: '/calculators/mru_mruv',
     image: '/images/mrua.png',
   },
   {
