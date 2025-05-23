@@ -147,19 +147,32 @@ function calcular() {
     vt: parseFloat(document.getElementById("vt")?.value),
     t: parseFloat(document.getElementById("t")?.value),
     g: parseFloat(document.getElementById("g")?.value) || 9.8
-  };
-
-  try {
+  };  try {
     const { val, unit } = formulas[key][fi].func(vals);
-    
-    resultadoDiv.style.display = "block";
+      resultadoDiv.style.display = "block";
+    resultadoDiv.style.color = "#111827"; // Color fijo para asegurar visibilidad
     if (isNaN(val)) {
-      resultadoDiv.textContent = "Revisa los datos ingresados.";
+      resultadoDiv.innerHTML = '<span class="tiro-resultado-text">Revisa los datos ingresados.</span>';
     } else {
-      resultadoDiv.textContent = `Resultado: ${val.toFixed(2)} ${unit}`;
+      resultadoDiv.innerHTML = `<span class="tiro-resultado-text">${val.toFixed(2)} ${unit}</span>`;
     }
-  } catch (error) {
-    resultadoDiv.textContent = "Error en el cálculo: " + error.message;
+  } catch (error) {    resultadoDiv.innerHTML = `<span class="tiro-resultado-text">Error en el cálculo: ${error.message}</span>`;
     resultadoDiv.style.display = "block";
+    resultadoDiv.style.color = "#111827";
   }
 }
+
+// Exponer la función calcular globalmente
+window.calcular = calcular;
+
+// Inicialización cuando el DOM está listo
+document.addEventListener('DOMContentLoaded', () => {
+  // Verificar si los elementos existen
+  if (!selectVar || !selectForm || !inputsCont || !resultadoDiv) {
+    console.error('Algunos elementos del DOM no se pudieron encontrar');
+    return;
+  }
+  
+  // Inicializar los campos ocultos
+  ocultarTodosInputs();
+});
