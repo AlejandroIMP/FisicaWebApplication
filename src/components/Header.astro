@@ -2,27 +2,41 @@
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 import { Icon } from 'astro-icon/components';
+
+interface HeaderLink {
+	href: string;
+	text: string;
+}
+
+const headerLinks: HeaderLink[] = [
+	{ href: '/', text: 'Inicio' },
+	{ href: '/calculator', text: 'Calculadora' },
+	{ href: '/exercise', text: 'Ejercicios' },
+	{ href: '/resources', text: 'Recursos' },
+	{ href: '/MIT_License', text: 'Licencia' },
+	{ href: '/acercaDe', text: 'Acerca De' },
+];
 ---
 
 <header>
 	<nav>
 		<h2><a href="/">{SITE_TITLE}</a></h2>
 		<div class="internal-links">
-			<HeaderLink href="/">Inicio</HeaderLink>
-			<HeaderLink href="/topic">Temario</HeaderLink>
-			<HeaderLink href="/calculator">Calculadora</HeaderLink>
-			<HeaderLink href="/exercise">Ejercicios</HeaderLink>
-			<HeaderLink href="/acercaDe">Acerca De</HeaderLink>
+			{headerLinks.map((link) => (
+				<HeaderLink href={link.href}>
+					{link.text}
+				</HeaderLink>
+			))}
 		</div>
 		<div class="menu-links">
 			<Icon name="mdi:menu" size={32}  />
 		</div>
 		<div class="internal-links-menu">
-			<HeaderLink href="/">Inicio</HeaderLink>
-			<HeaderLink href="/topic">Temario</HeaderLink>
-			<HeaderLink href="/calculator">Calculadora</HeaderLink>
-			<HeaderLink href="/exercise">Ejercicios</HeaderLink>
-			<HeaderLink href="/acercaDe">Acerca De</HeaderLink>
+			{headerLinks.map((link) => (
+				<HeaderLink href={link.href} class="menu-link">
+					{link.text}
+				</HeaderLink>
+			))}
 		</div>
 		<div class="social-links">
 			<a href="https://github.com/alejandroimp/FisicaWebApplication" target="_blank">
