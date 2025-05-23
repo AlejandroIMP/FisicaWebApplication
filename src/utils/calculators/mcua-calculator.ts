@@ -16,8 +16,9 @@ export function calculateMCUA(variableToSolve: string, values: Record<string, nu
   
   switch (variableToSolve) {
     case 'initialAngularVelocity':
-      if (values.finalAngularVelocity && values.angularAcceleration && values.time) {
-        result.value = values.finalAngularVelocity - (values.angularAcceleration * values.time);
+      if ('finalAngularVelocity' in values && values.angularAcceleration && values.time) {
+        const w = values.finalAngularVelocity || 0;
+        result.value = w - (values.angularAcceleration * values.time);
         result.unit = 'rad/s';
         result.name = 'Velocidad angular inicial (ω₀)';
         result.formula = 'ω₀ = ω - α × t';
@@ -26,8 +27,9 @@ export function calculateMCUA(variableToSolve: string, values: Record<string, nu
         result.unit = 'rad/s';
         result.name = 'Velocidad angular inicial (ω₀)';
         result.formula = 'ω₀ = (θ - 0.5 × α × t²) / t';
-      } else if (values.finalAngularVelocity && values.angularDisplacement && values.angularAcceleration) {
-        result.value = Math.sqrt(values.finalAngularVelocity * values.finalAngularVelocity - 2 * values.angularAcceleration * values.angularDisplacement);
+      } else if ('finalAngularVelocity' in values && values.angularDisplacement && values.angularAcceleration) {
+        const w = values.finalAngularVelocity || 0;
+        result.value = Math.sqrt(w * w - 2 * values.angularAcceleration * values.angularDisplacement);
         result.unit = 'rad/s';
         result.name = 'Velocidad angular inicial (ω₀)';
         result.formula = 'ω₀ = √(ω² - 2 × α × θ)';
@@ -35,13 +37,15 @@ export function calculateMCUA(variableToSolve: string, values: Record<string, nu
       break;
       
     case 'finalAngularVelocity':
-      if (values.initialAngularVelocity && values.angularAcceleration && values.time) {
-        result.value = values.initialAngularVelocity + (values.angularAcceleration * values.time);
+      if ('initialAngularVelocity' in values && values.angularAcceleration && values.time) {
+        const w0 = values.initialAngularVelocity || 0;
+        result.value = w0 + (values.angularAcceleration * values.time);
         result.unit = 'rad/s';
         result.name = 'Velocidad angular final (ω)';
         result.formula = 'ω = ω₀ + α × t';
-      } else if (values.initialAngularVelocity && values.angularDisplacement && values.angularAcceleration) {
-        result.value = Math.sqrt(values.initialAngularVelocity * values.initialAngularVelocity + 2 * values.angularAcceleration * values.angularDisplacement);
+      } else if ('initialAngularVelocity' in values && values.angularDisplacement && values.angularAcceleration) {
+        const w0 = values.initialAngularVelocity || 0;
+        result.value = Math.sqrt(w0 * w0 + 2 * values.angularAcceleration * values.angularDisplacement);
         result.unit = 'rad/s';
         result.name = 'Velocidad angular final (ω)';
         result.formula = 'ω = √(ω₀² + 2 × α × θ)';
@@ -49,18 +53,23 @@ export function calculateMCUA(variableToSolve: string, values: Record<string, nu
       break;
       
     case 'angularAcceleration':
-      if (values.initialAngularVelocity && values.finalAngularVelocity && values.time) {
-        result.value = (values.finalAngularVelocity - values.initialAngularVelocity) / values.time;
+      if ('initialAngularVelocity' in values && 'finalAngularVelocity' in values && values.time) {
+        const w0 = values.initialAngularVelocity || 0;
+        const w = values.finalAngularVelocity || 0;
+        result.value = (w - w0) / values.time;
         result.unit = 'rad/s²';
         result.name = 'Aceleración angular (α)';
         result.formula = 'α = (ω - ω₀) / t';
-      } else if (values.initialAngularVelocity && values.angularDisplacement && values.time) {
-        result.value = 2 * (values.angularDisplacement - values.initialAngularVelocity * values.time) / (values.time * values.time);
+      } else if ('initialAngularVelocity' in values && values.angularDisplacement && values.time) {
+        const w0 = values.initialAngularVelocity || 0;
+        result.value = 2 * (values.angularDisplacement - w0 * values.time) / (values.time * values.time);
         result.unit = 'rad/s²';
         result.name = 'Aceleración angular (α)';
         result.formula = 'α = 2 × (θ - ω₀ × t) / t²';
-      } else if (values.initialAngularVelocity && values.finalAngularVelocity && values.angularDisplacement) {
-        result.value = (values.finalAngularVelocity * values.finalAngularVelocity - values.initialAngularVelocity * values.initialAngularVelocity) / (2 * values.angularDisplacement);
+      } else if ('initialAngularVelocity' in values && 'finalAngularVelocity' in values && values.angularDisplacement) {
+        const w0 = values.initialAngularVelocity || 0;
+        const w = values.finalAngularVelocity || 0;
+        result.value = (w * w - w0 * w0) / (2 * values.angularDisplacement);
         result.unit = 'rad/s²';
         result.name = 'Aceleración angular (α)';
         result.formula = 'α = (ω² - ω₀²) / (2 × θ)';
@@ -82,38 +91,57 @@ export function calculateMCUA(variableToSolve: string, values: Record<string, nu
       break;
       
     case 'time':
-      if (values.initialAngularVelocity && values.finalAngularVelocity && values.angularAcceleration) {
-        result.value = (values.finalAngularVelocity - values.initialAngularVelocity) / values.angularAcceleration;
+      if ('initialAngularVelocity' in values && 'finalAngularVelocity' in values && values.angularAcceleration) {
+        const w0 = values.initialAngularVelocity || 0;
+        const w = values.finalAngularVelocity || 0;
+        result.value = (w - w0) / values.angularAcceleration;
         result.unit = 's';
         result.name = 'Tiempo (t)';
         result.formula = 't = (ω - ω₀) / α';
-      } else if (values.initialAngularVelocity && values.angularDisplacement && values.angularAcceleration) {
+      } else if ('initialAngularVelocity' in values && values.angularDisplacement && values.angularAcceleration) {
         // Resolución de ecuación cuadrática: at² + 2ω₀t - 2θ = 0
         const a = values.angularAcceleration;
-        const b = 2 * values.initialAngularVelocity;
+        // Usar 0 si initialAngularVelocity es 0
+        const w0 = values.initialAngularVelocity || 0;
+        const b = 2 * w0;
         const c = -2 * values.angularDisplacement;
         
-        // Utilizamos la fórmula cuadrática, considerando solo el valor positivo
-        result.value = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+        // Caso especial: si ω₀=0, entonces at² = 2θ
+        if (w0 === 0) {
+          result.value = Math.sqrt(2 * values.angularDisplacement / values.angularAcceleration);
+          result.formula = 't = √(2θ / α)';
+        } else {
+          // Utilizamos la fórmula cuadrática, considerando solo el valor positivo
+          result.value = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+          result.formula = 't = (-2ω₀ + √(4ω₀² + 8αθ)) / (2α)';
+        }
         result.unit = 's';
         result.name = 'Tiempo (t)';
-        result.formula = 't = (-2ω₀ + √(4ω₀² + 8αθ)) / (2α)';
       }
       break;
       
     case 'angularDisplacement':
-      if (values.initialAngularVelocity && values.time && values.angularAcceleration) {
-        result.value = values.initialAngularVelocity * values.time + 0.5 * values.angularAcceleration * values.time * values.time;
+      // Usamos 'in' para verificar si la propiedad existe, independientemente de su valor
+      if ('initialAngularVelocity' in values && values.time && values.angularAcceleration) {
+        // Usamos valores por defecto con || para manejar caso cuando ω₀=0
+        const w0 = values.initialAngularVelocity || 0;
+        result.value = w0 * values.time + 0.5 * values.angularAcceleration * values.time * values.time;
         result.unit = 'rad';
         result.name = 'Desplazamiento angular (θ)';
         result.formula = 'θ = ω₀ × t + 0.5 × α × t²';
-      } else if (values.initialAngularVelocity && values.finalAngularVelocity && values.time) {
-        result.value = 0.5 * (values.initialAngularVelocity + values.finalAngularVelocity) * values.time;
+      } else if ('initialAngularVelocity' in values && 'finalAngularVelocity' in values && values.time) {
+        // Manejar casos donde ω₀=0 o ω=0
+        const w0 = values.initialAngularVelocity || 0;
+        const w = values.finalAngularVelocity || 0;
+        result.value = 0.5 * (w0 + w) * values.time;
         result.unit = 'rad';
         result.name = 'Desplazamiento angular (θ)';
         result.formula = 'θ = 0.5 × (ω₀ + ω) × t';
-      } else if (values.initialAngularVelocity && values.finalAngularVelocity && values.angularAcceleration) {
-        result.value = (values.finalAngularVelocity * values.finalAngularVelocity - values.initialAngularVelocity * values.initialAngularVelocity) / (2 * values.angularAcceleration);
+      } else if ('initialAngularVelocity' in values && 'finalAngularVelocity' in values && values.angularAcceleration) {
+        // Manejar casos donde ω₀=0 o ω=0
+        const w0 = values.initialAngularVelocity || 0;
+        const w = values.finalAngularVelocity || 0;
+        result.value = (w * w - w0 * w0) / (2 * values.angularAcceleration);
         result.unit = 'rad';
         result.name = 'Desplazamiento angular (θ)';
         result.formula = 'θ = (ω² - ω₀²) / (2 × α)';
@@ -139,13 +167,15 @@ export function calculateMCUA(variableToSolve: string, values: Record<string, nu
       break;
       
     case 'centripetalAcceleration':
-      if (values.initialAngularVelocity && values.radius) {
-        result.value = values.initialAngularVelocity * values.initialAngularVelocity * values.radius;
+      if ('initialAngularVelocity' in values && values.radius) {
+        const w0 = values.initialAngularVelocity || 0;
+        result.value = w0 * w0 * values.radius;
         result.unit = 'm/s²';
         result.name = 'Aceleración centrípeta (aₙ)';
         result.formula = 'aₙ = ω₀² × r';
-      } else if (values.finalAngularVelocity && values.radius) {
-        result.value = values.finalAngularVelocity * values.finalAngularVelocity * values.radius;
+      } else if ('finalAngularVelocity' in values && values.radius) {
+        const w = values.finalAngularVelocity || 0;
+        result.value = w * w * values.radius;
         result.unit = 'm/s²';
         result.name = 'Aceleración centrípeta (aₙ)';
         result.formula = 'aₙ = ω² × r';
