@@ -1,0 +1,142 @@
+/* 
+  Estilos unificados para calculadoras de tiro vertical y parabólico
+  Compatibles con: calculator-theme.css, calculator-components.css y global.css
+*/
+/* Contenedor específico para calculadoras de tiro */
+.tiro-calculator {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Estilos específicos para los selectores de las calculadoras de tiro */
+.tiro-select {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: 2px solid rgba(var(--gray-light), 1);
+  margin-bottom: 1.5rem;
+  background-color: var(--light-bg);
+  color: var(--dark-text);
+  transition: var(--transition-default);
+}
+
+.tiro-select:focus {
+  border-color: var(--button-color);
+  box-shadow: var(--focus-shadow);
+  outline: none;
+}
+
+/* Estilos para el contenedor de inputs */
+.tiro-inputs {
+  width: 100%;
+  max-width: 500px;
+  margin: 1.5rem 0;
+}
+
+.tiro-input-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Estilo para campos numéricos */
+.tiro-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: 2px solid rgba(var(--gray-light), 1);
+  margin-bottom: 0.5rem;
+  background-color: var(--light-bg);
+  color: var(--dark-text);
+  transition: var(--transition-default);
+}
+
+.tiro-input:focus {
+  border-color: var(--button-color);
+  box-shadow: var(--focus-shadow);
+  outline: none;
+}
+
+/* Estilos para el botón de cálculo */
+.tiro-button {
+  background-color: var(--button-color, #2563EB);
+  color: white !important;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: var(--transition-default);
+  box-shadow: var(--button-shadow);
+}
+
+.tiro-button:hover {
+  background-color: var(--button-hover);
+  box-shadow: var(--button-shadow-hover);
+}
+
+/* Estilos para el área de resultados */
+.tiro-resultado {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 500px;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(34, 197, 94, 0.1);
+  border-left: 6px solid var(--success-color);
+  color: #111827 !important; /* Color fijo para asegurar visibilidad */
+  font-weight: 500;
+  box-shadow: var(--card-shadow);
+  word-wrap: break-word;
+}
+
+.tiro-resultado::before {
+  content: "✅ Resultado:";
+  color: var(--success-color);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+/* Clase específica para el texto del resultado */
+.tiro-resultado-text {
+  color: #111827 !important;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.tiro-formula {
+  background-color: rgba(var(--gray-light), 0.5);
+  border-left: 4px solid var(--formula-color);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  color: var(--dark-text);
+  font-family: 'Atkinson', monospace;
+}
+
+/* Línea divisoria */
+.tiro-divider {
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  border-top: 1px solid rgba(var(--gray), 0.2);
+  margin: 2rem 0;
+}
+
+/* Media queries */
+@media (max-width: 600px) {
+  .tiro-select,
+  .tiro-input {
+    font-size: 1rem;
+    padding: 0.7rem;
+  }
+
+  .tiro-resultado {
+    padding: 1.2rem;
+  }
+}

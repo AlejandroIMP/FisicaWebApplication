@@ -3,6 +3,26 @@ import { convertToBaseUnit, convertFromBaseUnit } from '../unit-converter/unit-c
 import { type CalculationResult } from './mcu-calculator';
 
 /**
+ * Retrieves a DOM element by its ID and ensures it exists.
+ * 
+ * @template T - The type of HTMLElement to return.
+ * @param {string} id - The ID of the element to retrieve.
+ * @returns {T} - The element with the specified ID cast to type T.
+ * @throws {Error} - Throws an error if no element with the specified ID is found.
+ * 
+ * @example
+ * // Get an input element
+ * const inputElement = getElementByIdStrict<HTMLInputElement>("myInput");
+ * // Now inputElement has all HTMLInputElement methods and properties
+ */
+export function getElementByIdStrict<T extends HTMLElement>(id: string): T {
+  const element = document.getElementById(id);
+  if (!element) {
+    throw new Error(`Element with id ${id} not found`);
+  }
+  return element as T;
+}
+/**
  * Tipo para la configuración del calculador
  */
 export interface CalculatorConfig {
@@ -18,10 +38,10 @@ export interface CalculatorConfig {
  * @param config Configuración específica para la calculadora
  */
 export function setupCalculator(config: CalculatorConfig): void {
-  const variableToSolveSelect = document.getElementById('variable-to-solve') as HTMLSelectElement;
-  const calculateBtn = document.getElementById('calculate-btn') as HTMLButtonElement;
-  const resultDiv = document.getElementById('result') as HTMLDivElement;
-  const formulaUsedDiv = document.getElementById('formula-used') as HTMLDivElement;
+  const variableToSolveSelect = getElementByIdStrict<HTMLSelectElement>('variable-to-solve');
+  const calculateBtn = getElementByIdStrict<HTMLButtonElement>('calculate-btn');
+  const resultDiv = getElementByIdStrict<HTMLDivElement>('result');
+  const formulaUsedDiv = getElementByIdStrict<HTMLDivElement>('formula-used');
   
   const inputGroups: Record<string, HTMLDivElement> = {};
   const inputs: Record<string, HTMLInputElement> = {};
@@ -34,8 +54,8 @@ export function setupCalculator(config: CalculatorConfig): void {
     
     inputGroups[camelCaseId] = group as HTMLDivElement;
     
-    const inputElement = document.getElementById(id) as HTMLInputElement;
-    const unitElement = document.getElementById(`${id}-unit`) as HTMLSelectElement;
+    const inputElement = getElementByIdStrict<HTMLInputElement>(id);
+    const unitElement = getElementByIdStrict<HTMLSelectElement>(`${id}-unit`);
     
     if (inputElement) inputs[camelCaseId] = inputElement;
     if (unitElement) unitSelectors[camelCaseId] = unitElement;
@@ -78,19 +98,17 @@ export function setupCalculator(config: CalculatorConfig): void {
     
     for (const key in inputs) {
       if (Object.prototype.hasOwnProperty.call(inputs, key) && 
-          key !== variableToSolve && 
+          key !== variableToSolve &&
           !inputGroups[key].style.display.includes('none')) {
         
         const inputValue = parseFloat(inputs[key].value);
         const unitSelected = unitSelectors[key].value;
         
-        if (!isNaN(inputValue) && inputValue !== 0) {
-
+        // Incluir valores no válidos (NaN) para que las calculadoras los procesen
+        // y manejen internamente, permitiendo pruebas más robustas
+        if (inputs[key].value.trim() !== '') {
           selectedUnits[key] = unitSelected;
-          
-
-          values[key] = convertToBaseUnit(inputValue, key as UnitType, unitSelected);
-
+          values[key] = isNaN(inputValue) ? NaN : convertToBaseUnit(inputValue, key as UnitType, unitSelected);
         }
       }
     }
@@ -98,7 +116,7 @@ export function setupCalculator(config: CalculatorConfig): void {
     const result = config.calculateFunction(variableToSolve, values);
     
     // Mostrar el resultado
-    if (result.value !== null) {
+    if (result.value !== null && !isNaN(result.value) && isFinite(result.value)) {
       const resultUnitSelected = variableToSolve in unitSelectors ? 
                                unitSelectors[variableToSolve].value : 
                                result.unit;
@@ -107,7 +125,6 @@ export function setupCalculator(config: CalculatorConfig): void {
                           convertFromBaseUnit(result.value, variableToSolve as UnitType, resultUnitSelected) :
                           result.value;
                           
-
       resultDiv.innerHTML = `${result.name} = <strong>${displayValue.toFixed(4)} ${resultUnitSelected}</strong>`;
       formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
     } else {

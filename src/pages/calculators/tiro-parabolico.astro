@@ -1,13 +1,15 @@
 ---
 import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
-import "../../styles/estiloparabolico.css";
+import "../../styles/calculator-theme.css";
+import "../../styles/tiros-calculator.css";
 ---
 
-<CalculatorLayout>
-  <h1>Tiro Parabólico(Oblicuo)</h1>
-    
-    <label for="selectVariable">Selecciona una Variable a calcular</label>
-    <select id="selectVariable">
+<CalculatorLayout title="Calculadora de Tiro Parabólico" description="Calcula variables de movimiento parabólico como posición, velocidad, alcance y más">
+  <div class="tiro-calculator">
+    <h1 class="text-header">Tiro Parabólico (Oblicuo)</h1>
+      
+    <label for="selectVariable">Selecciona una Variable a calcular:</label>
+    <select id="selectVariable" class="tiro-select">
         <option value="">-- Selecciona --</option>
         <option value="x_t">Posición en x (x(t))</option>
         <option value="y_t">Posición en y (y(t))</option>
@@ -24,30 +26,42 @@ import "../../styles/estiloparabolico.css";
         <option value="v0y">Componente vertical de v₀ (v₀ᵧ)</option>
     </select>
 
-
-    <label for="selectVariable">Selecciona la formula a utilizar</label>
-    <select id="selectFormula">
+    <label for="selectFormula">Selecciona la formula a utilizar:</label>
+    <select id="selectFormula" class="tiro-select">
         <option value="">-- Seleccionar fórmula --</option>
     </select>
 
-    <hr>
+    <hr class="tiro-divider">
 
-    <div id="inputs">
-        <div data-key="x"    style="display:none;"><label>x (m):</label><input type="number" id="x" step="any"></div>
-        <div data-key="y"    style="display:none;"><label>y (m):</label><input type="number" id="y" step="any"></div>
-        <div data-key="v0"   style="display:none;"><label>v₀ (m/s):</label><input type="number" id="v0" step="any"></div>
-        <div data-key="vx"   style="display:none;"><label>vₓ (m/s):</label><input type="number" id="vx" step="any"></div>
-        <div data-key="vy"   style="display:none;"><label>vᵧ (m/s):</label><input type="number" id="vy" step="any"></div>
-        <div data-key="v0x"  style="display:none;"><label>v₀ₓ (m/s):</label><input type="number" id="v0x" step="any"></div>
-        <div data-key="v0y"  style="display:none;"><label>v₀ᵧ (m/s):</label><input type="number" id="v0y" step="any"></div>
-        <div data-key="theta" style="display:none;"><label>θ (°):</label><input type="number" id="theta" step="any"></div>
-        <div data-key="t"    style="display:none;"><label>t (s):</label><input type="number" id="t" step="any"></div>
-        <div data-key="g"    style="display:none;"><label>g (m/s²):</label><input type="number" id="g" step="any" placeholder="9.8"></div>
+    <div id="inputs" class="tiro-inputs">
+        <div data-key="x"    class="tiro-input-group" style="display:none;"><label>x (m):</label><input type="number" id="x" class="tiro-input" step="any"></div>
+        <div data-key="y"    class="tiro-input-group" style="display:none;"><label>y (m):</label><input type="number" id="y" class="tiro-input" step="any"></div>
+        <div data-key="v0"   class="tiro-input-group" style="display:none;"><label>v₀ (m/s):</label><input type="number" id="v0" class="tiro-input" step="any"></div>
+        <div data-key="vx"   class="tiro-input-group" style="display:none;"><label>vₓ (m/s):</label><input type="number" id="vx" class="tiro-input" step="any"></div>
+        <div data-key="vy"   class="tiro-input-group" style="display:none;"><label>vᵧ (m/s):</label><input type="number" id="vy" class="tiro-input" step="any"></div>
+        <div data-key="v0x"  class="tiro-input-group" style="display:none;"><label>v₀ₓ (m/s):</label><input type="number" id="v0x" class="tiro-input" step="any"></div>
+        <div data-key="v0y"  class="tiro-input-group" style="display:none;"><label>v₀ᵧ (m/s):</label><input type="number" id="v0y" class="tiro-input" step="any"></div>
+        <div data-key="theta" class="tiro-input-group" style="display:none;"><label>θ (°):</label><input type="number" id="theta" class="tiro-input" step="any"></div>
+        <div data-key="t"    class="tiro-input-group" style="display:none;"><label>t (s):</label><input type="number" id="t" class="tiro-input" step="any"></div>
+        <div data-key="g"    class="tiro-input-group" style="display:none;"><label>g (m/s²):</label><input type="number" id="g" class="tiro-input" step="any" placeholder="9.8"></div>
     </div>
 
-    <button onclick="calcular()">Calcular</button>
-    <div id="resultado"></div>
-    <script src="../../utils/calculators/mainparabolico.js">
-    import { calcular } from "../../utils/calculators/mainparabolico.js";
+    <button id="calcularBtn" class="tiro-button">Calcular</button>
+    <div id="resultado" class="tiro-resultado" style="display:none;"></div>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+        const calcularBtn = document.getElementById('calcularBtn');
+        if (calcularBtn) {
+          calcularBtn.addEventListener('click', function() {
+            if (typeof calcular === 'function') {
+              calcular();
+            } else {
+              console.error('La función calcular no está definida');
+            }
+          });
+        }
+      });
     </script>
+    <script src="../../utils/calculators/mainparabolico.js"></script>
+  </div>
 </CalculatorLayout>

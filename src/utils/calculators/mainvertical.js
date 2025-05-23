@@ -1,3 +1,5 @@
+
+// Definir las fórmulas para cálculos de tiro vertical
 const formulas = {
   h_t: [
     {
@@ -89,6 +91,7 @@ const formulas = {
   ]
 };
 
+// Elementos del DOM
 const selectVar = document.getElementById("selectVariable");
 const selectForm = document.getElementById("selectFormula");
 const inputsCont = document.getElementById("inputs");
@@ -128,9 +131,11 @@ function ocultarTodosInputs() {
 
 function calcular() {
   const key = selectVar.value;
-  const fi = selectForm.value;
-  if (!formulas[key] || fi === "") {
+  const fi = parseInt(selectForm.value);
+  
+  if (!formulas[key] || isNaN(fi)) {
     resultadoDiv.textContent = "Primero selecciona variable y fórmula.";
+    resultadoDiv.style.display = "block";
     return;
   }
 
@@ -141,13 +146,33 @@ function calcular() {
     v0: parseFloat(document.getElementById("v0")?.value),
     vt: parseFloat(document.getElementById("vt")?.value),
     t: parseFloat(document.getElementById("t")?.value),
-    g: parseFloat(document.getElementById("g")?.value)
-  };
-
-  const { val, unit } = formulas[key][fi].func(vals);
-  if (isNaN(val)) {
-    resultadoDiv.textContent = "Revisa los datos ingresados.";
-  } else {
-    resultadoDiv.textContent = `Resultado: ${val.toFixed(2)} ${unit}`;
+    g: parseFloat(document.getElementById("g")?.value) || 9.8
+  };  try {
+    const { val, unit } = formulas[key][fi].func(vals);
+      resultadoDiv.style.display = "block";
+    resultadoDiv.style.color = "#111827"; // Color fijo para asegurar visibilidad
+    if (isNaN(val)) {
+      resultadoDiv.innerHTML = '<span class="tiro-resultado-text">Revisa los datos ingresados.</span>';
+    } else {
+      resultadoDiv.innerHTML = `<span class="tiro-resultado-text">${val.toFixed(2)} ${unit}</span>`;
+    }
+  } catch (error) {    resultadoDiv.innerHTML = `<span class="tiro-resultado-text">Error en el cálculo: ${error.message}</span>`;
+    resultadoDiv.style.display = "block";
+    resultadoDiv.style.color = "#111827";
   }
 }
+
+// Exponer la función calcular globalmente
+window.calcular = calcular;
+
+// Inicialización cuando el DOM está listo
+document.addEventListener('DOMContentLoaded', () => {
+  // Verificar si los elementos existen
+  if (!selectVar || !selectForm || !inputsCont || !resultadoDiv) {
+    console.error('Algunos elementos del DOM no se pudieron encontrar');
+    return;
+  }
+  
+  // Inicializar los campos ocultos
+  ocultarTodosInputs();
+});
