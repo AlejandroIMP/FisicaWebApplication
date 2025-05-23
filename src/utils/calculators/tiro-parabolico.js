@@ -1,5 +1,6 @@
-// Definir las fórmulas para cálculos de tiro parabólico
-const formulas = {
+// Versión exportable de las funciones de cálculo del tiro parabólico
+
+export const formulas = {
   x_t: [
     {
       label: "x(t) = v₀·cos(θ)·t",
@@ -121,82 +122,53 @@ const formulas = {
   ]
 };
 
-// Elementos del DOM
-const selectVar = document.getElementById("selectVariable");
-const selectForm = document.getElementById("selectFormula");
-const inputsCont = document.getElementById("inputs");
-const resultadoDiv = document.getElementById("resultado");
-
-// Evento de cambio en el selector de variables
-selectVar.addEventListener("change", () => {
-  const key = selectVar.value;
-  selectForm.innerHTML = "<option value=''>-- Selecciona fórmula --</option>";
-  resultadoDiv.textContent = "";
-  if (formulas[key]) {
-    formulas[key].forEach((f, i) => {
-      const o = document.createElement("option");
-      o.value = i;
-      o.textContent = f.label;
-      selectForm.appendChild(o);
-    });
+/**
+ * Calcula el resultado para una variable en tiro parabólico
+ * @param {string} variable - Variable a calcular (x_t, y_t, vx, etc.)
+ * @param {number} formulaIndex - Índice de la fórmula a usar
+ * @param {Object} valores - Valores de entrada para el cálculo
+ * @returns {Object} Resultado con valor, unidad y éxito
+ */
+export function calcularTiroParabolico(variable, formulaIndex, valores) {
+  if (!formulas[variable] || formulaIndex < 0 || formulaIndex >= formulas[variable].length) {
+    return { 
+      valor: null, 
+      unidad: null, 
+      exito: false, 
+      mensaje: "Fórmula o variable no válida" 
+    };
   }
-  ocultarTodosInputs();
-});
 
-// Evento de cambio en el selector de fórmulas
-selectForm.addEventListener("change", () => {
-  ocultarTodosInputs();
-  resultadoDiv.textContent = "";
-  const key = selectVar.value;
-  const fi = selectForm.value;
-  if (fi === "" || !formulas[key]) return;
-  const requiere = formulas[key][fi].requiere;
-  requiere.forEach(id => {
-    const div = inputsCont.querySelector(`[data-key="${id}"]`);
-    if (div) div.style.display = "block";
-  });
-});
-
-// Función para ocultar todos los inputs
-function ocultarTodosInputs() {
-  Array.from(inputsCont.children).forEach(div => div.style.display = "none");
-}
-
-// Función que se llama al hacer clic en el botón calcular
-function calcular() {
-  const key = selectVar.value;
-  const fi = parseInt(selectForm.value);
+  const formula = formulas[variable][formulaIndex];
+  const requiere = formula.requiere;
   
-  if (!formulas[key] || isNaN(fi)) {
-    resultadoDiv.textContent = "Primero selecciona variable y fórmula.";
-    resultadoDiv.style.display = "block";
-    return;
-  }
-  
-  const vals = {
-    x: parseFloat(document.getElementById("x")?.value),
-    y: parseFloat(document.getElementById("y")?.value),
-    v0: parseFloat(document.getElementById("v0")?.value),
-    vx: parseFloat(document.getElementById("vx")?.value),
-    vy: parseFloat(document.getElementById("vy")?.value),
-    v0x: parseFloat(document.getElementById("v0x")?.value),
-    v0y: parseFloat(document.getElementById("v0y")?.value),
-    theta: parseFloat(document.getElementById("theta")?.value),
-    t: parseFloat(document.getElementById("t")?.value),
-    g: parseFloat(document.getElementById("g")?.value) || 9.8
-  };
-  
-  try {
-    const { val, unit } = formulas[key][fi].func(vals);
-    
-    resultadoDiv.style.display = "block";
-    if (isNaN(val)) {
-      resultadoDiv.textContent = "Revisa los datos ingresados.";
-    } else {
-      resultadoDiv.textContent = "Resultado: " + val.toFixed(2) + " " + unit;
+  // Verificar que todos los valores requeridos estén presentes
+  for (const param of requiere) {
+    if (valores[param] === undefined || isNaN(valores[param])) {
+      return { 
+        valor: null, 
+        unidad: null, 
+        exito: false, 
+        mensaje: `Falta el valor para ${param}` 
+      };
     }
+  }
+
+  try {
+    const resultado = formula.func(valores);
+    return {
+      valor: resultado.val,
+      unidad: resultado.unit,
+      exito: true,
+      mensaje: null,
+      formulaDescripcion: formula.label
+    };
   } catch (error) {
-    resultadoDiv.textContent = "Error en el cálculo: " + error.message;
-    resultadoDiv.style.display = "block";
+    return { 
+      valor: null, 
+      unidad: null, 
+      exito: false, 
+      mensaje: "Error en el cálculo: " + error.message 
+    };
   }
 }
