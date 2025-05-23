@@ -7,6 +7,11 @@ import { type CalculationResult } from './mcu-calculator';
  * @returns Resultado del cálculo con valor, unidad, nombre y fórmula
  */
 export function calculateMCUA(variableToSolve: string, values: Record<string, number>): CalculationResult {
+  // Verificar si values es indefinido o null y manejarlo apropiadamente
+  if (!values) {
+    return { value: null, unit: '', name: '', formula: '' };
+  }
+  
   let result: CalculationResult = { value: null, unit: '', name: '', formula: '' };
   
   switch (variableToSolve) {

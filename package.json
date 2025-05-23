@@ -6,7 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run",
+    "test:ts": "vitest run \"src/utils/__tests__/**/*.test.ts\"",
+    "test:tiros": "vitest run \"src/utils/__tests__/tiro-*.test.{js,ts}\" --reporter=verbose"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.6",
@@ -16,6 +19,10 @@
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
-    "astro-icon": "^1.1.5"
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/jsdom": "^21.1.7",
+    "astro-icon": "^1.1.5",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.1.4"
   }
 }
