@@ -1,4 +1,5 @@
 ---
+import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
 import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
 import "../../styles/calculator-theme.css";
 import "../../styles/tiros-calculator.css";
@@ -6,30 +7,38 @@ import "../../styles/tiros-calculator.css";
 
 <CalculatorLayout title="Calculadora de Tiro Parabólico" description="Calcula variables de movimiento parabólico como posición, velocidad, alcance y más">
   <div class="tiro-calculator">
-    <h1 class="text-header">Tiro Parabólico (Oblicuo)</h1>
-      
-    <label for="selectVariable">Selecciona una Variable a calcular:</label>
-    <select id="selectVariable" class="tiro-select">
-        <option value="">-- Selecciona --</option>
-        <option value="x_t">Posición en x (x(t))</option>
-        <option value="y_t">Posición en y (y(t))</option>
-        <option value="vx">Velocidad en x (vₓ)</option>
-        <option value="vy_t">Velocidad en y (vᵧ(t))</option>
-        <option value="v_t">Velocidad total (v(t))</option>
-        <option value="theta">Ángulo de lanzamiento (θ)</option>
-        <option value="y_max">Altura máxima (y_max)</option>
-        <option value="t_subida">Tiempo de subida (t_subida)</option>
-        <option value="t_total">Tiempo total de vuelo (t_total)</option>
-        <option value="R">Alcance horizontal (R)</option>
-        <option value="v0">Velocidad inicial (v₀)</option>
-        <option value="v0x">Componente horizontal de v₀ (v₀ₓ)</option>
-        <option value="v0y">Componente vertical de v₀ (v₀ᵧ)</option>
-    </select>
+    <CalculatorHeader 
+      title="Tiro Parabólico (Oblicuo)" 
+      description="Selecciona la variable que deseas calcular y completa los valores conocidos"
+      icon="↗️"
+    />
+    <div>
 
-    <label for="selectFormula">Selecciona la formula a utilizar:</label>
-    <select id="selectFormula" class="tiro-select">
-        <option value="">-- Seleccionar fórmula --</option>
-    </select>
+      <label for="selectVariable">Selecciona una Variable a calcular:</label>
+  
+      <select id="selectVariable" class="tiro-select">
+          <option value="">-- Selecciona --</option>
+          <option value="x_t">Posición en x (x(t))</option>
+          <option value="y_t">Posición en y (y(t))</option>
+          <option value="vx">Velocidad en x (vₓ)</option>
+          <option value="vy_t">Velocidad en y (vᵧ(t))</option>
+          <option value="v_t">Velocidad total (v(t))</option>
+          <option value="theta">Ángulo de lanzamiento (θ)</option>
+          <option value="y_max">Altura máxima (y_max)</option>
+          <option value="t_subida">Tiempo de subida (t_subida)</option>
+          <option value="t_total">Tiempo total de vuelo (t_total)</option>
+          <option value="R">Alcance horizontal (R)</option>
+          <option value="v0">Velocidad inicial (v₀)</option>
+          <option value="v0x">Componente horizontal de v₀ (v₀ₓ)</option>
+          <option value="v0y">Componente vertical de v₀ (v₀ᵧ)</option>
+      </select>
+    </div>
+    <div>
+      <label for="selectFormula">Selecciona la formula a utilizar:</label>
+      <select id="selectFormula" class="tiro-select">
+          <option value="">-- Seleccionar fórmula --</option>
+      </select>
+    </div>
 
     <hr class="tiro-divider">
 

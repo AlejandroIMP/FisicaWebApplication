@@ -1,4 +1,5 @@
 ---
+import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
 import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
 import "../../styles/calculator-theme.css";
 import "../../styles/tiros-calculator.css";
@@ -6,7 +7,12 @@ import "../../styles/tiros-calculator.css";
 
 <CalculatorLayout title="Calculadora de Tiro Vertical" description="Calcula variables de movimientos de tiro vertical como altura máxima, tiempo de subida y más">
     <div class="tiro-calculator">
-        <h1 class="text-header">Calculadora de Tiro Vertical</h1>
+      <CalculatorHeader 
+        title="Tiro Vertical"
+        description="Selecciona la variable que deseas calcular y completa los valores conocidos"
+        icon="⬆️⬇️"
+      />
+      <div>
 
         <label for="selectVariable">Selecciona la variable a calcular:</label>
         <select id="selectVariable" class="tiro-select">
@@ -21,11 +27,13 @@ import "../../styles/tiros-calculator.css";
             <option value="g">Gravedad (g)</option>
             <option value="t">Tiempo (t)</option>
         </select>
-
-  <label for="selectFormula">Selecciona la fórmula:</label>
-  <select id="selectFormula" class="tiro-select">
-    <option value="">-- Primero selecciona variable --</option>
-  </select>
+      </div>
+      <div>
+        <label for="selectFormula">Selecciona la fórmula:</label><br/>
+        <select id="selectFormula" class="tiro-select">
+          <option value="">-- Primero selecciona variable --</option>
+        </select>
+      </div>
 
   <hr class="tiro-divider">
 
