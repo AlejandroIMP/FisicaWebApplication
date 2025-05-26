@@ -1,0 +1,221 @@
+/* Multiple Forces Calculator Styles */
+
+/* Mode Selection Styles */
+.calculation-mode-selector {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 800px;
+}
+
+.calculation-mode-selector h3 {
+  margin: 0 0 1rem 0;
+  color: #1F2937;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.mode-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  background: #f8f9fa;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  font-family: inherit;
+}
+
+.mode-btn:hover {
+  background: #f1f5f9;
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.mode-btn.active {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-color: #1d4ed8;
+  color: white;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.mode-btn .icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.mode-info strong {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.mode-info small {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.mode-btn.active .mode-info small {
+  opacity: 0.9;
+}
+
+/* Input Mode Toggle Styles */
+.input-mode {
+  display: none;
+}
+
+.input-mode.active {
+  display: block;
+}
+
+/* Multiple Forces Specific Styles */
+.example-container {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.example-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.example-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+}
+
+.example-icon {
+  font-size: 1.1rem;
+}
+
+/* Formula Section Toggle */
+.formulas-section {
+  display: none;
+}
+
+.formulas-section.active {
+  display: block;
+}
+
+.formulas-section h4 {
+  color: #1f2937;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Net Force Details in Results */
+.net-force-details {
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.net-force-details h4 {
+  color: #0c4a6e;
+  margin: 0 0 0.8rem 0;
+  font-size: 1rem;
+}
+
+.net-force-details p {
+  margin: 0.4rem 0;
+  color: #164e63;
+}
+
+/* Calculation Steps */
+.calculation-steps {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.calculation-steps h4 {
+  color: #334155;
+  margin: 0 0 0.8rem 0;
+  font-size: 1rem;
+}
+
+.calculation-steps ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #475569;
+}
+
+.calculation-steps li {
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mode-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .mode-btn {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .calculation-mode-selector {
+    margin: 1rem;
+    padding: 1rem;
+  }
+  
+  .mode-btn .icon {
+    font-size: 1.5rem;
+  }
+  
+  .mode-info strong {
+    font-size: 1rem;
+  }
+  
+  .mode-info small {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mode-btn {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+  
+  .mode-btn .icon {
+    font-size: 1.3rem;
+  }
+  
+  .example-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

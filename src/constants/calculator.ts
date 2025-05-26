@@ -117,20 +117,6 @@ export const NEWTON_SECOND_LAW_VARIABLES = [
   { value: 'acceleration', label: 'Aceleración (a)' }
 ];
 
-export const NEWTON_SECOND_LAW_FORMULAS = [
-  { 
-    formula: 'F = m × a', 
-    description: 'Segunda Ley de Newton - Fuerza neta' 
-  },
-  { 
-    formula: 'm = F / a', 
-    description: 'Masa en función de la fuerza y aceleración' 
-  },
-  { 
-    formula: 'a = F / m', 
-    description: 'Aceleración en función de la fuerza y masa' 
-  }
-];
 
 // Variables para Segunda Ley de Newton Avanzada
 export const NEWTON_ADVANCED_VARIABLES = [
@@ -257,29 +243,22 @@ export const MCU_FORMULAS = [
   }
 ];
 
-// // Variables y fórmulas para Segunda Ley de Newton
-// export const NEWTON_SECOND_LAW_VARIABLES = [
-//   { value: 'force', label: 'Fuerza (F)' },
-//   { value: 'mass', label: 'Masa (m)' },
-//   { value: 'acceleration', label: 'Aceleración (a)' }
-// ];
+export const NEWTON_SECOND_LAW_FORMULAS = [
+  { 
+    formula: 'F = m × a', 
+    description: 'Fuerza resultante en función de la masa y aceleración' 
+  },
+  { 
+    formula: 'a = F / m', 
+    description: 'Aceleración en función de la fuerza y masa' 
+  },
+  { 
+    formula: 'm = F / a', 
+    description: 'Masa en función de la fuerza y aceleración' 
+  }
+];
 
-// export const NEWTON_SECOND_LAW_FORMULAS = [
-//   { 
-//     formula: 'F = m × a', 
-//     description: 'Fuerza resultante en función de la masa y aceleración' 
-//   },
-//   { 
-//     formula: 'a = F / m', 
-//     description: 'Aceleración en función de la fuerza y masa' 
-//   },
-//   { 
-//     formula: 'm = F / a', 
-//     description: 'Masa en función de la fuerza y aceleración' 
-//   }
-// ];
-
-// // Variables y fórmulas para Segunda Ley de Newton Avanzada
+// Variables y fórmulas para Segunda Ley de Newton Avanzada
 // export const NEWTON_ADVANCED_VARIABLES = [
 //   { value: 'force', label: 'Fuerza Resultante (F)' },
 //   { value: 'mass', label: 'Masa (m)' },
@@ -288,43 +267,13 @@ export const MCU_FORMULAS = [
 //   { value: 'forceY', label: 'Fuerza en Y (Fy)' },
 //   { value: 'accelerationX', label: 'Aceleración en X (ax)' },
 //   { value: 'accelerationY', label: 'Aceleración en Y (ay)' },
+//   { value: 'angle', label: 'Ángulo de Aplicación (θ)' },
 //   { value: 'appliedForce', label: 'Fuerza Aplicada (Fa)' },
 //   { value: 'frictionForce', label: 'Fuerza de Fricción (Ff)' },
 //   { value: 'normalForce', label: 'Fuerza Normal (N)' },
-//   { value: 'frictionCoefficient', label: 'Coeficiente de Fricción (μ)' },
-//   { value: 'angle', label: 'Ángulo de Aplicación (θ)' }
+//   { value: 'frictionCoefficient', label: 'Coeficiente de Fricción (μ)' }
 // ];
 
-// export const NEWTON_ADVANCED_FORMULAS = [
-//   { 
-//     formula: 'F = √(Fx² + Fy²)', 
-//     description: 'Fuerza resultante de componentes bidimensionales' 
-//   },
-//   { 
-//     formula: 'Fx = F × cos(θ)', 
-//     description: 'Componente horizontal de la fuerza' 
-//   },
-//   { 
-//     formula: 'Fy = F × sin(θ)', 
-//     description: 'Componente vertical de la fuerza' 
-//   },
-//   { 
-//     formula: 'Ff = μ × N', 
-//     description: 'Fuerza de fricción cinética' 
-//   },
-//   { 
-//     formula: 'Fneta = Faplicada - Ff', 
-//     description: 'Fuerza neta considerando fricción' 
-//   },
-//   { 
-//     formula: 'a = Fneta / m', 
-//     description: 'Aceleración considerando todas las fuerzas' 
-//   },
-//   { 
-//     formula: 'N = m × g × cos(θ)', 
-//     description: 'Fuerza normal en superficie inclinada' 
-//   }
-// ];
 
 // Variables y fórmulas para MCUA
 export const MCUA_VARIABLES = [
@@ -363,9 +312,8 @@ export const MCUA_FORMULAS = [
   { 
     formula: 'aₜₒₜₐₗ = √(aₙ² + aₜ²)', 
     description: 'Aceleración total' 
-  }
+  },
 ];
-
 // Configuraciones para los calculadores
 export const MCU_CONFIG = {
   title: "Movimiento Circular Uniforme",
@@ -437,5 +385,61 @@ export const NEWTON_ADVANCED_CONFIG = {
     frictionForce: ['frictionCoefficient', 'normalForce'],
     normalForce: ['mass', 'angle'],
     frictionCoefficient: ['frictionForce', 'normalForce']
+  }
+};
+
+// Variables para Fuerzas Múltiples - Segunda Ley de Newton
+export const NEWTON_MULTIPLE_FORCES_VARIABLES = [
+  { value: 'netForce', label: 'Fuerza Neta (F_neta)' },
+  { value: 'acceleration', label: 'Aceleración (a)' },
+  { value: 'mass', label: 'Masa (m)' },
+  { value: 'multipleForces', label: 'Fuerzas Múltiples' }
+];
+
+export const NEWTON_MULTIPLE_FORCES_FORMULAS = [
+  { 
+    formula: 'F_neta = √(Fx² + Fy²)', 
+    description: 'Fuerza neta a partir de componentes',
+    example: 'Si Fx = 30 N y Fy = 40 N, entonces F_neta = √(30² + 40²) = 50 N'
+  },
+  { 
+    formula: 'Fx = Σ(Fi × cos(θi))', 
+    description: 'Componente X de la fuerza neta',
+    example: 'F₁ = 100N a 0°, F₂ = 50N a 90° → Fx = 100×cos(0°) + 50×cos(90°) = 100 N'
+  },
+  { 
+    formula: 'Fy = Σ(Fi × sin(θi))', 
+    description: 'Componente Y de la fuerza neta',
+    example: 'F₁ = 100N a 0°, F₂ = 50N a 90° → Fy = 100×sin(0°) + 50×sin(90°) = 50 N'
+  },
+  { 
+    formula: 'θ = arctan(Fy / Fx)', 
+    description: 'Ángulo de la fuerza neta',
+    example: 'Si Fx = 100 N y Fy = 50 N, entonces θ = arctan(50/100) = 26.57°'
+  },
+  { 
+    formula: 'a = F_neta / m', 
+    description: 'Aceleración a partir de fuerza neta',
+    example: 'Si F_neta = 50 N y m = 10 kg, entonces a = 5 m/s²'
+  },
+  { 
+    formula: 'm = F_neta / a', 
+    description: 'Masa a partir de fuerza neta',
+    example: 'Si F_neta = 50 N y a = 5 m/s², entonces m = 10 kg'
+  }
+];
+
+export const NEWTON_MULTIPLE_FORCES_CONFIG = {
+  title: "Segunda Ley de Newton - Fuerzas Múltiples",
+  description: "Calculadora para múltiples fuerzas aplicadas y cálculo de fuerza neta",
+  calculatorTitle: "Calculadora de Fuerzas Múltiples",
+  calculatorDescription: "Ingresa múltiples fuerzas para calcular la fuerza neta y aplicar la Segunda Ley de Newton",
+  variables: NEWTON_MULTIPLE_FORCES_VARIABLES,
+  formulas: NEWTON_MULTIPLE_FORCES_FORMULAS,
+  variableGroups: {
+    netForce: ['multipleForces'],
+    acceleration: ['netForce', 'mass', 'multipleForces'],
+    mass: ['netForce', 'acceleration', 'multipleForces'],
+    multipleForces: ['netForce', 'acceleration', 'mass']
   }
 };
