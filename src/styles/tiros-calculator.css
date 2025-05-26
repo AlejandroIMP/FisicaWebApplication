@@ -22,10 +22,21 @@
   transition: var(--transition-default);
 }
 
+body.dark-mode .tiro-select {
+  background-color: rgb(var(--gray-dark-theme)); /* from global.css */
+  color: rgb(var(--black-dark-theme)); /* from global.css */
+  border: 2px solid rgb(var(--gray-dark-theme));
+}
+
 .tiro-select:focus {
   border-color: var(--button-color);
   box-shadow: var(--focus-shadow);
   outline: none;
+}
+
+body.dark-mode .tiro-select:focus {
+  border-color: var(--accent-dark-theme); /* from global.css */
+  box-shadow: 0 0 0 2px rgba(var(--accent-dark-theme-rgb), 0.4); /* from global.css */
 }
 
 /* Estilos para el contenedor de inputs */
@@ -52,10 +63,21 @@
   transition: var(--transition-default);
 }
 
+body.dark-mode .tiro-input {
+  background-color: rgb(var(--gray-dark-theme));
+  color: rgb(var(--black-dark-theme));
+  border: 2px solid rgb(var(--gray-dark-theme));
+}
+
 .tiro-input:focus {
   border-color: var(--button-color);
   box-shadow: var(--focus-shadow);
   outline: none;
+}
+
+body.dark-mode .tiro-input:focus {
+  border-color: var(--accent-dark-theme);
+  box-shadow: 0 0 0 2px rgba(var(--accent-dark-theme-rgb), 0.4);
 }
 
 /* Estilos para el botón de cálculo */
@@ -73,9 +95,20 @@
   box-shadow: var(--button-shadow);
 }
 
+body.dark-mode .tiro-button {
+  background-color: var(--accent-dark-theme);
+  color: rgb(var(--black-dark-theme)) !important; /* Ensure text is readable */
+  box-shadow: 0 2px 4px rgba(var(--accent-dark-theme-rgb), 0.3);
+}
+
 .tiro-button:hover {
   background-color: var(--button-hover);
   box-shadow: var(--button-shadow-hover);
+}
+
+body.dark-mode .tiro-button:hover {
+  background-color: var(--accent-dark-dark-theme);
+  box-shadow: 0 4px 8px rgba(var(--accent-dark-dark-theme-rgb), 0.4);
 }
 
 /* Estilos para el área de resultados */
@@ -93,6 +126,13 @@
   word-wrap: break-word;
 }
 
+body.dark-mode .tiro-resultado {
+  background-color: rgba(var(--accent-success-dark-theme-rgb), 0.2);
+  border-left: 6px solid var(--accent-success-dark-theme);
+  color: rgb(var(--black-dark-theme)) !important;
+  box-shadow: var(--box-shadow-dark-theme); /* from global.css */
+}
+
 .tiro-resultado::before {
   content: "✅ Resultado:";
   color: var(--success-color);
@@ -100,6 +140,10 @@
   display: block;
   margin-bottom: 0.8rem;
   font-size: 1.1rem;
+}
+
+body.dark-mode .tiro-resultado::before {
+  color: var(--accent-success-dark-theme);
 }
 
 /* Clase específica para el texto del resultado */
@@ -119,6 +163,12 @@
   font-family: 'Atkinson', monospace;
 }
 
+body.dark-mode .tiro-formula {
+  background-color: rgba(var(--gray-dark-theme), 0.5);
+  border-left: 4px solid var(--accent-highlight-dark-theme); /* Mapped from formula-color */
+  color: rgb(var(--black-dark-theme));
+}
+
 /* Línea divisoria */
 .tiro-divider {
   width: 100%;
@@ -126,6 +176,10 @@
   border: none;
   border-top: 1px solid rgba(var(--gray), 0.2);
   margin: 2rem 0;
+}
+
+body.dark-mode .tiro-divider {
+  border-top: 1px solid rgba(var(--gray-dark-dark-theme), 0.2); /* from global.css */
 }
 
 /* Media queries */

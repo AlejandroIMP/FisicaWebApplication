@@ -5,6 +5,10 @@ h1 {
   color: var(--header-color);
 }
 
+body.dark-mode h1 {
+  color: var(--accent-dark-dark-theme); /* From global.css */
+}
+
 .calculator-container {
   display: flex;
   flex-direction: column;
@@ -21,16 +25,30 @@ h1 {
   margin: 0 auto;
 }
 
+body.dark-mode .calculator {
+  background: rgb(var(--gray-light-dark-theme)); /* From global.css */
+  box-shadow: 0 8px 24px rgba(var(--black-dark-theme), 0.2); /* Adjusted shadow */
+}
+
 .calculator-header {
   background: linear-gradient(135deg, var(--accent-dark), #1E40AF); /* Gradiente de azul profundo */
   color: white;
   padding: 1.5rem;
 }
 
+body.dark-mode .calculator-header {
+  background: var(--accent-dark-dark-theme); /* Solid color for dark mode */
+  color: rgb(var(--black-dark-theme));
+}
+
 .calculator-header h2 {
   color: white;
   margin: 0;
   font-size: 1.8rem;
+}
+
+body.dark-mode .calculator-header h2 {
+  color: rgb(var(--black-dark-theme));
 }
 
 .calculator-header p {
@@ -60,10 +78,21 @@ h1 {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+body.dark-mode .variable-selector select {
+  background: rgb(var(--gray-dark-theme));
+  color: rgb(var(--black-dark-theme));
+  border: 1px solid rgb(var(--gray-dark-theme));
+}
+
 .variable-selector select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
   outline: none;
+}
+
+body.dark-mode .variable-selector select:focus {
+  border-color: var(--accent-dark-theme);
+  box-shadow: 0 0 0 2px rgba(var(--accent-dark-theme-rgb), 0.2);
 }
 
 .input-groups-container {
@@ -93,9 +122,18 @@ h1 {
   transition: all 0.3s ease;
 }
 
+body.dark-mode .input-group {
+  background-color: rgb(var(--gray-dark-theme));
+}
+
 .input-group:hover {
   background-color: #F3F4F6;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+body.dark-mode .input-group:hover {
+  background-color: rgb(var(--gray-light-dark-theme)); /* A slightly different shade for hover */
+  box-shadow: 0 2px 8px rgba(var(--black-dark-theme), 0.15);
 }
 
 .input-group label {
@@ -103,6 +141,10 @@ h1 {
   margin-bottom: 0.7rem;
   font-weight: 500;
   color: #374151; 
+}
+
+body.dark-mode .input-group label {
+  color: rgb(var(--black-dark-theme));
 }
 
 /* Estos estilos serán reemplazados por los del componente InputGroup */
@@ -127,10 +169,21 @@ h1 {
   background-color: #FFFFFF;
 }
 
+body.dark-mode .input-with-unit input {
+  background-color: rgb(var(--gray-dark-theme));
+  color: rgb(var(--black-dark-theme));
+  border: 1px solid rgb(var(--gray-dark-theme));
+}
+
 .input-with-unit input:focus {
   border-color: var(--accent);
   outline: none;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+body.dark-mode .input-with-unit input:focus {
+  border-color: var(--accent-dark-theme);
+  box-shadow: 0 0 0 2px rgba(var(--accent-dark-theme-rgb), 0.2);
 }
 
 .unit-selector {
@@ -150,14 +203,29 @@ h1 {
   overflow: visible; 
 }
 
+body.dark-mode .unit-selector {
+  background: rgb(var(--gray-dark-theme));
+  color: rgb(var(--black-dark-theme));
+  border: 1px solid rgb(var(--gray-dark-theme));
+}
+
 .unit-selector:hover {
   background: #e5e5e5;
+}
+
+body.dark-mode .unit-selector:hover {
+  background: rgb(var(--gray-light-dark-theme)); /* Slightly different for hover */
 }
 
 .unit-selector:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 1px var(--accent); 
+}
+
+body.dark-mode .unit-selector:focus {
+  border-color: var(--accent-dark-theme);
+  box-shadow: 0 0 0 1px var(--accent-dark-theme);
 }
 
 .calculate-button {
@@ -175,10 +243,21 @@ h1 {
   box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
 }
 
+body.dark-mode .calculate-button {
+  background: var(--accent-dark-theme);
+  color: rgb(var(--black-dark-theme));
+  box-shadow: 0 2px 4px rgba(var(--accent-dark-theme-rgb), 0.3);
+}
+
 .calculate-button:hover {
   background: #1D4ED8; 
   box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
   transform: translateY(-1px);
+}
+
+body.dark-mode .calculate-button:hover {
+  background: var(--accent-dark-dark-theme);
+  box-shadow: 0 4px 8px rgba(var(--accent-dark-dark-theme-rgb), 0.4);
 }
 
 .result-container {
@@ -193,9 +272,19 @@ h1 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+body.dark-mode .result-box {
+  background: rgb(var(--gray-dark-theme));
+  border-left: 4px solid var(--accent-success-dark-theme);
+  box-shadow: 0 2px 8px rgba(var(--black-dark-theme), 0.1);
+}
+
 .result-box h3 {
   margin: 0 0 0.8rem 0;
   font-size: 1.2rem;
+}
+
+body.dark-mode .result-box h3 {
+  color: rgb(var(--black-dark-theme));
 }
 
 #result {
@@ -203,6 +292,10 @@ h1 {
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #111827;
+}
+
+body.dark-mode #result {
+  color: rgb(var(--black-dark-theme));
 }
 
 /* Estilos para mensajes de error */
@@ -215,10 +308,20 @@ h1 {
   border-radius: 0 4px 4px 0;
 }
 
+body.dark-mode .error-message {
+  color: var(--accent-error-dark-theme);
+  border-left: 3px solid var(--accent-error-dark-theme);
+  background-color: rgba(var(--accent-error-dark-theme-rgb), 0.1);
+}
+
 #formula-used {
   font-size: 0.9rem;
   color: #666;
   font-weight: 500;
+}
+
+body.dark-mode #formula-used {
+  color: rgb(var(--gray-dark-dark-theme));
 }
 
 .formulas-container {
@@ -228,6 +331,11 @@ h1 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+body.dark-mode .formulas-container {
+  background: rgb(var(--gray-light-dark-theme));
+  box-shadow: 0 4px 12px rgba(var(--black-dark-theme), 0.15);
+}
+
 .formulas-container h3 {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -235,10 +343,18 @@ h1 {
   font-weight: 700;
 }
 
+body.dark-mode .formulas-container h3 {
+  color: var(--accent-dark-dark-theme);
+}
+
 .formula-item {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #eee;
+}
+
+body.dark-mode .formula-item {
+  border-bottom: 1px solid rgb(var(--gray-dark-theme));
 }
 
 .formula-item:last-child {
@@ -256,10 +372,18 @@ h1 {
   color: var(--accent-highlight);
 }
 
+body.dark-mode .formula-item span {
+  color: var(--accent-highlight-dark-theme);
+}
+
 .formula-item p {
   margin: 0;
   color: #666;
   font-size: 0.95rem;
+}
+
+body.dark-mode .formula-item p {
+  color: rgb(var(--gray-dark-dark-theme));
 }
 
 @media (min-width: 768px) {

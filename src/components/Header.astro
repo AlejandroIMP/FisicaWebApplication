@@ -2,6 +2,7 @@
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 import { Icon } from 'astro-icon/components';
+import { toggleTheme } from '../utils/theme-switcher.js';
 
 interface HeaderLink {
 	href: string;
@@ -39,6 +40,9 @@ const headerLinks: HeaderLink[] = [
 			))}
 		</div>
 		<div class="social-links">
+			<button id="theme-toggle-button" aria-label="Toggle theme">
+				<Icon name="mdi:theme-light-dark" size={24} />
+			</button>
 			<a href="https://github.com/alejandroimp/FisicaWebApplication" target="_blank">
 				<span class="sr-only">Go to Platform's GitHub repo</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
@@ -87,6 +91,16 @@ const headerLinks: HeaderLink[] = [
       menu.classList.remove('show');
     }
   });
+
+  // Theme toggle button event listener
+  const themeToggleButton = document.getElementById('theme-toggle-button');
+  if (themeToggleButton) {
+    themeToggleButton.addEventListener('click', () => {
+      toggleTheme();
+      // Optional: Update icon or button text based on the new theme
+      // For example, by checking document.body.classList.contains('dark-mode')
+    });
+  }
 </script>
 <style>
 	header {
@@ -127,9 +141,24 @@ const headerLinks: HeaderLink[] = [
 	}
 
 	.social-links,
-	.social-links a {
+	.social-links a,
+	.social-links button {
 		display: flex;
+		align-items: center; /* Align items vertically */
 	}
+
+	.social-links button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5em; /* Similar padding to links */
+		color: var(--black); /* Use a CSS variable for color if available */
+	}
+
+	.social-links button:hover {
+		color: var(--accent); /* Example hover color */
+	}
+
 
 	.menu-links {
 		display: none;

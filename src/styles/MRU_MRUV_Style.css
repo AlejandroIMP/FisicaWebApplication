@@ -21,6 +21,11 @@ body {
   color: var(--text);
 }
 
+body.dark-mode {
+  background: rgb(var(--gray-light-dark-theme)); /* Global dark theme background */
+  color: rgb(var(--black-dark-theme));      /* Global dark theme text color */
+}
+
 /* header {
   background: var(--primary);
   color: white;
@@ -53,6 +58,11 @@ main {
   margin-top: 1.5rem;
 }
 
+body.dark-mode .card {
+  background: rgb(var(--gray-dark-theme)); /* Global dark theme card background */
+  box-shadow: 0 5px 20px rgba(var(--black-dark-theme), 0.2); /* Adjusted shadow for dark theme */
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -67,6 +77,10 @@ main {
 h2 {
   color: var(--primary);
   margin-top: 0;
+}
+
+body.dark-mode h2 {
+  color: var(--accent-dark-dark-theme); /* Global dark theme accent for headings */
 }
 
 label {
@@ -86,6 +100,13 @@ select {
   border-radius: var(--radius);
 }
 
+body.dark-mode input,
+body.dark-mode select {
+  background-color: rgb(var(--gray-dark-theme)); /* Darker background for inputs */
+  color: rgb(var(--black-dark-theme)); /* Text color for inputs */
+  border: 1px solid rgb(var(--gray-dark-theme)); /* Border for inputs */
+}
+
 button {
   display: inline-block;
   margin-top: 1.5rem;
@@ -99,8 +120,18 @@ button {
   box-shadow: 0 2px 10px var(--shadow);
 }
 
+body.dark-mode button {
+  background: var(--accent-dark-theme); /* Global dark theme button color */
+  color: rgb(var(--black-dark-theme)); /* Text color for button */
+  box-shadow: 0 2px 10px rgba(var(--black-dark-theme), 0.2); /* Adjusted shadow */
+}
+
 button:hover {
   background: var(--primary-dark);
+}
+
+body.dark-mode button:hover {
+  background: var(--accent-dark-dark-theme); /* Global dark theme button hover color */
 }
 
 .result {
@@ -108,6 +139,10 @@ button:hover {
   font-weight: bold;
   font-size: 1.2rem;
   color: var(--text);
+}
+
+body.dark-mode .result {
+  color: rgb(var(--black-dark-theme)); /* Global dark theme text color for results */
 }
 
 /* Responsive */

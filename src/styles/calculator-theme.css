@@ -25,6 +25,10 @@
   --transition-default: all 0.2s ease;
 }
 
+/* Dark mode variable overrides for calculator-theme specifically if needed.
+   For now, we'll rely on the global dark theme variables defined in global.css
+   and apply them directly in the body.dark-mode sections below. */
+
 /* Estilos para mejorar la accesibilidad */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -38,7 +42,7 @@
 /* Estilo para los enlaces de accesibilidad para saltar al contenido principal */
 .skip-link {
   background: var(--button-color);
-  color: white;
+  color: white; /* Assuming white text is fine on accent-dark-theme */
   font-weight: 700;
   left: 50%;
   padding: 8px;
@@ -52,38 +56,64 @@
   transform: translateY(0%);
 }
 
+body.dark-mode .skip-link {
+  background: var(--accent-dark-theme);
+  /* color: var(--black-dark-theme); Ensure text is readable */
+}
+
 /* Mejoras de enfoque para la accesibilidad con el teclado */
 :focus-visible {
   outline: 3px solid var(--button-color);
   outline-offset: 2px;
 }
 
-/* Estilos para modo oscuro - para futura implementación */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --light-bg: #1F2937;
-    --gray-bg: #374151;
-    --gray-text: #9CA3AF;
-    --dark-text: #F3F4F6;
-  }
+body.dark-mode :focus-visible {
+  outline: 3px solid var(--accent-dark-theme);
 }
 
 /* Clases utilitarias para los colores */
 .text-header { color: var(--header-color); }
+body.dark-mode .text-header { color: var(--accent-dark-dark-theme); }
+
 .text-button { color: var(--button-color); }
+body.dark-mode .text-button { color: var(--accent-dark-theme); }
 .text-formula { color: var(--formula-color); }
+body.dark-mode .text-formula { color: var(--accent-highlight-dark-theme); }
+
 .text-error { color: var(--error-color); }
+body.dark-mode .text-error { color: var(--accent-error-dark-theme); }
+
 .text-success { color: var(--success-color); }
+body.dark-mode .text-success { color: var(--accent-success-dark-theme); }
+
 .text-dark { color: var(--dark-text); }
+body.dark-mode .text-dark { color: rgb(var(--black-dark-theme)); } /* from global.css */
+
 .text-gray { color: var(--gray-text); }
+body.dark-mode .text-gray { color: rgb(var(--gray-dark-theme)); } /* from global.css */
+
 
 .bg-header { background-color: var(--header-color); }
+body.dark-mode .bg-header { background-color: var(--accent-dark-dark-theme); }
+
 .bg-button { background-color: var(--button-color); }
+body.dark-mode .bg-button { background-color: var(--accent-dark-theme); }
+
 .bg-formula { background-color: var(--formula-color); }
+body.dark-mode .bg-formula { background-color: var(--accent-highlight-dark-theme); }
+
 .bg-error { background-color: var(--error-color); }
+body.dark-mode .bg-error { background-color: var(--accent-error-dark-theme); }
+
 .bg-success { background-color: var(--success-color); }
+body.dark-mode .bg-success { background-color: var(--accent-success-dark-theme); }
+
 .bg-light { background-color: var(--light-bg); }
+body.dark-mode .bg-light { background-color: rgb(var(--gray-light-dark-theme)); } /* from global.css */
+
 .bg-gray { background-color: var(--gray-bg); }
+body.dark-mode .bg-gray { background-color: rgb(var(--gray-dark-theme)); } /* from global.css, using gray-dark as bg */
+
 
 /* Clases para mensajes informativos */
 .info-message {
@@ -99,10 +129,22 @@
   color: #166534;
 }
 
+body.dark-mode .info-success {
+  background-color: rgba(var(--accent-success-dark-theme-rgb), 0.2);
+  border-left: 4px solid var(--accent-success-dark-theme);
+  color: rgb(var(--black-dark-theme)); /* Lighter text for dark background */
+}
+
 .info-error {
   background-color: rgba(239, 68, 68, 0.1);
   border-left: 4px solid var(--error-color);
   color: #B91C1C;
+}
+
+body.dark-mode .info-error {
+  background-color: rgba(var(--accent-error-dark-theme-rgb), 0.2);
+  border-left: 4px solid var(--accent-error-dark-theme);
+  color: rgb(var(--black-dark-theme));
 }
 
 .info-warning {
@@ -111,8 +153,20 @@
   color: #C2410C;
 }
 
+body.dark-mode .info-warning {
+  background-color: rgba(var(--accent-highlight-dark-theme-rgb), 0.2); /* Assuming formula-color maps to accent-highlight */
+  border-left: 4px solid var(--accent-highlight-dark-theme);
+  color: rgb(var(--black-dark-theme));
+}
+
 .info-info {
   background-color: rgba(37, 99, 235, 0.1);
   border-left: 4px solid var(--button-color);
   color: #1E40AF;
+}
+
+body.dark-mode .info-info {
+  background-color: rgba(var(--accent-dark-theme-rgb), 0.2);
+  border-left: 4px solid var(--accent-dark-theme);
+  color: rgb(var(--black-dark-theme));
 }

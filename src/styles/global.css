@@ -21,6 +21,29 @@
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
+
+	/* Dark Theme Colors */
+	--accent-dark-theme: #F97316; /* Naranja científico - Botones/interactivos */
+	--accent-dark-dark-theme: #EA580C; /* Naranja oscuro - Cabeceras */
+	--accent-highlight-dark-theme: #2563EB; /* Azul eléctrico - Ecuaciones/resaltados */
+	--accent-error-dark-theme: #DC2626; /* Rojo oscuro - Errores/alertas */
+	--accent-success-dark-theme: #16A34A; /* Verde oscuro - Feedback positivo */
+
+	--black-dark-theme: 229, 231, 235; /* gris claro #E5E7EB */
+	--gray-dark-theme: 107, 114, 128; /* gris oscuro #6B7280 */
+	--gray-light-dark-theme: 31, 41, 55; /* casi negro #1F2937 */
+	--gray-dark-dark-theme: 243, 244, 246; /* casi blanco #F3F4F6 */
+	--gray-gradient-dark-theme: rgba(var(--gray-light-dark-theme), 50%), #000;
+	--box-shadow-dark-theme:
+		0 2px 6px rgba(var(--black-dark-theme), 25%), 0 8px 24px rgba(var(--black-dark-theme), 33%),
+		0 16px 32px rgba(var(--black-dark-theme), 33%);
+
+	/* RGB versions of dark theme accents for use in rgba() */
+	--accent-dark-theme-rgb: 249, 115, 22; /* Corresponds to #F97316 */
+	--accent-dark-dark-theme-rgb: 234, 88, 12; /* Corresponds to #EA580C */
+	--accent-highlight-dark-theme-rgb: 37, 99, 235; /* Corresponds to #2563EB */
+	--accent-error-dark-theme-rgb: 220, 38, 38; /* Corresponds to #DC2626 */
+	--accent-success-dark-theme-rgb: 22, 163, 74; /* Corresponds to #16A34A */
 }
 @font-face {
 	font-family: 'Atkinson';
@@ -49,6 +72,13 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 }
+
+body.dark-mode {
+	background: linear-gradient(var(--gray-gradient-dark-theme)) no-repeat;
+	background-size: 100% 600px;
+	color: rgb(var(--gray-dark-dark-theme));
+}
+
 main {
 	width: 720px;
 	max-width: calc(100% - 2em);
@@ -65,6 +95,16 @@ h6 {
 	color: rgb(var(--black));
 	line-height: 1.2;
 }
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+	color: rgb(var(--black-dark-theme));
+}
+
 h1 {
 	font-size: 3.052em;
 }
@@ -87,9 +127,19 @@ b {
 a {
 	color: var(--accent);
 }
+
+body.dark-mode a {
+	color: var(--accent-dark-theme);
+}
+
 a:hover {
 	color: var(--accent);
 }
+
+body.dark-mode a:hover {
+	color: var(--accent-dark-dark-theme); /* Using a slightly different shade for hover in dark mode */
+}
+
 p {
 	margin-bottom: 1em;
 }
@@ -116,6 +166,12 @@ code {
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
 }
+
+body.dark-mode code {
+	background-color: rgb(var(--gray-light-dark-theme));
+	color: rgb(var(--black-dark-theme)); /* Text color for code blocks in dark mode */
+}
+
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
@@ -129,10 +185,21 @@ blockquote {
 	margin: 0px;
 	font-size: 1.333em;
 }
+
+body.dark-mode blockquote {
+	border-left: 4px solid var(--accent-dark-theme);
+	color: rgb(var(--gray-dark-dark-theme)); /* Text color for blockquotes in dark mode */
+}
+
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
 }
+
+body.dark-mode hr {
+	border-top: 1px solid rgb(var(--gray-light-dark-theme));
+}
+
 @media (max-width: 720px) {
 	body {
 		font-size: 18px;
