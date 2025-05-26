@@ -1,28 +1,54 @@
-
 /* Variables de tema para las calculadoras */
 :root {
-  /* Colores principales de la plataforma */
+  /* Colores principales de la plataforma (from calculator-theme & global) */
   --header-color: #1E3A8A; /* Azul profundo para cabeceras */
   --button-color: #2563EB; /* Azul eléctrico para botones/interactivos */
   --button-hover: #1D4ED8; /* Azul eléctrico más oscuro para hover */
   --formula-color: #F97316; /* Naranja científico para ecuaciones */
   --error-color: #EF4444; /* Rojo coral para errores/alertas */
   --success-color: #22C55E; /* Verde éxito para feedback positivo */
-  
-  /* Neutros */
-  --light-bg: #FFFFFF; /* Fondo principal */
-  --gray-bg: #F3F4F6; /* Fondo gris para elementos secundarios */
-  --gray-text: #6B7280; /* Texto gris */
+  --success-dark-color: #059669; /* Verde éxito más oscuro */
+  --success-darker-color: #047857; /* Verde éxito aún más oscuro */
+
+  /* Colores para componentes de Información / Neutros Claros */
+  --info-light-bg: #f0f9ff; /* Fondo azulado muy claro para secciones informativas */
+  --info-border-color: #0ea5e9; /* Borde azul claro para secciones informativas */
+  --info-dark-text: #0c4a6e; /* Texto azul oscuro para títulos en secciones informativas */
+  --info-text: #164e63; /* Texto azul principal para secciones informativas */
+
+  /* Fondos y Texto (from calculator-theme, with additions/mappings) */
+  --light-bg: #FFFFFF; /* Fondo principal, card backgrounds */
+  --gray-bg: #F3F4F6; /* Fondo gris para elementos secundarios, page background */
+  --gray-lighter-bg: #E5E7EB; /* Un gris aún más claro para fondos de elementos */
+  --gray-element-bg: #f0f0f0; /* Gris para fondos de elementos como selectores */
+  --gray-element-hover-bg: #e5e5e5; /* Gris para hover de elementos como selectores */
   --dark-text: #111827; /* Texto principal oscuro */
+  --gray-text: #6B7280; /* Texto gris secundario */
   
-  /* Sombras y efectos */
+  /* Variantes de texto y grises (from global/estilo*) */
+  --black-deep: #0F1219; /* Un negro más profundo, si necesario */
+  --dark-text-variant: #222939; /* Una variante más oscura para texto o elementos */
+  --gray-medium: #9CA3AF; /* Un gris medio */
+  /* --gray-light (#E5E7EB) is very similar to --gray-bg (#F3F4F6), sticking to --gray-bg */
+  
+  /* Sombras y efectos (from calculator-theme) */
   --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --focus-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
-  --button-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
-  --button-shadow-hover: 0 4px 8px rgba(37, 99, 235, 0.4);
+  --focus-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4); /* Uses button-color */
+  --button-shadow: 0 2px 4px rgba(37, 99, 235, 0.3); /* Uses button-color */
+  --button-shadow-hover: 0 4px 8px rgba(37, 99, 235, 0.4); /* Uses button-color */
+  --success-shadow: 0 2px 4px rgba(34, 197, 94, 0.3); /* Sombra para elementos de éxito */
+  --success-shadow-hover: 0 4px 8px rgba(34, 197, 94, 0.4); /* Sombra para hover de elementos de éxito */
+  --component-box-shadow: 0 2px 6px rgba(156, 163, 175, 0.25), 0 8px 24px rgba(156, 163, 175, 0.33), 0 16px 32px rgba(156, 163, 175, 0.33); /* Based on --gray-medium #9CA3AF */
   
-  /* Transiciones */
+  /* Transiciones (from calculator-theme) */
   --transition-default: all 0.2s ease;
+
+  /* Variables de global.css que usan otros colores */
+  --gray-gradient: rgba(243, 244, 246, 0.5), #fff; /* Mapped from --gray-light */
+
+  /* Variables de MRU_MRUV_Style.css (non-color, keeping for now if they are general) */
+  --radius-general: 12px; /* Renamed from --radius */
+  --max-width-content: 900px; /* Renamed from --max-width */
 }
 
 /* Estilos para mejorar la accesibilidad */
@@ -38,7 +64,7 @@
 /* Estilo para los enlaces de accesibilidad para saltar al contenido principal */
 .skip-link {
   background: var(--button-color);
-  color: white;
+  color: white; /* Explicit white for high contrast on button color */
   font-weight: 700;
   left: 50%;
   padding: 8px;
@@ -63,8 +89,20 @@
   :root {
     --light-bg: #1F2937;
     --gray-bg: #374151;
-    --gray-text: #9CA3AF;
-    --dark-text: #F3F4F6;
+    --gray-text: #9CA3AF; /* Mapped to the new --gray-medium for dark mode */
+    --dark-text: #F3F4F6; /* Light text for dark background */
+
+    /* Update other colors for dark mode if necessary */
+    --black-deep: #000000;
+    --dark-text-variant: #D1D5DB; /* Lighter variant for dark mode */
+    --gray-medium: #6B7280; /* Darker gray for dark mode text if needed */
+    --gray-gradient: rgba(55, 65, 81, 0.5), #1F2937; /* Dark gradient */
+
+    /* Ensure main color palette is adapted for dark mode if needed */
+    --header-color: #375a7f; /* Example: softer blue for dark mode header */
+    --button-color: #4A90E2; /* Example: slightly lighter/brighter blue for buttons */
+    --button-hover: #357ABD; /* Example: adjusted hover */
+    --formula-color: #FFA500; /* Example: ensure orange is visible */
   }
 }
 
@@ -94,25 +132,25 @@
 }
 
 .info-success {
-  background-color: rgba(34, 197, 94, 0.1);
+  background-color: rgba(34, 197, 94, 0.1); /* success-color with alpha */
   border-left: 4px solid var(--success-color);
-  color: #166534;
+  color: #166534; /* Dark green for text, consider making this a variable if used elsewhere */
 }
 
 .info-error {
-  background-color: rgba(239, 68, 68, 0.1);
+  background-color: rgba(239, 68, 68, 0.1); /* error-color with alpha */
   border-left: 4px solid var(--error-color);
-  color: #B91C1C;
+  color: #B91C1C; /* Dark red for text */
 }
 
 .info-warning {
-  background-color: rgba(249, 115, 22, 0.1);
+  background-color: rgba(249, 115, 22, 0.1); /* formula-color with alpha */
   border-left: 4px solid var(--formula-color);
-  color: #C2410C;
+  color: #C2410C; /* Dark orange for text */
 }
 
 .info-info {
-  background-color: rgba(37, 99, 235, 0.1);
+  background-color: rgba(37, 99, 235, 0.1); /* button-color with alpha */
   border-left: 4px solid var(--button-color);
-  color: #1E40AF;
+  color: #1E40AF; /* Dark blue for text */
 }

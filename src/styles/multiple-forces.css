@@ -2,9 +2,9 @@
 
 /* Mode Selection Styles */
 .calculation-mode-selector {
-  background: white;
+  background: var(--light-bg); /* Updated */
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Kept as is */
   padding: 1.5rem;
   margin: 2rem auto;
   max-width: 800px;
@@ -12,7 +12,7 @@
 
 .calculation-mode-selector h3 {
   margin: 0 0 1rem 0;
-  color: #1F2937;
+  color: var(--dark-text-variant); /* Updated */
   font-size: 1.2rem;
   font-weight: 600;
 }
@@ -28,27 +28,27 @@
   align-items: center;
   gap: 1rem;
   padding: 1.2rem;
-  background: #f8f9fa;
-  border: 2px solid #e5e7eb;
+  background: var(--gray-bg); /* Updated */
+  border: 2px solid var(--gray-lighter-bg); /* Updated */
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: left;
-  font-family: inherit;
+  /* font-family: inherit; is covered by global.css button style if this is a button */
 }
 
 .mode-btn:hover {
-  background: #f1f5f9;
-  border-color: #3b82f6;
+  background: var(--gray-bg); /* Updated - Note: original hover #f1f5f9 is very close to gray-bg #F3F4F6 */
+  border-color: var(--button-color); /* Updated */
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15); /* Kept specific shadow */
 }
 
 .mode-btn.active {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  border-color: #1d4ed8;
+  background: linear-gradient(135deg, var(--button-color), var(--button-hover)); /* Updated */
+  border-color: var(--button-hover); /* Updated */
   color: white;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: var(--button-shadow-hover); /* Updated */
 }
 
 .mode-btn .icon {
@@ -92,7 +92,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, var(--success-color), var(--success-dark-color)); /* Updated */
   color: white;
   border: none;
   border-radius: 8px;
@@ -100,13 +100,13 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+  box-shadow: var(--success-shadow); /* Updated */
 }
 
 .example-btn:hover {
-  background: linear-gradient(135deg, #059669, #047857);
+  background: linear-gradient(135deg, var(--success-dark-color), var(--success-darker-color)); /* Updated */
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+  box-shadow: var(--success-shadow-hover); /* Updated */
 }
 
 .example-icon {
@@ -123,7 +123,7 @@
 }
 
 .formulas-section h4 {
-  color: #1f2937;
+  color: var(--dark-text-variant); /* Updated */
   margin-bottom: 1rem;
   font-size: 1.1rem;
   font-weight: 600;
@@ -131,35 +131,35 @@
 
 /* Net Force Details in Results */
 .net-force-details {
-  background: #f0f9ff;
-  border: 1px solid #0ea5e9;
+  background: var(--info-light-bg); /* Updated */
+  border: 1px solid var(--info-border-color); /* Updated */
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
 }
 
 .net-force-details h4 {
-  color: #0c4a6e;
+  color: var(--info-dark-text); /* Updated */
   margin: 0 0 0.8rem 0;
   font-size: 1rem;
 }
 
 .net-force-details p {
   margin: 0.4rem 0;
-  color: #164e63;
+  color: var(--info-text); /* Updated */
 }
 
 /* Calculation Steps */
 .calculation-steps {
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
+  background: var(--gray-bg); /* Updated */
+  border: 1px solid var(--gray-lighter-bg); /* Updated */
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
 }
 
 .calculation-steps h4 {
-  color: #334155;
+  color: var(--dark-text-variant); /* Updated */
   margin: 0 0 0.8rem 0;
   font-size: 1rem;
 }
@@ -167,7 +167,7 @@
 .calculation-steps ol {
   margin: 0;
   padding-left: 1.2rem;
-  color: #475569;
+  color: var(--gray-text); /* Updated */
 }
 
 .calculation-steps li {

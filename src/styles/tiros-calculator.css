@@ -2,9 +2,28 @@
   Estilos unificados para calculadoras de tiro vertical y parabólico
   Compatibles con: calculator-theme.css, calculator-components.css y global.css
 */
+
+/* Styles merged from estiloparabolico.css & estilovertical.css */
+/* General page layout for calculators using these styles - apply to a wrapper in Astro if needed */
+/* For now, assuming the Astro layout handles overall page centering and background */
+
+/* Themed H1 for Tiro Calculators */
+.tiro-calculator h1, h1.tiro-calculator-title {
+    background-color: var(--header-color);
+    color: white;
+    font-weight: bold;
+    font-size: 1.8rem;
+    padding: 1rem 2rem;
+    text-align: center;
+    /* width: 100%; /* Make sure this works with parent .tiro-calculator max-width */
+    box-shadow: var(--component-box-shadow);
+    margin-top: 0; /* Reset any browser default */
+    margin-bottom: 2rem; 
+}
+
 /* Contenedor específico para calculadoras de tiro */
 .tiro-calculator {
-  max-width: 700px;
+  max-width: 700px; /* Max width for the calculator content area */
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -15,7 +34,7 @@
   max-width: 500px;
   padding: 0.8rem;
   border-radius: 0.5rem;
-  border: 2px solid rgba(var(--gray-light), 1);
+  border: 2px solid var(--gray-lighter-bg); /* Updated */
   margin-bottom: 1.5rem;
   background-color: var(--light-bg);
   color: var(--dark-text);
@@ -29,7 +48,7 @@
 }
 
 /* Estilos para el contenedor de inputs */
-.tiro-inputs {
+.tiros-inputs {
   width: 100%;
   max-width: 500px;
   margin: 1.5rem 0;
@@ -45,7 +64,7 @@
   max-width: 500px;
   padding: 0.8rem;
   border-radius: 0.5rem;
-  border: 2px solid rgba(var(--gray-light), 1);
+  border: 2px solid var(--gray-lighter-bg); /* Updated */
   margin-bottom: 0.5rem;
   background-color: var(--light-bg);
   color: var(--dark-text);
@@ -60,13 +79,13 @@
 
 /* Estilos para el botón de cálculo */
 .tiro-button {
-  background-color: var(--button-color, #2563EB);
-  color: white !important;
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
+  background-color: var(--button-color); 
+  color: white !important; /* Important might be for specificity */
+  padding: 0.8rem 2rem; /* Specific padding */
+  /* font-size: 1rem; is from global button */
+  /* font-weight: 600; is from global button */
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.5rem; /* Matches global button */
   cursor: pointer;
   margin-top: 1rem;
   transition: var(--transition-default);
@@ -85,32 +104,34 @@
   max-width: 500px;
   padding: 1.5rem;
   border-radius: 0.75rem;
-  background-color: rgba(34, 197, 94, 0.1);
+  background-color: rgba(34, 197, 94, 0.1); /* success-color with alpha */
   border-left: 6px solid var(--success-color);
-  color: #111827 !important; /* Color fijo para asegurar visibilidad */
-  font-weight: 500;
-  box-shadow: var(--card-shadow);
+  color: var(--dark-text) !important; /* Kept from original tiros */
+  font-weight: 600; /* Merged from #resultado */
+  font-size: 1.25rem; /* Merged from #resultado */
+  box-shadow: var(--card-shadow); /* Kept original, --component-box-shadow is an alternative */
   word-wrap: break-word;
+  position: relative; /* Added from #resultado */
 }
 
 .tiro-resultado::before {
   content: "✅ Resultado:";
   color: var(--success-color);
-  font-weight: 700;
+  font-weight: 700; /* Kept from original tiros */
   display: block;
-  margin-bottom: 0.8rem;
-  font-size: 1.1rem;
+  margin-bottom: 0.8rem; /* Kept from original tiros */
+  font-size: 1.1rem; /* Kept from original tiros */
 }
 
-/* Clase específica para el texto del resultado */
+/* Clase específica para el texto del resultado - Can be removed if .tiro-resultado direct styles are enough */
 .tiro-resultado-text {
-  color: #111827 !important;
-  font-size: 1.05rem;
-  font-weight: 500;
+  color: var(--dark-text) !important; 
+  font-size: 1.25rem; /* Matched with .tiro-resultado font-size */
+  font-weight: 600; /* Matched with .tiro-resultado font-weight */
 }
 
 .tiro-formula {
-  background-color: rgba(var(--gray-light), 0.5);
+  background-color: rgba(229, 231, 235, 0.5); /* Updated: was var(--gray-light) alpha 0.5. (RGB for #E5E7EB) */
   border-left: 4px solid var(--formula-color);
   padding: 1rem;
   border-radius: 0.5rem;
@@ -120,23 +141,35 @@
 }
 
 /* Línea divisoria */
-.tiro-divider {
+.tiro-divider { /* Styled like hr from estiloparabolico/vertical */
   width: 100%;
   max-width: 500px;
   border: none;
-  border-top: 1px solid rgba(var(--gray), 0.2);
+  border-top: 1px solid rgba(156, 163, 175, 0.2); /* var(--gray-medium) with 0.2 alpha */
   margin: 2rem 0;
 }
 
-/* Media queries */
+/* Responsive styles from estiloparabolico/vertical */
 @media (max-width: 600px) {
+  .tiro-calculator h1, h1.tiro-calculator-title {
+    font-size: 1.6rem;
+  }
+
   .tiro-select,
   .tiro-input {
-    font-size: 1rem;
-    padding: 0.7rem;
+    font-size: 1rem; /* Already consistent */
+    padding: 0.7rem; /* Already consistent */
   }
 
   .tiro-resultado {
-    padding: 1.2rem;
+    font-size: 1.1rem; /* Merged from #resultado responsive */
+    padding: 1.2rem; /* Already consistent */
+  }
+
+  /* Styles for general select, input, button font size are in global.css or component specific */
+  
+  .titulo-movimiento { /* from estilovertical.css */
+    font-size: 1.4rem;
+    padding: 1rem;
   }
 }

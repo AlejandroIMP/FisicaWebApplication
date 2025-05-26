@@ -92,8 +92,8 @@ const headerLinks: HeaderLink[] = [
 	header {
 		margin: 0;
 		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		background: var(--light-bg); /* Updated from white */
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Updated from rgba(var(--black), 5%) */
 	}
 	h2 {
 		margin: 0;
@@ -111,13 +111,13 @@ const headerLinks: HeaderLink[] = [
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--black);
+		color: var(--dark-text); /* Updated from var(--black) */
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 	}
 	nav a.active {
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		border-bottom-color: var(--button-color); /* Updated from var(--accent) */
 	}
 
 	.social-links {
@@ -143,7 +143,7 @@ const headerLinks: HeaderLink[] = [
 		top: 70px;
 		left: 0;
 		right: 0;
-		background: white;
+		background: var(--light-bg); /* Updated from white */
 		z-index: 1;
 		transform: translateY(-100%);
 		transition: transform 0.3s ease-in-out;
@@ -185,7 +185,7 @@ const headerLinks: HeaderLink[] = [
 			flex-direction: column;
 			width: 100%;
 			padding: 1em;
-			box-shadow: 0 2px 8px rgba(var(--black), 5%);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Updated from rgba(var(--black), 5%) */
 			transform: translateY(-150%);
 		}
 
@@ -195,7 +195,7 @@ const headerLinks: HeaderLink[] = [
 
 		.internal-links-menu a {
 			padding: 0.8em 0;
-			border-bottom: 1px solid rgba(var(--black), 10%);
+			border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Updated from rgba(var(--black), 10%) */
 		}
 
 		.internal-links-menu a:last-child {

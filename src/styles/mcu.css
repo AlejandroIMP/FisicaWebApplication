@@ -1,8 +1,6 @@
-@import './calculator-theme.css';
-
 h1 {
   text-align: center;
-  color: var(--header-color);
+  color: var(--header-color); /* Updated */
 }
 
 .calculator-container {
@@ -13,16 +11,16 @@ h1 {
 }
 
 .calculator {
-  background: white;
+  background: var(--light-bg); /* Updated */
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12); /* Kept as is for now */
   overflow: hidden;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .calculator-header {
-  background: linear-gradient(135deg, var(--accent-dark), #1E40AF); /* Gradiente de azul profundo */
+  background: linear-gradient(135deg, var(--header-color), var(--button-hover)); /* Updated */
   color: white;
   padding: 1.5rem;
 }
@@ -52,19 +50,15 @@ h1 {
 .variable-selector select {
   flex-grow: 1;
   padding: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-lighter-bg); /* Updated */
   border-radius: 6px;
-  font-size: 1rem;
-  background: #f9f9f9;
-  color: #1F2937; /* Gris oscuro para mejor legibilidad */
-  transition: border-color 0.2s, box-shadow 0.2s;
+  /* font-size is 1rem from global.css input/select */
+  background: var(--gray-bg); /* Updated */
+  color: var(--dark-text-variant); /* Updated */
+  /* transition is from global.css input/select */
 }
 
-.variable-selector select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-  outline: none;
-}
+/* .variable-selector select:focus is handled by global.css input:focus, select:focus */
 
 .input-groups-container {
   display: grid;
@@ -87,14 +81,14 @@ h1 {
 }
 
 .input-group {
-  background-color: rgb(var(--gray-light));
+  background-color: var(--gray-lighter-bg); /* Updated */
   border-radius: 8px;
   padding: 1rem;
   transition: all 0.3s ease;
 }
 
 .input-group:hover {
-  background-color: #F3F4F6;
+  background-color: var(--gray-bg); /* Updated */
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -102,7 +96,7 @@ h1 {
   display: block;
   margin-bottom: 0.7rem;
   font-weight: 500;
-  color: #374151; 
+  color: var(--dark-text-variant);  /* Updated */
 }
 
 /* Estos estilos serán reemplazados por los del componente InputGroup */
@@ -119,28 +113,24 @@ h1 {
 .input-with-unit input {
   flex: 1;
   padding: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-lighter-bg); /* Updated */
   border-right: none;
   border-radius: 8px 0 0 8px;
-  font-size: 1rem;
-  color: #111827;
-  background-color: #FFFFFF;
+  /* font-size is 1rem from global.css input/select */
+  color: var(--dark-text); /* Updated */
+  /* background-color is var(--light-bg) from global.css input/select */
 }
 
-.input-with-unit input:focus {
-  border-color: var(--accent);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-}
+/* .input-with-unit input:focus is handled by global.css input:focus, select:focus */
 
 .unit-selector {
-  background: #f0f0f0;
+  background: var(--gray-element-bg); /* Updated */
   padding: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--gray-lighter-bg); /* Updated */
   border-left: none;
   border-radius: 0 8px 8px 0;
   font-size: 1rem;
-  color: #4B5563; 
+  color: var(--gray-text);  /* Updated */
   cursor: pointer;
   min-width: 90px; 
   width: auto;
@@ -151,17 +141,17 @@ h1 {
 }
 
 .unit-selector:hover {
-  background: #e5e5e5;
+  background: var(--gray-element-hover-bg); /* Updated */
 }
 
 .unit-selector:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent); 
+  border-color: var(--button-color); /* Updated */
+  box-shadow: 0 0 0 1px var(--button-color); /* Minor inconsistency with --focus-shadow, but keeping specific style */
 }
 
 .calculate-button {
-  background: var(--accent);
+  background: var(--button-color); /* Updated */
   color: white;
   border: none;
   padding: 1rem;
@@ -172,12 +162,12 @@ h1 {
   width: 100%;
   margin: 1.5rem 0;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+  box-shadow: var(--button-shadow); /* Updated */
 }
 
 .calculate-button:hover {
-  background: #1D4ED8; 
-  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
+  background: var(--button-hover);  /* Updated */
+  box-shadow: var(--button-shadow-hover); /* Updated */
   transform: translateY(-1px);
 }
 
@@ -186,10 +176,10 @@ h1 {
 }
 
 .result-box {
-  background: #f9f9f9;
+  background: var(--gray-bg); /* Updated */
   border-radius: 8px;
   padding: 1.2rem;
-  border-left: 4px solid var(--accent-success); 
+  border-left: 4px solid var(--success-color);  /* Updated */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -202,27 +192,27 @@ h1 {
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #111827;
+  color: var(--dark-text); /* Updated */
 }
 
 /* Estilos para mensajes de error */
 .error-message {
-  color: var(--accent-error);
+  color: var(--error-color); /* Updated */
   font-weight: 500;
   padding: 0.5rem;
-  border-left: 3px solid var(--accent-error);
-  background-color: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid var(--error-color); /* Updated */
+  background-color: rgba(239, 68, 68, 0.1); /* error-color with alpha */
   border-radius: 0 4px 4px 0;
 }
 
 #formula-used {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--gray-text); /* Updated */
   font-weight: 500;
 }
 
 .formulas-container {
-  background: white;
+  background: var(--light-bg); /* Updated */
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -231,14 +221,14 @@ h1 {
 .formulas-container h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: var(--accent-dark); 
+  color: var(--header-color);  /* Updated */
   font-weight: 700;
 }
 
 .formula-item {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--gray-lighter-bg); /* Updated */
 }
 
 .formula-item:last-child {
@@ -253,12 +243,12 @@ h1 {
   font-family: monospace;
   font-size: 1.1rem;
   margin-bottom: 0.3rem;
-  color: var(--accent-highlight);
+  color: var(--formula-color); /* Updated */
 }
 
 .formula-item p {
   margin: 0;
-  color: #666;
+  color: var(--gray-text); /* Updated */
   font-size: 0.95rem;
 }
 

@@ -9,6 +9,8 @@ const { title, description } = Astro.props
 <html lang="es">
 	<head>
 		<BaseHead title={title} description={description} />
+		<link rel="stylesheet" href="/styles/global.css" />
+		<link rel="stylesheet" href="/styles/calculator-theme.css" />
 		<style>
 			main {
 				width: calc(100% - 2em);
