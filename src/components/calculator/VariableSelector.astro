@@ -8,9 +8,10 @@ export interface Props {
   options: Option[];
   defaultValue?: string;
   label?: string;
+  id?: string;
 }
 
-const { options, defaultValue, label = "Calcular:" } = Astro.props;
+const { options, defaultValue, label = "Calcular:", id} = Astro.props;
 ---
 <div class="variable-selector">
   <label for="variable-to-solve">{label}</label>

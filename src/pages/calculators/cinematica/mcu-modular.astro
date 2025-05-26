@@ -1,15 +1,15 @@
 ---
-import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
-import CalculatorHeader from "../../components/calculator/CalculatorHeader.astro";
-import VariableSelector from "../../components/calculator/VariableSelector.astro";
-import InputGroup from "../../components/calculator/InputGroup.astro";
-import ResultDisplay from "../../components/calculator/ResultDisplay.astro";
-import FormulasContainer from "../../components/calculator/FormulasContainer.astro";
-import FormulaItem from "../../components/calculator/FormulaItem.astro";
-import InfoMessage from "../../components/calculator/InfoMessage.astro";
-import { MCU_VARIABLES, MCU_FORMULAS, UNITS } from "../../constants/calculator";
-import '../../styles/mcu.css';
-import '../../styles/calculator-components.css';
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../../components/calculator/FormulaItem.astro";
+import InfoMessage from "../../../components/calculator/InfoMessage.astro";
+import { MCU_VARIABLES, MCU_FORMULAS, UNITS } from "../../../constants/calculator";
+import '../../../styles/mcu.css';
+import '../../../styles/calculator-components.css';
 ---
 <CalculatorLayout title="Movimiento Circular Uniforme" description="Calculadora de Movimiento Circular Uniforme">
   <h1>Movimiento Circular Uniforme</h1>
@@ -115,10 +115,10 @@ import '../../styles/calculator-components.css';
   </div>
 
   <script>
-    import { setupCalculator } from "../../utils/calculators/calculator-controller";
-    import { calculateMCU } from "../../utils/calculators/mcu-calculator";
-    import { MCU_CONFIG } from "../../constants/calculator";
-    import { initResponsiveUtils } from "../../utils/responsive-utils";
+    import { setupCalculator } from "../../../utils/calculators/calculator-controller";
+    import { calculateMCU } from "../../../utils/calculators/mcu-calculator";
+    import { MCU_CONFIG } from "../../../constants/calculator";
+    import { initResponsiveUtils } from "../../../utils/responsive-utils";
     
     document.addEventListener('DOMContentLoaded', function() {
       // Configurar la calculadora MCU

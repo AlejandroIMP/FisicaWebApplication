@@ -6,6 +6,28 @@ export interface CalculationResult {
   formula: string;
 }
 
+export const calcularRadioSegunVLVA = (VelocidadLineal: number, VelocidadAngular: number) : number =>{
+  // Verificar si las velocidades son números y no son cero
+  if (typeof VelocidadLineal !== 'number' || typeof VelocidadAngular !== 'number' || VelocidadAngular === 0) {
+    throw new Error('Las velocidades deben ser números y la velocidad angular no puede ser cero.');
+  }
+  
+  // Calcular el radio
+  return VelocidadLineal / VelocidadAngular;
+
+}
+
+export const calcularVelocidadAngularSegunRadioVL = (Radio: number, VelocidadLineal: number) : number =>{
+  // Verificar si el radio y la velocidad lineal son números y no son cero
+  if (typeof Radio !== 'number' || typeof VelocidadLineal !== 'number' || Radio === 0) {
+    throw new Error('El radio y la velocidad lineal deben ser números y el radio no puede ser cero.');
+  }
+  
+  // Calcular la velocidad angular
+  return VelocidadLineal / Radio;
+}
+// export const calcularRadioSegunP
+
 /**
  * Calcula variables para el Movimiento Circular Uniforme (MCU)
  * @param variableToSolve La variable que se quiere calcular

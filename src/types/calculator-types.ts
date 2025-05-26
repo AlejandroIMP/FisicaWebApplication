@@ -7,7 +7,14 @@ export type UnitType =
   
   // Unidades MCUA
   'initialAngularVelocity' | 'finalAngularVelocity' | 'angularAcceleration' | 
-  'tangentialAcceleration' | 'totalAcceleration';
+  'tangentialAcceleration' | 'totalAcceleration' |
+  
+  // Unidades Segunda Ley de Newton básicas
+  'force' | 'mass' | 'acceleration' |
+  
+  // Unidades Segunda Ley de Newton avanzadas
+  'forceX' | 'forceY' | 'accelerationX' | 'accelerationY' | 'angle' | 
+  'appliedForce' | 'frictionForce' | 'normalForce' | 'frictionCoefficient';
 
 export type UnitMap = {
   radius: 'm' | 'cm' | 'km';
@@ -39,4 +46,13 @@ export type UnitMap = {
   finalRadius: 'm' | 'cm' | 'km';
   initialAngularAcceleration: 'rad/s²' | 'deg/s²' | 'rpm/s';
   finalAngularAcceleration: 'rad/s²' | 'deg/s²' | 'rpm/s';
+  
+  // Tipos para Segunda Ley de Newton
+  force: 'N' | 'kN' | 'dyn' | 'lbf';
+  mass: 'kg' | 'g' | 'lb' | 't';
+  acceleration: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g';
+  
+  // Tipos para cálculos avanzados
+  angle: 'deg' | 'rad';
+  coefficient: 'dimensionless';
 }

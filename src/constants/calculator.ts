@@ -78,8 +78,145 @@ export const UNITS = {
     { value: 'rad/s', label: 'rad/s' },
     { value: 'deg/s', label: '°/s' },
     { value: 'rpm', label: 'rpm' }
+  ],
+  
+  // Unidades para Segunda Ley de Newton
+  force: [
+    { value: 'N', label: 'N' },
+    { value: 'kN', label: 'kN' },
+    { value: 'dyn', label: 'dyn' },
+    { value: 'lbf', label: 'lbf' }
+  ],
+  mass: [
+    { value: 'kg', label: 'kg' },
+    { value: 'g', label: 'g' },
+    { value: 'lb', label: 'lb' },
+    { value: 't', label: 't' }
+  ],
+  acceleration: [
+    { value: 'm/s²', label: 'm/s²' },
+    { value: 'cm/s²', label: 'cm/s²' },
+    { value: 'ft/s²', label: 'ft/s²' },
+    { value: 'g', label: 'g' }
+  ],
+  
+  // Unidades para cálculos avanzados de Segunda Ley de Newton
+  angle: [
+    { value: 'deg', label: '°' },
+    { value: 'rad', label: 'rad' }
+  ],
+  coefficient: [
+    { value: 'dimensionless', label: 'sin unidad' }
   ]
 };
+
+// Variables para Segunda Ley de Newton
+export const NEWTON_SECOND_LAW_VARIABLES = [
+  { value: 'force', label: 'Fuerza (F)' },
+  { value: 'mass', label: 'Masa (m)' },
+  { value: 'acceleration', label: 'Aceleración (a)' }
+];
+
+export const NEWTON_SECOND_LAW_FORMULAS = [
+  { 
+    formula: 'F = m × a', 
+    description: 'Segunda Ley de Newton - Fuerza neta' 
+  },
+  { 
+    formula: 'm = F / a', 
+    description: 'Masa en función de la fuerza y aceleración' 
+  },
+  { 
+    formula: 'a = F / m', 
+    description: 'Aceleración en función de la fuerza y masa' 
+  }
+];
+
+// Variables para Segunda Ley de Newton Avanzada
+export const NEWTON_ADVANCED_VARIABLES = [
+  // Variables básicas
+  { value: 'force', label: 'Fuerza Resultante (F)' },
+  { value: 'mass', label: 'Masa (m)' },
+  { value: 'acceleration', label: 'Aceleración Resultante (a)' },
+  
+  // Componentes bidimensionales
+  { value: 'forceX', label: 'Fuerza en X (Fx)' },
+  { value: 'forceY', label: 'Fuerza en Y (Fy)' },
+  { value: 'accelerationX', label: 'Aceleración en X (ax)' },
+  { value: 'accelerationY', label: 'Aceleración en Y (ay)' },
+  { value: 'angle', label: 'Ángulo de la Fuerza (θ)' },
+  
+  // Fuerzas múltiples y fricción
+  { value: 'appliedForce', label: 'Fuerza Aplicada (Fap)' },
+  { value: 'frictionForce', label: 'Fuerza de Fricción (Ff)' },
+  { value: 'normalForce', label: 'Fuerza Normal (N)' },
+  { value: 'frictionCoefficient', label: 'Coeficiente de Fricción (μ)' }
+];
+
+export const NEWTON_ADVANCED_FORMULAS = [
+  // Fórmulas básicas
+  { 
+    formula: 'F = m × a', 
+    description: 'Segunda Ley de Newton - Fuerza neta',
+    example: 'Si m = 10 kg y a = 2 m/s², entonces F = 20 N'
+  },
+  
+  // Componentes bidimensionales
+  { 
+    formula: 'Fx = F × cos(θ)', 
+    description: 'Componente horizontal de la fuerza',
+    example: 'Si F = 100 N y θ = 30°, entonces Fx = 86.6 N'
+  },
+  { 
+    formula: 'Fy = F × sin(θ)', 
+    description: 'Componente vertical de la fuerza',
+    example: 'Si F = 100 N y θ = 30°, entonces Fy = 50 N'
+  },
+  { 
+    formula: 'F = √(Fx² + Fy²)', 
+    description: 'Magnitud de la fuerza resultante',
+    example: 'Si Fx = 86.6 N y Fy = 50 N, entonces F = 100 N'
+  },
+  { 
+    formula: 'θ = arctan(Fy / Fx)', 
+    description: 'Ángulo de la fuerza resultante',
+    example: 'Si Fx = 86.6 N y Fy = 50 N, entonces θ = 30°' 
+  },
+  
+  // Aceleraciones por componentes
+  { 
+    formula: 'ax = Fx / m', 
+    description: 'Aceleración en componente X',
+    example: 'Si Fx = 20 N y m = 10 kg, entonces ax = 2 m/s²' 
+  },
+  { 
+    formula: 'ay = Fy / m', 
+    description: 'Aceleración en componente Y',
+    example: 'Si Fy = 10 N y m = 10 kg, entonces ay = 1 m/s²' 
+  },
+  { 
+    formula: 'a = √(ax² + ay²)', 
+    description: 'Aceleración resultante',
+    example: 'Si ax = 2 m/s² y ay = 1 m/s², entonces a = √(2² + 1²) = √5 ≈ 2.24 m/s²' 
+  },
+  
+  // Fricción
+  { 
+    formula: 'Ff = μ × N', 
+    description: 'Fuerza de fricción',
+    example: 'Si μ = 0.5 y N = 100 N, entonces Ff = 50 N' 
+  },
+  { 
+    formula: 'N = m × g × cos(θ)', 
+    description: 'Fuerza normal en plano inclinado',
+    example: 'Si m = 10 kg, g = 9.81 m/s² y θ = 30°, entonces N = 10 × 9.81 × cos(30°) ≈ 84.87 N'
+  },
+  { 
+    formula: 'Fneta = Fap - Ff', 
+    description: 'Fuerza neta considerando fricción',
+    example: 'Si Fap = 100 N y Ff = 50 N, entonces Fneta = 50 N' 
+  }
+];
 
 // Variables y fórmulas para MCU
 export const MCU_VARIABLES = [
@@ -119,6 +256,75 @@ export const MCU_FORMULAS = [
     description: 'Desplazamiento angular en función del tiempo' 
   }
 ];
+
+// // Variables y fórmulas para Segunda Ley de Newton
+// export const NEWTON_SECOND_LAW_VARIABLES = [
+//   { value: 'force', label: 'Fuerza (F)' },
+//   { value: 'mass', label: 'Masa (m)' },
+//   { value: 'acceleration', label: 'Aceleración (a)' }
+// ];
+
+// export const NEWTON_SECOND_LAW_FORMULAS = [
+//   { 
+//     formula: 'F = m × a', 
+//     description: 'Fuerza resultante en función de la masa y aceleración' 
+//   },
+//   { 
+//     formula: 'a = F / m', 
+//     description: 'Aceleración en función de la fuerza y masa' 
+//   },
+//   { 
+//     formula: 'm = F / a', 
+//     description: 'Masa en función de la fuerza y aceleración' 
+//   }
+// ];
+
+// // Variables y fórmulas para Segunda Ley de Newton Avanzada
+// export const NEWTON_ADVANCED_VARIABLES = [
+//   { value: 'force', label: 'Fuerza Resultante (F)' },
+//   { value: 'mass', label: 'Masa (m)' },
+//   { value: 'acceleration', label: 'Aceleración (a)' },
+//   { value: 'forceX', label: 'Fuerza en X (Fx)' },
+//   { value: 'forceY', label: 'Fuerza en Y (Fy)' },
+//   { value: 'accelerationX', label: 'Aceleración en X (ax)' },
+//   { value: 'accelerationY', label: 'Aceleración en Y (ay)' },
+//   { value: 'appliedForce', label: 'Fuerza Aplicada (Fa)' },
+//   { value: 'frictionForce', label: 'Fuerza de Fricción (Ff)' },
+//   { value: 'normalForce', label: 'Fuerza Normal (N)' },
+//   { value: 'frictionCoefficient', label: 'Coeficiente de Fricción (μ)' },
+//   { value: 'angle', label: 'Ángulo de Aplicación (θ)' }
+// ];
+
+// export const NEWTON_ADVANCED_FORMULAS = [
+//   { 
+//     formula: 'F = √(Fx² + Fy²)', 
+//     description: 'Fuerza resultante de componentes bidimensionales' 
+//   },
+//   { 
+//     formula: 'Fx = F × cos(θ)', 
+//     description: 'Componente horizontal de la fuerza' 
+//   },
+//   { 
+//     formula: 'Fy = F × sin(θ)', 
+//     description: 'Componente vertical de la fuerza' 
+//   },
+//   { 
+//     formula: 'Ff = μ × N', 
+//     description: 'Fuerza de fricción cinética' 
+//   },
+//   { 
+//     formula: 'Fneta = Faplicada - Ff', 
+//     description: 'Fuerza neta considerando fricción' 
+//   },
+//   { 
+//     formula: 'a = Fneta / m', 
+//     description: 'Aceleración considerando todas las fuerzas' 
+//   },
+//   { 
+//     formula: 'N = m × g × cos(θ)', 
+//     description: 'Fuerza normal en superficie inclinada' 
+//   }
+// ];
 
 // Variables y fórmulas para MCUA
 export const MCUA_VARIABLES = [
@@ -197,5 +403,39 @@ export const MCUA_CONFIG = {
     tangentialAcceleration: ['angularAcceleration', 'radius'],
     centripetalAcceleration: ['initialAngularVelocity', 'finalAngularVelocity', 'radius'],
     totalAcceleration: ['centripetalAcceleration', 'tangentialAcceleration']
+  }
+};
+
+export const NEWTON_SECOND_LAW_CONFIG = {
+  title: "Segunda Ley de Newton",
+  description: "Calculadora de la Segunda Ley de Newton (F = ma)",
+  calculatorTitle: "Calculadora Segunda Ley de Newton",
+  calculatorDescription: "Selecciona la incógnita que deseas calcular y completa los valores conocidos",
+  variables: NEWTON_SECOND_LAW_VARIABLES,
+  formulas: NEWTON_SECOND_LAW_FORMULAS,
+  variableGroups: {
+    force: ['mass', 'acceleration'],
+    mass: ['force', 'acceleration'],
+    acceleration: ['force', 'mass']
+  }
+};
+
+export const NEWTON_ADVANCED_CONFIG = {
+  title: "Segunda Ley de Newton - Avanzada",
+  description: "Calculadora avanzada de la Segunda Ley de Newton con fuerzas múltiples, componentes 2D y fricción",
+  calculatorTitle: "Calculadora Avanzada - Segunda Ley de Newton",
+  calculatorDescription: "Analiza sistemas complejos con múltiples fuerzas, componentes bidimensionales y fricción",
+  variables: NEWTON_ADVANCED_VARIABLES,
+  formulas: NEWTON_ADVANCED_FORMULAS,
+  variableGroups: {
+    force: ['forceX', 'forceY', 'mass', 'acceleration'],
+    forceX: ['force', 'angle', 'mass', 'accelerationX'],
+    forceY: ['force', 'angle', 'mass', 'accelerationY'],
+    accelerationX: ['forceX', 'mass'],
+    accelerationY: ['forceY', 'mass'],
+    appliedForce: ['frictionForce', 'mass', 'acceleration', 'angle'],
+    frictionForce: ['frictionCoefficient', 'normalForce'],
+    normalForce: ['mass', 'angle'],
+    frictionCoefficient: ['frictionForce', 'normalForce']
   }
 };

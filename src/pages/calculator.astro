@@ -1,6 +1,6 @@
 ---
 import CalculatorLayout from "../layouts/CalculatorLayout.astro";
-import { CALCULATORS } from "../consts";
+import { CALCULATORS, CALCULATORS_DINAMIC } from "../consts";
 import CalculatorCard from "../components/CalculatorCard.astro";
 ---
 
@@ -23,6 +23,18 @@ import CalculatorCard from "../components/CalculatorCard.astro";
     <h2 class="calculator-grid__subtitle">Cinematica</h2>
     <div class="calculator-grid">
       {CALCULATORS.map((calculator) => (
+        <CalculatorCard
+          key={calculator.name}
+          title={calculator.name}
+          description={calculator.description}
+          url={calculator.url}
+          image={calculator.image}
+        />
+      ))}
+    </div>
+    <h2 class="calculator-grid__subtitle">Dinamica</h2>
+    <div class="calculator-grid">
+      {CALCULATORS_DINAMIC.map((calculator) => (
         <CalculatorCard
           key={calculator.name}
           title={calculator.name}

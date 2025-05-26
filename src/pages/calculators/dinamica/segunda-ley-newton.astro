@@ -1,0 +1,103 @@
+---
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../../components/calculator/FormulaItem.astro";
+import InfoMessage from "../../../components/calculator/InfoMessage.astro";
+import { NEWTON_SECOND_LAW_VARIABLES, NEWTON_SECOND_LAW_FORMULAS, UNITS } from "../../../constants/calculator";
+import '../../../styles/calculator-components.css';
+import '../../../styles/calculator-unified.css';
+import '../../../styles/mcu.css'
+---
+
+<CalculatorLayout title="Segunda Ley de Newton" description="Calculadora para la Segunda Ley de Newton (F = ma)">
+  <h1>Segunda Ley de Newton</h1>
+  
+  <InfoMessage type="info">
+    La Segunda Ley de Newton establece que la fuerza resultante aplicada a un objeto es directamente proporcional a su aceleración y a su masa.
+  </InfoMessage>
+  
+  <p>
+    La Segunda Ley de Newton, también conocida como Ley Fundamental de la Dinámica, establece que la aceleración de un objeto es directamente proporcional a la fuerza neta aplicada sobre él e inversamente proporcional a su masa. Esta ley se expresa matemáticamente como <strong>F = m × a</strong>, donde F es la fuerza resultante, m es la masa del objeto y a es la aceleración producida.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <CalculatorHeader 
+        title="Calculadora Segunda Ley de Newton" 
+        description="Selecciona la incógnita que deseas calcular y completa los valores conocidos"
+        icon="⚖️"
+      />
+      
+      <div class="calculator-body">
+        <VariableSelector 
+          options={NEWTON_SECOND_LAW_VARIABLES} 
+          label="Variable a calcular:"
+        />
+        
+        <div class="input-groups-container">
+          <InputGroup 
+            id="force" 
+            label="Fuerza (F):" 
+            placeholder="Ingresa la fuerza" 
+            units={UNITS.force} 
+          />
+          
+          <InputGroup 
+            id="mass" 
+            label="Masa (m):" 
+            placeholder="Ingresa la masa" 
+            units={UNITS.mass} 
+          />
+          
+          <InputGroup 
+            id="acceleration" 
+            label="Aceleración (a):" 
+            placeholder="Ingresa la aceleración" 
+            units={UNITS.acceleration} 
+          />
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <ResultDisplay showCopyButton={true} />
+      </div>
+    </div>
+    
+    <FormulasContainer 
+      title="Fórmulas de la Segunda Ley de Newton"
+      icon="📊"
+    >
+      {NEWTON_SECOND_LAW_FORMULAS.map(formula => (
+        <FormulaItem 
+          formula={formula.formula} 
+          description={formula.description}
+          example={formula.formula === 'F = m × a' ? 'F = 10 kg × 2 m/s² = 20 N' : 
+                   formula.formula === 'a = F / m' ? 'a = 20 N / 10 kg = 2 m/s²' :
+                   formula.formula === 'm = F / a' ? 'm = 20 N / 2 m/s² = 10 kg' : undefined} 
+        />
+      ))}
+    </FormulasContainer>
+  </div>
+
+  <script>
+    import { setupCalculator } from "../../../utils/calculators/calculator-controller";
+    import { calculateNewtonSecondLaw } from "../../../utils/calculators/newton-second-law-calculator";
+    import { NEWTON_SECOND_LAW_CONFIG } from "../../../constants/calculator";
+    import { initResponsiveUtils } from "../../../utils/responsive-utils";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configurar la calculadora de Segunda Ley de Newton
+      setupCalculator({
+        calculateFunction: calculateNewtonSecondLaw,
+        variableGroups: NEWTON_SECOND_LAW_CONFIG.variableGroups
+      });
+      
+      // Inicializar utilidades responsivas
+      initResponsiveUtils();
+    });
+  </script>
+</CalculatorLayout>

@@ -1,0 +1,198 @@
+<!-- ---
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../../components/calculator/ResultDisplay.astro";
+import InfoMessage from "../../../components/calculator/InfoMessage.astro";
+import FormulasContainer from "../../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../../components/calculator/FormulaItem.astro";
+import '../../../styles/calculator-components.css';
+import '../../../styles/mcu.css';
+// Importamos la declaración de tipos para window.calcular
+import "../../../types/calculator-globals";
+---
+
+<CalculatorLayout title="Tiro Parabólico" description="Calculadora de Movimiento de Tiro Parabólico u Oblicuo">
+  <h1>Calculadora de Tiro Parabólico</h1>
+  
+  <p>
+    El tiro parabólico es un tipo de movimiento en dos dimensiones que describe la trayectoria de un objeto lanzado con una velocidad inicial que forma un ángulo con la horizontal. Esta calculadora te permite determinar diferentes variables relacionadas con este movimiento.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <CalculatorHeader 
+        title="Tiro Parabólico (Oblicuo)" 
+        description="Selecciona la variable que deseas calcular y completa los valores conocidos"
+        icon="↗️"
+      />
+      
+      <div class="calculator-body">
+        <div class="variable-control">
+          <VariableSelector 
+            label="Variable a calcular:" 
+            id="variableSelect"
+            options={[
+              { value: "", label: "-- Selecciona una variable --" },
+              { value: "x_t", label: "Posición en x (x(t))" },
+              { value: "y_t", label: "Posición en y (y(t))" },
+              { value: "vx", label: "Velocidad en x (vₓ)" },
+              { value: "vy_t", label: "Velocidad en y (vᵧ(t))" },
+              { value: "v_t", label: "Velocidad total (v(t))" },
+              { value: "theta", label: "Ángulo de lanzamiento (θ)" },
+              { value: "y_max", label: "Altura máxima (y_max)" },
+              { value: "t_subida", label: "Tiempo de subida (t_subida)" },
+              { value: "t_total", label: "Tiempo total de vuelo (t_total)" },
+              { value: "R", label: "Alcance horizontal (R)" },
+              { value: "v0", label: "Velocidad inicial (v₀)" },
+              { value: "v0x", label: "Componente horizontal de v₀ (v₀ₓ)" },
+              { value: "v0y", label: "Componente vertical de v₀ (v₀ᵧ)" }
+            ]}
+          />
+          
+          <div id="formulaSelector" class="hidden-initially">
+            <VariableSelector 
+              label="Fórmula a utilizar:" 
+              id="formulaSelect"
+              options={[
+                { value: "", label: "-- Primero selecciona una variable --" }
+              ]}
+            />
+          </div>
+        </div>
+        
+        <div class="inputs-container">
+          <div id="inputFields" class="inputs-grid">
+            <div data-key="x" class="input-wrapper hidden-initially">
+              <InputGroup id="x" label="Posición x" units="m" placeholder="0" />
+            </div>
+            <div data-key="y" class="input-wrapper hidden-initially">
+              <InputGroup id="y" label="Posición y" units="m" placeholder="0" />
+            </div>
+            <div data-key="v0" class="input-wrapper hidden-initially">
+              <InputGroup id="v0" label="Velocidad inicial (v₀)" units="m/s" placeholder="0" />
+            </div>
+            <div data-key="vx" class="input-wrapper hidden-initially">
+              <InputGroup id="vx" label="Velocidad en x (vₓ)" units="m/s" placeholder="0" />
+            </div>
+            <div data-key="vy" class="input-wrapper hidden-initially">
+              <InputGroup id="vy" label="Velocidad en y (vᵧ)" units="m/s" placeholder="0" />
+            </div>
+            <div data-key="v0x" class="input-wrapper hidden-initially">
+              <InputGroup id="v0x" label="Velocidad inicial en x (v₀ₓ)" units="m/s" placeholder="0" />
+            </div>
+            <div data-key="v0y" class="input-wrapper hidden-initially">
+              <InputGroup id="v0y" label="Velocidad inicial en y (v₀ᵧ)" units="m/s" placeholder="0" />
+            </div>
+            <div data-key="theta" class="input-wrapper hidden-initially">
+              <InputGroup id="theta" label="Ángulo (θ)" units="°" placeholder="0" />
+            </div>
+            <div data-key="t" class="input-wrapper hidden-initially">
+              <InputGroup id="t" label="Tiempo (t)" units="s" placeholder="0" />
+            </div>
+            <div data-key="g" class="input-wrapper hidden-initially">
+              <InputGroup id="g" label="Gravedad (g)" units="m/s²" placeholder="9.8" />
+            </div>
+          </div>
+          
+          <div class="action-container">
+            <button id="calculateBtn" class="calculate-button">Calcular</button>
+          </div>
+        </div>
+        
+        <ResultDisplay id="resultDisplay" />
+      </div>
+    </div>
+    
+    <FormulasContainer title="Fórmulas de Tiro Parabólico">
+      <FormulaItem 
+        title="Posición horizontal" 
+        formula="x(t) = v₀·cos(θ)·t" 
+        description="Permite calcular la posición horizontal del objeto en cualquier instante t."
+      />
+      <FormulaItem 
+        title="Posición vertical" 
+        formula="y(t) = v₀·sin(θ)·t - ½·g·t²" 
+        description="Permite calcular la posición vertical del objeto en cualquier instante t."
+      />
+      <FormulaItem 
+        title="Velocidad horizontal" 
+        formula="vₓ = v₀·cos(θ)" 
+        description="La componente horizontal de la velocidad es constante durante todo el movimiento."
+      />
+      <FormulaItem 
+        title="Velocidad vertical" 
+        formula="vᵧ(t) = v₀·sin(θ) - g·t" 
+        description="La componente vertical de la velocidad varía debido a la acción de la gravedad."
+      />
+      <FormulaItem 
+        title="Tiempo de vuelo" 
+        formula="t_total = (2·v₀·sin(θ)) / g" 
+        description="Tiempo que tarda el proyectil en volver a la misma altura desde la que fue lanzado."
+      />
+      <FormulaItem 
+        title="Alcance horizontal" 
+        formula="R = (v₀²·sin(2θ)) / g" 
+        description="Distancia horizontal recorrida por el proyectil cuando vuelve a la altura inicial."
+      />
+      <FormulaItem 
+        title="Altura máxima" 
+        formula="h_max = (v₀²·sin²(θ)) / (2·g)" 
+        description="La máxima altura que alcanza el proyectil durante su trayectoria."
+      />
+    </FormulasContainer>
+  </div>
+</CalculatorLayout>
+
+<script>
+  // Definimos la función calcular que necesita existir globalmente
+  window.calcular = function() {
+    // Esta función se definirá al cargar el script mainparabolico.js
+    console.log("La función calcular se está inicializando...");
+  };
+  
+  // Importamos el script existente de tiro parabólico
+  import "../../../utils/calculators/mainparabolico.js";
+  // Importamos la función de inicialización
+  import { initTiroParabolico } from "../../../utils/calculators/tiros-sync.js";
+  
+  // Inicializamos la calculadora con la función de sincronización
+  initTiroParabolico();
+</script>
+
+<style>
+  .hidden-initially {
+    display: none;
+  }
+  
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .action-container {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .calculate-button {
+    background-color: var(--button-color);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    box-shadow: var(--button-shadow);
+  }
+  
+  .calculate-button:hover {
+    background-color: var(--button-hover);
+    box-shadow: var(--button-shadow-hover);
+  }
+</style> -->

@@ -64,5 +64,25 @@ export const conversionFactors = {
     'm/s²': 1,
     'g': 9.8,
     'cm/s²': 0.01
+  },
+  
+  // Factores de conversión para Segunda Ley de Newton
+  force: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822
+  },
+  mass: {
+    'kg': 1,
+    'g': 0.001,
+    'lb': 0.453592,
+    't': 1000
+  },
+  acceleration: {
+    'm/s²': 1,
+    'cm/s²': 0.01,
+    'ft/s²': 0.3048,
+    'g': 9.80665
   }
 };

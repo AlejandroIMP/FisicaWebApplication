@@ -1,7 +1,7 @@
 ---
-import Header from "../../components/Header.astro";
-import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
-import "../../styles/MRU_MRUV_Style.css";
+import Header from "../../../components/Header.astro";
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
+import "../../../styles/MRU_MRUV_Style.css";
 ---
 
 <CalculatorLayout>
@@ -59,7 +59,7 @@ import "../../styles/MRU_MRUV_Style.css";
        style="position: absolute; top: 30px; left: 0; width: 100px; transition: left 1s, transform 1s;">
   </div>
 <script>
-  import { calcularMRU, calcularMRUV, mostrarCamposMRU, mostrarCamposMruv, mostrarSeccion, actualizarVariablesMruv } from "../../utils/calculators/MRU_MRUV_JavaScript.js";
+  import { calcularMRU, calcularMRUV, mostrarCamposMRU, mostrarCamposMruv, mostrarSeccion, actualizarVariablesMruv } from "../../../utils/calculators/MRU_MRUV_JavaScript.js";
   
   // Declarar tipos para las funciones en window
   declare global {

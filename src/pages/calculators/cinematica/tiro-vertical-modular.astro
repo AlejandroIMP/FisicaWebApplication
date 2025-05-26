@@ -1,0 +1,174 @@
+<!-- ---
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../../components/calculator/ResultDisplay.astro";
+import InfoMessage from "../../../components/calculator/InfoMessage.astro";
+import FormulasContainer from "../../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../../components/calculator/FormulaItem.astro";
+import '../../../styles/calculator-components.css';
+import '../../../styles/mcu.css';
+// Importamos la declaración de tipos para window.calcular
+import "../../../types/calculator-globals";
+---
+
+<CalculatorLayout title="Tiro Vertical" description="Calculadora de Movimiento de Tiro Vertical">
+  <h1>Calculadora de Tiro Vertical</h1>
+  
+  <p>
+    El tiro vertical es un movimiento rectilíneo uniformemente variado en el cual un objeto es lanzado hacia arriba y la única fuerza que actúa sobre él es la gravedad. Esta calculadora te permite determinar diferentes variables relacionadas con este movimiento.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <CalculatorHeader 
+        title="Tiro Vertical" 
+        description="Selecciona la variable que deseas calcular y completa los valores conocidos"
+        icon="⬆️⬇️"
+      />
+      
+      <div class="calculator-body">
+        <div class="variable-control">
+          <VariableSelector 
+            label="Variable a calcular:" 
+            id="variableSelect"
+            options={[
+              { value: "", label: "-- Selecciona una variable --" },
+              { value: "h_t", label: "Altura en t (h(t))" },
+              { value: "v_t", label: "Velocidad en t (v(t))" },
+              { value: "h_max", label: "Altura máxima (h_max)" },
+              { value: "t_subida", label: "Tiempo de subida (t_subida)" },
+              { value: "t_total", label: "Tiempo total de vuelo (t_total)" },
+              { value: "v0", label: "Velocidad inicial (v₀)" },
+              { value: "h0", label: "Altura inicial (h₀)" },
+              { value: "g", label: "Gravedad (g)" },
+              { value: "t", label: "Tiempo (t)" }
+            ]}
+          />
+          
+          <div id="formulaSelector" class="hidden-initially">
+            <VariableSelector 
+              label="Fórmula a utilizar:" 
+              id="formulaSelect"
+              options={[
+                { value: "", label: "-- Primero selecciona una variable --" }
+              ]}
+            />
+          </div>
+        </div>
+        
+        <div class="inputs-container">
+          <div id="inputFields" class="inputs-grid">
+            <div data-key="h" class="input-wrapper hidden-initially">
+              <InputGroup id="h" label="Altura (h)" unit="m" placeholder="0" />
+            </div>
+            <div data-key="h0" class="input-wrapper hidden-initially">
+              <InputGroup id="h0" label="Altura inicial (h₀)" unit="m" placeholder="0" />
+            </div>
+            <div data-key="h_max" class="input-wrapper hidden-initially">
+              <InputGroup id="h_max" label="Altura máxima (h_max)" unit="m" placeholder="0" />
+            </div>
+            <div data-key="v0" class="input-wrapper hidden-initially">
+              <InputGroup id="v0" label="Velocidad inicial (v₀)" unit="m/s" placeholder="0" />
+            </div>
+            <div data-key="vt" class="input-wrapper hidden-initially">
+              <InputGroup id="vt" label="Velocidad en t (v(t))" unit="m/s" placeholder="0" />
+            </div>
+            <div data-key="t" class="input-wrapper hidden-initially">
+              <InputGroup id="t" label="Tiempo (t)" unit="s" placeholder="0" />
+            </div>
+            <div data-key="g" class="input-wrapper hidden-initially">
+              <InputGroup id="g" label="Gravedad (g)" unit="m/s²" placeholder="9.8" />
+            </div>
+          </div>
+          
+          <div class="action-container">
+            <button id="calculateBtn" class="calculate-button">Calcular</button>
+          </div>
+        </div>
+        
+        <ResultDisplay id="resultDisplay" />
+      </div>
+    </div>
+    
+    <FormulasContainer title="Fórmulas de Tiro Vertical">
+      <FormulaItem 
+        title="Altura en función del tiempo" 
+        formula="h(t) = h₀ + v₀·t - ½·g·t²" 
+        description="Permite calcular la altura del objeto en cualquier instante t."
+      />
+      <FormulaItem 
+        title="Velocidad en función del tiempo" 
+        formula="v(t) = v₀ - g·t" 
+        description="Determina la velocidad instantánea del objeto en cualquier momento t."
+      />
+      <FormulaItem 
+        title="Altura máxima" 
+        formula="h_max = h₀ + v₀² / (2·g)" 
+        description="Calcula la altura máxima que alcanzará el objeto durante su trayectoria."
+      />
+      <FormulaItem 
+        title="Tiempo de subida" 
+        formula="t_subida = v₀ / g" 
+        description="El tiempo que tarda el objeto en alcanzar su altura máxima."
+      />
+      <FormulaItem 
+        title="Tiempo total de vuelo" 
+        formula="t_total = 2·v₀ / g (si h₀=0)" 
+        description="El tiempo total que permanece el objeto en el aire si vuelve a la altura inicial."
+      />
+    </FormulasContainer>
+  </div>
+</CalculatorLayout>
+
+<script>
+  // Definimos globalmente la función calcular que será redefinida por el script
+  window.calcular = function() {
+    console.log("La función calcular se está inicializando...");
+  };
+  
+  // Importamos el script existente de tiro vertical
+  import "../../../utils/calculators/mainvertical.js";
+  // Importamos la función de inicialización
+  import { initTiroVertical } from "../../../utils/calculators/tiros-sync.js";
+  
+  // Inicializamos la calculadora con la función de sincronización
+  initTiroVertical();
+</script>
+
+<style>
+  .hidden-initially {
+    display: none;
+  }
+  
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .action-container {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .calculate-button {
+    background-color: var(--button-color);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    box-shadow: var(--button-shadow);
+  }
+  
+  .calculate-button:hover {
+    background-color: var(--button-hover);
+    box-shadow: var(--button-shadow-hover);
+  }
+</style> -->
