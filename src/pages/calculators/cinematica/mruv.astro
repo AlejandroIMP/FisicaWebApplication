@@ -1,0 +1,101 @@
+---
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
+import CalculatorHeader from "../../../components/calculator/CalculatorHeader.astro";
+import VariableSelector from "../../../components/calculator/VariableSelector.astro";
+import InputGroup from "../../../components/calculator/InputGroup.astro";
+import ResultDisplay from "../../../components/calculator/ResultDisplay.astro";
+import FormulasContainer from "../../../components/calculator/FormulasContainer.astro";
+import FormulaItem from "../../../components/calculator/FormulaItem.astro";
+import InfoMessage from "../../../components/calculator/InfoMessage.astro";
+import { MRUA_CONFIG } from "../../../constants/mrua.constants";
+import { UNITS } from "../../../constants/calculator";
+import '../../../styles/mcu.css';
+import '../../../styles/calculator-components.css';
+---
+<CalculatorLayout title={MRUA_CONFIG.title} description={MRUA_CONFIG.description} icon="🔄">
+  <h1>Movimiento Circular Uniforme</h1>
+  
+  <!-- <InfoMessage type="info">
+    Esta calculadora utiliza la nueva interfaz modular con estilos mejorados y mayor accesibilidad.
+  </InfoMessage> -->
+  
+  <p>
+    El movimiento circular uniforme (MCU) es un tipo de movimiento en el que un objeto se desplaza a lo largo de una trayectoria circular con una velocidad constante. Esto significa que la magnitud de la velocidad no cambia, aunque la dirección del movimiento sí lo hace.
+  </p>
+  
+  <div class="calculator-container">
+    <div class="calculator">
+      <CalculatorHeader 
+        title={MRUA_CONFIG.title} 
+        description={MRUA_CONFIG.calculatorDescription}
+        icon="🔄"
+      />
+      
+      <div class="calculator-body">
+        <VariableSelector 
+          options={MRUA_CONFIG.variables} 
+          label="Variable a calcular:"
+        />
+        
+        <div class="input-groups-container">
+          <InputGroup 
+            id="distance" 
+            label="Distancia (d):" 
+            placeholder="Ingresa la distancia" 
+            units={UNITS.distance} 
+          />
+          
+          <InputGroup 
+            id="velocity" 
+            label="Velocidad (v):" 
+            placeholder="Ingresa la velocidad" 
+            units={UNITS.velocity} 
+          />
+          
+          <InputGroup 
+            id="time" 
+            label="tiempo (t):" 
+            placeholder="Ingresa el tiempo" 
+            units={UNITS.time} 
+          />
+          
+        </div>
+        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>
+        
+        <ResultDisplay showCopyButton={true} />
+      </div>
+    </div>
+    
+    <FormulasContainer 
+      title="Fórmulas del MCU"
+      icon="📊"
+    >
+      {MRUA_CONFIG.formulas.map(formula => (
+        <FormulaItem 
+          formula={formula.formula} 
+          description={formula.description}
+          example={formula.example} 
+        />
+      ))}
+    </FormulasContainer>
+  </div>
+
+  <script>
+    import { setupCalculator } from "../../../utils/calculators/calculator-controller";
+    import { MRUA_CONFIG } from "../../../constants/mrua.constants";
+    import { initResponsiveUtils } from "../../../utils/responsive-utils";
+    import { calculateMRU } from "../../../utils/calculators/cinematica/mru-calculator";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configurar la calculadora MCU
+      setupCalculator({
+        calculateFunction: calculateMRU,
+        variableGroups: MRUA_CONFIG.variableGroups
+      });
+      
+      // Inicializar utilidades responsivas
+      initResponsiveUtils();
+    });
+  </script>
+</CalculatorLayout>

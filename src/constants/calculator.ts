@@ -38,7 +38,11 @@ export const UNITS = {
   time: [
     { value: 's', label: 's' },
     { value: 'min', label: 'min' },
-    { value: 'h', label: 'h' }
+    { value: 'h', label: 'h' },
+    { value: 'day', label: 'día' },
+    { value: 'week', label: 'semana' },
+    { value: 'month', label: 'mes' },
+    { value: 'year', label: 'año' }
   ],
   period: [
     { value: 's', label: 's' },
@@ -105,7 +109,7 @@ export const UNITS = {
     { value: 'ft/s²', label: 'ft/s²' },
     { value: 'g', label: 'g' },
     { value: 'in/s²', label: 'in/s²' },
-    { value: 'km/h²', label: 'km/h²' }
+    { value: 'km/h²', label: 'km/h²' },
   ],
   
   // Unidades para cálculos avanzados de Segunda Ley de Newton
@@ -117,6 +121,29 @@ export const UNITS = {
   ],
   coefficient: [
     { value: 'dimensionless', label: 'sin unidad' }
+  ],
+
+  // Unidades para MRU
+
+  distance: [
+    { value: 'm', label: 'm' },
+    { value: 'km', label: 'km' },
+    { value: 'cm', label: 'cm' },
+    { value: 'mm', label: 'mm' },
+    { value: 'mi', label: 'mi' },
+    { value: 'yd', label: 'yd' },
+    { value: 'ft', label: 'ft' },
+    { value: 'in', label: 'in' }
+  ],
+  velocity: [
+    { value: 'm/s', label: 'm/s' },
+    { value: 'km/h', label: 'km/h' },
+    { value: 'cm/s', label: 'cm/s' },
+    { value: 'mm/s', label: 'mm/s' },
+    { value: 'mi/h', label: 'mi/h' },
+    { value: 'yd/s', label: 'yd/s' },
+    { value: 'ft/s', label: 'ft/s' },
+    { value: 'in/s', label: 'in/s' }
   ]
 };
 
@@ -136,26 +163,32 @@ export const MCU_FORMULAS = [
   { 
     formula: 'ω = 2π / T = 2π × f', 
     description: 'Velocidad angular en función del periodo o frecuencia',
+    example: 'Si T = 2 s, entonces ω = π rad/s'
   },
   { 
     formula: 'v = ω × r', 
-    description: 'Velocidad lineal en función de la velocidad angular y el radio' 
+    description: 'Velocidad lineal en función de la velocidad angular y el radio',
+    example: 'Si ω = π rad/s y r = 1 m, entonces v = π m/s'
   },
   { 
     formula: 'a = v² / r = ω² × r', 
-    description: 'Aceleración centrípeta' 
+    description: 'Aceleración centrípeta',
+    example: 'Si v = 2 m/s y r = 1 m, entonces a = 4 m/s²'
   },
   { 
     formula: 'T = 2π × r / v = 2π / ω', 
-    description: 'Periodo del movimiento' 
+    description: 'Periodo del movimiento',
+    example: 'Si r = 1 m y v = π m/s, entonces T = 2 s'
   },
   { 
     formula: 'f = 1 / T = ω / 2π', 
-    description: 'Frecuencia del movimiento' 
+    description: 'Frecuencia del movimiento',
+    example: 'Si T = 2 s, entonces f = 0.5 Hz'
   },
   { 
     formula: 'θ = ω × t', 
-    description: 'Desplazamiento angular en función del tiempo' 
+    description: 'Desplazamiento angular en función del tiempo',
+    example: 'Si ω = π rad/s y t = 2 s, entonces θ = 2π rad'
   }
 ];
 
@@ -175,27 +208,33 @@ export const MCUA_VARIABLES = [
 export const MCUA_FORMULAS = [
   { 
     formula: 'ω = ω₀ + α × t', 
-    description: 'Velocidad angular en función del tiempo' 
+    description: 'Velocidad angular en función del tiempo',
+    example: 'Si ω₀ = 0 rad/s, α = 2 rad/s² y t = 3 s, entonces ω = 6 rad/s'
   },
   { 
     formula: 'θ = ω₀ × t + ½ × α × t²', 
-    description: 'Desplazamiento angular en función del tiempo' 
+    description: 'Desplazamiento angular en función del tiempo',
+    example: 'Si ω₀ = 0 rad/s, α = 2 rad/s² y t = 3 s, entonces θ = 9 rad'
   },
   { 
     formula: 'ω² = ω₀² + 2 × α × θ', 
-    description: 'Relación entre velocidades angulares, aceleración y desplazamiento' 
+    description: 'Relación entre velocidades angulares, aceleración y desplazamiento',
+    example: 'Si ω₀ = 0 rad/s, α = 2 rad/s² y θ = 9 rad, entonces ω = 6 rad/s' 
   },
   { 
     formula: 'aₜ = α × r', 
-    description: 'Aceleración tangencial' 
+    description: 'Aceleración tangencial',
+    example: 'Si α = 2 rad/s² y r = 1 m, entonces aₜ = 2 m/s²'
   },
   { 
     formula: 'aₙ = ω² × r', 
-    description: 'Aceleración normal o centrípeta' 
+    description: 'Aceleración normal o centrípeta',
+    example: 'Si ω = 6 rad/s y r = 1 m, entonces aₙ = 36 m/s²'
   },
   { 
     formula: 'aₜₒₜₐₗ = √(aₙ² + aₜ²)', 
-    description: 'Aceleración total' 
+    description: 'Aceleración total',
+    example: 'Si aₜ = 2 m/s² y aₙ = 36 m/s², entonces aₜₒₜₐₗ = √(36² + 2²) ≈ 36.16 m/s²'
   },
 ];
 // Configuraciones para los calculadores

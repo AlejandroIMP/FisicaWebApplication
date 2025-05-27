@@ -14,18 +14,25 @@ export type UnitType =
   
   // Unidades Segunda Ley de Newton avanzadas
   'forceX' | 'forceY' | 'accelerationX' | 'accelerationY' | 'angle' | 
-  'appliedForce' | 'frictionForce' | 'normalForce' | 'frictionCoefficient';
+  'appliedForce' | 'frictionForce' | 'normalForce' | 'frictionCoefficient'
+  
+  // MRU y MRUA
+  | 'distance' | 'velocity' | 'coefficient' 
+
+
+  ;
 
 export type UnitMap = {
+  distance: 'm' | 'km' | 'cm' | 'mm' | 'mi' | 'yd' | 'ft' | 'in';
+  velocity: 'm/s' | 'km/h' | 'cm/s' | 'mm/s' | 'mi/h' | 'yd/s' | 'ft/s' | 'in/s';
   radius: 'm' | 'cm' | 'km';
   angularVelocity: 'rad/s' | 'deg/s' | 'rpm';
   linearVelocity: 'm/s' | 'km/h' | 'cm/s';
   period: 's' | 'min' | 'h';
   frequency: 'Hz' | 'kHz' | 'rpm';
   centripetalAcceleration: 'm/s²' | 'g' | 'cm/s²';
-  time: 's' | 'min' | 'h';
+  time: 's' | 'min' | 'h'| 'day' | 'week' | 'month' | 'year';
   angularDisplacement: 'rad' | 'deg' | 'rev';  
-  aceleration: 'm/s²' | 'g' | 'cm/s²';
   initialAngularVelocity: 'rad/s' | 'deg/s' | 'rpm';
   finalAngularVelocity: 'rad/s' | 'deg/s' | 'rpm';
   angularAcceleration: 'rad/s²' | 'deg/s²' | 'rpm/s';

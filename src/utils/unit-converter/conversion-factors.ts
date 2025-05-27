@@ -33,7 +33,12 @@ export const conversionFactors = {
   time: {
     's': 1,
     'min': 60,
-    'h': 3600
+    'h': 3600,
+    'day': 86400,            // 1 día = 86400 segundos
+    'week': 604800,          // 1 semana = 604800 segundos
+    'month': 2592000,        // 1 mes = 2592000 segundos (30 días)
+    'year': 31536000         // 1 año = 31536000 segundos (365 días)
+    
   },
   angularDisplacement: {
     'rad': 1,
@@ -104,14 +109,36 @@ export const conversionFactors = {
     'cm': 0.01,
     'km': 1000,
     'ft': 0.3048,
-    'in': 0.0254
+    'in': 0.0254,
+    'mi': 1609.34,         // 1 mile = 1609.34 m
+    'yd': 0.9144,          // 1 yard = 0.9144 m
+    'nm': 1852,            // 1 nautical mile = 1852 m
+    'ly': 9.461e15,        // 1 light year = 9.461e15 m
+    'pc': 3.086e16,        // 1 parsec = 3.086e16 m
+    'au': 1.496e11,        // 1 astronomical unit = 1.496e11 m
+    'furlong': 201.168,    // 1 furlong = 201.168 m
+    'rod': 5.0292,         // 1 rod = 5.0292 m
+    'chain': 20.1168,      // 1 chain = 20.1168 m
+    'league': 4828.03,     // 1 league = 4828.03 m
+    'parsec': 3.085677581491367e16, // 1 parsec = 3.085677581491367e16 m
+    'kiloparsec': 3.085677581491367e19, // 1 kiloparsec = 3.085677581491367e19 m
+    'megaparsec': 3.085677581491367e22, // 1 megaparsec = 3.085677581491367e22 m
+    'gigaparsec': 3.085677581491367e25, // 1 gigaparsec = 3.085677581491367e25 m
+    'teraparsec': 3.085677581491367e28, // 1 teraparsec = 3.085677581491367e28 m
   },
   velocity: {
     'm/s': 1,
     'km/h': 1 / 3.6,         // 1 km/h = 0.2777... m/s
     'cm/s': 0.01,
     'ft/s': 0.3048,
-    'mph': 0.44704           // 1 mph = 0.44704 m/s
+    'mph': 0.44704,
+    'knots': 0.514444,
+    'mi/s': 1609.34,
+    'ft/min': 0.00508,
+    'in/s': 0.0254,
+    'yd/s': 0.9144,
+    'miles/s': 1609.34,
+    'nautical miles/s': 1852,           
   },
   forceX: {
     'N': 1,
@@ -172,6 +199,13 @@ export const conversionFactors = {
   frictionCoefficient: {
     'static': 0.5, // Valor típico para coeficiente de fricción estática
     'kinetic': 0.3 // Valor típico para coeficiente de fricción cinética
+  },
+
+  coefficient: {
+    'dimensionless': 1,
+    'unitless': 1,
+    'percent': 0.01,
+    'ratio': 1
   }
   
 };
