@@ -115,6 +115,9 @@ export function setupCalculator(config: CalculatorConfig): void {
     
     const result = config.calculateFunction(variableToSolve, values);
     
+    // Guardar el resultado para análisis detallado
+    (window as any).lastCalculationResult = result;
+    
     // Mostrar el resultado
     if (result.value !== null && !isNaN(result.value) && isFinite(result.value)) {
       const resultUnitSelected = variableToSolve in unitSelectors ? 

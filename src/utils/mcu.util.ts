@@ -65,8 +65,117 @@ export const conversionFactors = {
     'm/s²': 1,
     'g': 9.8,
     'cm/s²': 0.01
+  },
+  
+  // Factores de conversión para Segunda Ley de Newton
+  force: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822,
+    'kgf': 9.80665, 
+    'poundal': 0.138255,
+    'kip': 4.44822 * 1000 // 1 kip = 1000 lbf
+  },
+  mass: {
+    'kg': 1,
+    'g': 0.001,
+    'lb': 0.453592,
+    't': 1000,
+    'slug': 14.5939, // 1 slug = 14.5939 kg
+    'oz': 0.0283495, // 1 oz = 0.0283495 kg
+    'stone': 6.35029, // 1 stone = 6.35029 kg
+  },
+  acceleration: {
+    'm/s²': 1,
+    'cm/s²': 0.01,
+    'ft/s²': 0.3048,
+    'g': 9.80665,
+    'in/s²': 0.0254,
+    'km/h²': 1 / (3.6 * 3.6), // 1 km/h² = 1 / (3.6 * 3.6) m/s²
+  },
+  angle: {
+    'rad': 1,
+    'deg': Math.PI / 180,
+    'grad': Math.PI / 200,
+    'turn': 2 * Math.PI, // 1 turn = 2π rad
+  },
+  distance: {
+    'm': 1,
+    'cm': 0.01,
+    'km': 1000,
+    'ft': 0.3048,
+    'in': 0.0254
+  },
+  velocity: {
+    'm/s': 1,
+    'km/h': 1 / 3.6,         // 1 km/h = 0.2777... m/s
+    'cm/s': 0.01,
+    'ft/s': 0.3048,
+    'mph': 0.44704           // 1 mph = 0.44704 m/s
+  },
+  forceX: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822,
+    'kgf': 9.80665,
+    'poundal': 0.138255
+  },
+  forceY: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822,
+    'kgf': 9.80665,
+    'poundal': 0.138255
+  },
+  accelerationX: {
+    'm/s²': 1,
+    'cm/s²': 0.01,
+    'ft/s²': 0.3048,
+    'g': 9.80665,
+    'in/s²': 0.0254,
+    'km/h²': 1 / (3.6 * 3.6) // 1 km/h² = 1 / (3.6 * 3.6) m/s²
+  },
+  accelerationY: {
+    'm/s²': 1,
+    'cm/s²': 0.01,
+    'ft/s²': 0.3048,
+    'g': 9.80665,
+    'in/s²': 0.0254,
+    'km/h²': 1 / (3.6 * 3.6) // 1 km/h² = 1 / (3.6 * 3.6) m/s²
+  },
+  appliedForce: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822,
+    'kgf': 9.80665,
+    'poundal': 0.138255
+  },
+  frictionForce: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822,
+    'kgf': 9.80665,
+    'poundal': 0.138255
+  },
+  normalForce: {
+    'N': 1,
+    'kN': 1000,
+    'dyn': 0.00001,
+    'lbf': 4.44822,
+    'kgf': 9.80665,
+    'poundal': 0.138255
+  },
+  frictionCoefficient: {
+    'static': 0.5, // Valor típico para coeficiente de fricción estática
+    'kinetic': 0.3 // Valor típico para coeficiente de fricción cinética
   }
-}
+  
+};
 
 /**
  * Converts a numerical value from a specified unit to its base unit using conversion factors.

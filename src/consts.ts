@@ -44,9 +44,15 @@ export const CALCULATORS = [
 
 export const CALCULATORS_DINAMIC = [
   {
-    name: 'Leyes de Newton',
+    name: 'segunda Lye de Newton',
     description: 'Calcula la fuerza, masa o aceleración según las leyes de Newton.',
     url: '/calculators/dinamica/segunda-ley-newton',
     image: '/images/segunda-ley-newton.png',
+  },
+  {
+    name: 'Multiples fuerzas',
+    description: 'Calcula la fuerza resultante de múltiples fuerzas aplicadas a un objeto.',
+    url: '/calculators/dinamica/multiples-fuerzas',
+    image: '/images/multiples-fuerzas.png',
   }
 ]

@@ -48,11 +48,45 @@ export type UnitMap = {
   finalAngularAcceleration: 'rad/s²' | 'deg/s²' | 'rpm/s';
   
   // Tipos para Segunda Ley de Newton
-  force: 'N' | 'kN' | 'dyn' | 'lbf';
-  mass: 'kg' | 'g' | 'lb' | 't';
-  acceleration: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g';
+  force: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  mass: 'kg' | 'g' | 'lb' | 't' | 'oz' | 'slug';
+  acceleration: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  forceX: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  forceY: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  accelerationX: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  accelerationY: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  angle: 'deg' | 'rad';
+  appliedForce: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  frictionForce: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  normalForce: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  frictionCoefficient: 'dimensionless';
+  // Tipos para Segunda Ley de Newton avanzados
+  initialForce: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  finalForce: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  initialMass: 'kg' | 'g' | 'lb' | 't' | 'oz' | 'slug';
+  finalMass: 'kg' | 'g' | 'lb' | 't' | 'oz' | 'slug';
+  initialAcceleration: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  finalAcceleration: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  initialForceX: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  finalForceX: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  initialForceY: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  finalForceY: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  initialAccelerationX: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  finalAccelerationX: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  initialAccelerationY: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  finalAccelerationY: 'm/s²' | 'cm/s²' | 'ft/s²' | 'g' | 'km/s²' | 'mi/s²' | 'km/h²' | 'mi/h²';
+  initialAngle: 'deg' | 'rad';
+  finalAngle: 'deg' | 'rad';
+  initialCoefficient: 'dimensionless';
+  finalCoefficient: 'dimensionless';
+  appliedForceX: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  appliedForceY: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  frictionForceX: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  frictionForceY: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  normalForceX: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
+  normalForceY: 'N' | 'kN' | 'dyn' | 'lbf' | 'kgf' | 'poundal';
   
   // Tipos para cálculos avanzados
-  angle: 'deg' | 'rad';
+
   coefficient: 'dimensionless';
 }

@@ -6,124 +6,160 @@ import InputGroup from "../../../components/calculator/InputGroup.astro";
 import ResultDisplay from "../../../components/calculator/ResultDisplay.astro";
 import FormulasContainer from "../../../components/calculator/FormulasContainer.astro";
 import FormulaItem from "../../../components/calculator/FormulaItem.astro";
-import InfoMessage from "../../../components/calculator/InfoMessage.astro";
 import MultipleForces from "../../../components/calculator/MultipleForces.astro";
-import { 
-  NEWTON_SECOND_LAW_VARIABLES, 
-  NEWTON_SECOND_LAW_FORMULAS,
-  NEWTON_MULTIPLE_FORCES_VARIABLES,
-  NEWTON_MULTIPLE_FORCES_FORMULAS, 
-  UNITS 
-} from "../../../constants/calculator";
-import '../../../styles/calculator-components.css';
-import '../../../styles/calculator-unified.css';
-import '../../../styles/mcu.css';
-import '../../../styles/multiple-forces.css';
----
+import InfoMessage from "../../../components/calculator/InfoMessage.astro";
 
-<CalculatorLayout title="Segunda Ley de Newton" description="Calculadora para la Segunda Ley de Newton (F = ma)">
-  <h1>Segunda Ley de Newton</h1>
+import {  UNITS, NEWTON_SECOND_LAW_CONFIG, NEWTON_ADVANCED_VARIABLES, NEWTON_ADVANCED_FORMULAS } from "../../../constants/calculator";
+import '../../../styles/mcu.css';
+import '../../../styles/calculator-components.css';
+---
+<CalculatorLayout title={NEWTON_SECOND_LAW_CONFIG.title} description={NEWTON_SECOND_LAW_CONFIG.description} icon="⚖️">
+  <h1>{NEWTON_SECOND_LAW_CONFIG.title}</h1>
   
-  <InfoMessage type="info">
-    La Segunda Ley de Newton establece que la fuerza resultante aplicada a un objeto es directamente proporcional a su aceleración y a su masa. <strong>¡Ahora con soporte para múltiples fuerzas!</strong>
-  </InfoMessage>
+  <!-- Enlace a la calculadora especializada -->
+  <div class="specialized-calculator-link">
+    <InfoMessage type="info">
+      💡 <strong>¿Necesitas analizar múltiples fuerzas?</strong> 
+      <a href="/calculators/dinamica/multiples-fuerzas" class="specialized-link">
+        Prueba nuestra Calculadora de Múltiples Fuerzas
+      </a> 
+      diseñada específicamente para este tipo de problemas.
+    </InfoMessage>
+  </div>
+  
+  <!-- <InfoMessage type="info">
+    Esta calculadora utiliza la nueva interfaz modular con estilos mejorados y mayor accesibilidad.
+  </InfoMessage> -->
   
   <p>
-    La Segunda Ley de Newton, también conocida como Ley Fundamental de la Dinámica, establece que la aceleración de un objeto es directamente proporcional a la fuerza neta aplicada sobre él e inversamente proporcional a su masa. Esta ley se expresa matemáticamente como <strong>F = m × a</strong>, donde F es la fuerza resultante, m es la masa del objeto y a es la aceleración producida.
+    
   </p>
-
-  <!-- Selector de modo de cálculo -->
-  <div class="calculation-mode-selector">
-    <h3>Modo de Cálculo:</h3>
-    <div class="mode-buttons">
-      <button type="button" class="mode-btn active" id="basic-mode-btn" onclick="switchCalculationMode('basic')">
-        <span class="icon">⚖️</span>
-        <div class="mode-info">
-          <strong>Básico</strong>
-          <small>Una sola fuerza</small>
-        </div>
-      </button>
-      <button type="button" class="mode-btn" id="multiple-mode-btn" onclick="switchCalculationMode('multipleForces')">
-        <span class="icon">🎯</span>
-        <div class="mode-info">
-          <strong>Múltiples Fuerzas</strong>
-          <small>Varias fuerzas simultáneas</small>
-        </div>
-      </button>
-    </div>
-  </div>
   
   <div class="calculator-container">
     <div class="calculator">
       <CalculatorHeader 
-        title="Calculadora Segunda Ley de Newton" 
-        description="Selecciona la incógnita que deseas calcular y completa los valores conocidos"
-        icon="⚖️"
+        title={NEWTON_SECOND_LAW_CONFIG.title} 
+        description={NEWTON_SECOND_LAW_CONFIG.calculatorDescription}
+        icon="🔄"
       />
       
       <div class="calculator-body">
         <VariableSelector 
-          options={NEWTON_SECOND_LAW_VARIABLES} 
+          options={NEWTON_ADVANCED_VARIABLES} 
           label="Variable a calcular:"
-          id="variable-selector"
         />
         
-        <!-- Modo básico: Inputs tradicionales -->
-        <div id="basic-inputs" class="input-mode active">
-          <div class="input-groups-container">
-            <InputGroup 
-              id="force" 
-              label="Fuerza (F):" 
-              placeholder="Ingresa la fuerza" 
-              units={UNITS.force} 
-            />
-            
-            <InputGroup 
-              id="mass" 
-              label="Masa (m):" 
-              placeholder="Ingresa la masa" 
-              units={UNITS.mass} 
-            />
-            
-            <InputGroup 
-              id="acceleration" 
-              label="Aceleración (a):" 
-              placeholder="Ingresa la aceleración" 
-              units={UNITS.acceleration} 
-            />
-          </div>
-        </div>
+        <div class="input-groups-container">
+          <InputGroup 
+            id="mass"
+            label="Masa (m):"
+            placeholder="Ingresa la masa"
+            units={UNITS.mass}
+          />
+          <InputGroup 
+            id="acceleration"
+            label="Aceleración (a):"
+            placeholder="Ingresa la aceleración"
+            units={UNITS.acceleration}
+          />
+          <InputGroup 
+            id="force"
+            label="Fuerza (F):"
+            placeholder="Ingresa la fuerza"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="angle"
+            label="Ángulo (θ):"
+            placeholder="Ingresa el angulo"
+            units={UNITS.angle}
+          />
+          <InputGroup 
+            id="coefficient"
+            label="Coeficiente(μ):"
+            placeholder="Ingresa el coeficiente"
+            units={UNITS.coefficient}
+          />
+          <InputGroup 
+            id="friction-force"
+            label="Fuerza de fricción (Ff):"
+            placeholder="Ingresa la fuerza de fricción"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="normal-force"
+            label="Fuerza normal (N):"
+            placeholder="Ingresa la fuerza normal"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="gravity"
+            label="Gravedad (g):"
+            placeholder="Ingresa la gravedad"
+            units={UNITS.acceleration}
+          />
+          <InputGroup 
+            id="net-force"
+            label="Fuerza neta (Fn):"
+            placeholder="Ingresa la fuerza neta"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="resultant-force"
+            label="Fuerza resultante (Fr):"
+            placeholder="Ingresa la fuerza resultante"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="weight"
+            label="Peso (P):"
+            placeholder="Ingresa el peso"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="forceX",
+            label="Fuerza componente X (Fx):"
+            placeholder="Ingresa la fuerza en el componente X"
+            units={UNITS.force}          
+          />
 
-        <!-- Modo múltiples fuerzas -->
-        <div id="multiple-forces-inputs" class="input-mode">
-          <div class="example-container">
-            <button type="button" class="example-btn" id="load-example-btn">
-              <span class="example-icon">💡</span>
-              Cargar ejemplo: Dos fuerzas perpendiculares
-            </button>
-          </div>
+          <InputGroup 
+            id="forceY"
+            label="Fuerza en el componente Y (Fy):"
+            placeholder="Ingresa la fuerza en el componente Y"
+            units={UNITS.force}
+          />
+
+          <InputGroup 
+            id="applied-force",
+            label="Fuerza aplicada (Fa):"
+            placeholder="Ingresa la fuerza aplicada"
+            units={UNITS.force}          
+          />   
           
-          <MultipleForces id="multiple-forces" />
+          <InputGroup 
+            id="friction-coefficient",
+            label="Coeficiente de fricción (μ):"
+            placeholder="Ingresa el coeficiente de fricción"
+            units={UNITS.coefficient}          
+          />     
           
-          <div class="input-groups-container">
-            <InputGroup 
-              id="mass-multiple" 
-              label="Masa (m):" 
-              placeholder="Ingresa la masa del objeto" 
-              units={UNITS.mass} 
-            />
-            
-            <InputGroup 
-              id="acceleration-multiple" 
-              label="Aceleración (a):" 
-              placeholder="Ingresa la aceleración (si es conocida)" 
-              units={UNITS.acceleration} 
-            />
-          </div>
+          <InputGroup 
+            id="radius"
+            label="Radio (r):"
+            placeholder="Ingresa el radio del planeta"
+            units={UNITS.radius}          
+          />
+
+          <InputGroup
+            id="time"
+            label="Tiempo (t):"
+            placeholder="Ingresa el tiempo"
+            units={UNITS.time}
+          />
         </div>
         
-        <button id="calculate-btn" class="calculate-button">Calcular</button>
-        
+        <button id="calculate-btn" class="calculate-button">Calcular</button>       
         <ResultDisplay showCopyButton={true} />
       </div>
     </div>
@@ -132,57 +168,63 @@ import '../../../styles/multiple-forces.css';
       title="Fórmulas de la Segunda Ley de Newton"
       icon="📊"
     >
-      <div id="basic-formulas" class="formulas-section active">
-        <h4>Fórmulas Básicas:</h4>
-        {NEWTON_SECOND_LAW_FORMULAS.map(formula => (
-          <FormulaItem 
-            formula={formula.formula} 
-            description={formula.description}
-            example={formula.formula === 'F = m × a' ? 'F = 10 kg × 2 m/s² = 20 N' : 
-                     formula.formula === 'a = F / m' ? 'a = 20 N / 10 kg = 2 m/s²' :
-                     formula.formula === 'm = F / a' ? 'm = 20 N / 2 m/s² = 10 kg' : undefined} 
-          />
-        ))}
-      </div>
-
-      <div id="multiple-formulas" class="formulas-section">
-        <h4>Fórmulas para Múltiples Fuerzas:</h4>
-        {NEWTON_MULTIPLE_FORCES_FORMULAS.map(formula => (
-          <FormulaItem 
-            formula={formula.formula} 
-            description={formula.description}
-            example={formula.example} 
-          />
-        ))}
-      </div>
+      
+      {NEWTON_ADVANCED_FORMULAS.map(formula => (
+        <FormulaItem 
+          formula={formula.formula} 
+          description={formula.description}
+          example={formula.example} 
+        />
+      ))}
     </FormulasContainer>
   </div>
 
+  <style>
+    .specialized-calculator-link {
+      margin: 1.5rem 0;
+    }
+
+    .specialized-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      display: inline-block;
+    }
+
+    .specialized-link:hover {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .specialized-calculator-link .info-message {
+      border-left: 4px solid #667eea;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    }
+  </style>
+
   <script>
     import { setupCalculator } from "../../../utils/calculators/calculator-controller";
-    import { calculateNewtonAuto } from "../../../utils/calculators/integrated-newton-calculator";
+    import { calculateNewton, calculateNetForceFromMultiple } from "../../../utils/calculators/dinamica/segunda-ley/segunda-ley-calculator";
     import { NEWTON_SECOND_LAW_CONFIG } from "../../../constants/calculator";
     import { initResponsiveUtils } from "../../../utils/responsive-utils";
     
     document.addEventListener('DOMContentLoaded', function() {
-      // Configurar la calculadora con función integrada
+      // Configurar la calculadora Newton
       setupCalculator({
-        calculateFunction: (variableToSolve, values) => {
-          try {
-            return calculateNewtonAuto(variableToSolve, values);
-          } catch (error) {
-            console.error('Error en cálculo:', error);
-            throw error;
-          }
-        },
+        calculateFunction: calculateNewton,
         variableGroups: NEWTON_SECOND_LAW_CONFIG.variableGroups
       });
+      
       
       // Inicializar utilidades responsivas
       initResponsiveUtils();
     });
   </script>
-  
-  <!-- Load the mode controller script -->
-  <script src="../../../utils/calculators/newton-mode-controller.js"></script>
 </CalculatorLayout>

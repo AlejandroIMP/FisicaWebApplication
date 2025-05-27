@@ -1,133 +1,170 @@
 ---
-export interface Props {
-  id?: string;
-  label?: string;
+interface Props {
+  id: string;
+  title: string;
   maxForces?: number;
 }
 
-const { id = "multiple-forces", label = "Fuerzas Aplicadas:", maxForces = 5 } = Astro.props;
+const { id, title, maxForces = 5 } = Astro.props;
 ---
 
-<div class="multiple-forces-container" id={id}>
-  <label class="input-label">{label}</label>
+<div class="multiple-forces-container" id={`${id}-container`}>
+  <div class="forces-header">
+    <h4>{title}</h4>
+    <div class="forces-controls">
+      <button type="button" class="add-force-btn" id={`${id}-add`}>
+        <span class="icon">➕</span>
+        Agregar Fuerza
+      </button>
+      <button type="button" class="clear-forces-btn" id={`${id}-clear`}>
+        <span class="icon">🗑️</span>
+        Limpiar Todo
+      </button>
+      <button type="button" class="load-example-btn" id={`${id}-example`}>
+        <span class="icon">📝</span>
+        Cargar Ejemplo
+      </button>
+    </div>
+  </div>
   
   <div class="forces-list" id={`${id}-list`}>
-    <!-- Las fuerzas se añadirán dinámicamente aquí -->
+    <!-- Las fuerzas se agregarán dinámicamente aquí -->
   </div>
   
-  <div class="forces-controls">
-    <button type="button" class="add-force-btn" id={`${id}-add`}>
-      <span class="icon">+</span>
-      Agregar Fuerza
-    </button>
-    
-    <button type="button" class="clear-forces-btn" id={`${id}-clear`}>
-      <span class="icon">🗑️</span>
-      Limpiar Todo
-    </button>
-  </div>
-  
-  <div class="net-force-preview" id={`${id}-preview`} style="display: none;">
-    <h4>Fuerza Neta Preliminar:</h4>
+  <div class="net-force-preview" id={`${id}-preview`}>
     <div class="preview-content">
-      <span class="magnitude">Magnitud: <strong id={`${id}-magnitude`}>0 N</strong></span>
-      <span class="angle">Ángulo: <strong id={`${id}-angle`}>0°</strong></span>
+      <strong>Vista Previa de Fuerza Neta:</strong>
+      <div class="preview-components">
+        <span id={`${id}-fx-preview`}>Fx = 0 N</span>
+        <span id={`${id}-fy-preview`}>Fy = 0 N</span>
+      </div>
+      <div class="preview-result">
+        <span id={`${id}-magnitude-preview`}>|F_net| = 0 N</span>
+        <span id={`${id}-angle-preview`}>θ = 0°</span>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
 .multiple-forces-container {
-  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.input-label {
-  display: block;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
+.forces-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.forces-header h4 {
+  margin: 0;
+  color: #495057;
+  font-size: 1.2rem;
+}
+
+.forces-controls {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.forces-controls button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-force-btn {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+}
+
+.add-force-btn:hover {
+  background: linear-gradient(135deg, #218838, #1ea080);
+  transform: translateY(-2px);
+}
+
+.clear-forces-btn {
+  background: linear-gradient(135deg, #dc3545, #e74c3c);
+  color: white;
+}
+
+.clear-forces-btn:hover {
+  background: linear-gradient(135deg, #c82333, #dc2626);
+  transform: translateY(-2px);
+}
+
+.load-example-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.load-example-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-2px);
 }
 
 .forces-list {
-  border: 2px dashed var(--color-border);
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  min-height: 80px;
-  background: var(--color-surface);
-  transition: border-color 0.3s ease;
-}
-
-.forces-list:focus-within,
-.forces-list.has-forces {
-  border-color: var(--color-primary);
-  border-style: solid;
-}
-
-.forces-list.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-text-muted);
-  font-style: italic;
-}
-
-.forces-list.empty::before {
-  content: "Haz clic en 'Agregar Fuerza' para comenzar";
+  margin: 1rem 0;
 }
 
 .force-item {
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
   padding: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   position: relative;
   transition: all 0.3s ease;
 }
 
-.force-item:last-child {
-  margin-bottom: 0;
-}
-
 .force-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-color: var(--color-primary);
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
 }
 
 .force-header {
   display: flex;
-  justify-content: between;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .force-title {
-  font-weight: 600;
-  color: var(--color-text);
-  font-size: 0.9rem;
+  font-weight: bold;
+  color: #495057;
 }
 
 .remove-force-btn {
-  background: var(--color-danger);
+  background: #dc3545;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.remove-force-btn:hover {
-  background: var(--color-danger-dark);
+  font-size: 0.8rem;
 }
 
 .force-inputs {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
 .force-input-group {
@@ -135,384 +172,320 @@ const { id = "multiple-forces", label = "Fuerzas Aplicadas:", maxForces = 5 } = 
   flex-direction: column;
 }
 
-.force-input-label {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
+.force-input-group label {
+  font-size: 0.9rem;
+  color: #6c757d;
   margin-bottom: 0.25rem;
-  font-weight: 500;
 }
 
-.force-input {
+.force-input-group input,
+.force-input-group select {
   padding: 0.5rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 0.9rem;
-  transition: border-color 0.3s ease;
-}
-
-.force-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-light);
-}
-
-.force-unit-select {
-  padding: 0.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  font-size: 0.9rem;
-  background: white;
-  cursor: pointer;
-}
-
-.forces-controls {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.add-force-btn,
-.clear-forces-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.add-force-btn {
-  background: var(--color-primary);
-  color: white;
-}
-
-.add-force-btn:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
-}
-
-.clear-forces-btn {
-  background: var(--color-secondary);
-  color: var(--color-text);
-}
-
-.clear-forces-btn:hover {
-  background: var(--color-secondary-dark);
-}
-
-.icon {
-  font-size: 1rem;
 }
 
 .net-force-preview {
-  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-lighter));
-  border: 1px solid var(--color-primary);
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 1px solid #2196f3;
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
 }
 
-.net-force-preview h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--color-primary-dark);
-  font-size: 0.95rem;
-}
-
 .preview-content {
+  text-align: center;
+}
+
+.preview-components {
   display: flex;
-  gap: 1.5rem;
-  font-size: 0.9rem;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
 }
 
-.preview-content strong {
-  color: var(--color-primary-dark);
+.preview-result {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  font-weight: bold;
+  color: #1976d2;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .force-inputs {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+  .forces-header {
+    flex-direction: column;
+    align-items: stretch;
   }
   
   .forces-controls {
-    flex-direction: column;
-  }
-  
-  .add-force-btn,
-  .clear-forces-btn {
     justify-content: center;
   }
   
-  .preview-content {
+  .force-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .preview-components,
+  .preview-result {
     flex-direction: column;
     gap: 0.5rem;
-  }
-}
-
-/* Animaciones */
-.force-item {
-  animation: fadeInUp 0.3s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.forces-list.empty {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    border-color: var(--color-border);
-  }
-  50% {
-    border-color: var(--color-primary-light);
   }
 }
 </style>
 
 <script>
-  import type { Force } from '../../utils/calculators/multiple-forces-calculator';
-  
-  // Variables globales para manejar las fuerzas
-  let forces: Force[] = [];
-  let forceCounter = 1;
-  const maxForces = 5;
-  
-  // Unidades disponibles para las fuerzas
-  const forceUnits = [
-    { value: 'N', label: 'N' },
-    { value: 'kN', label: 'kN' },
-    { value: 'dyn', label: 'dyn' },
-    { value: 'lbf', label: 'lbf' },
-    { value: 'kgf', label: 'kgf' }
-  ];
-  
-  document.addEventListener('DOMContentLoaded', function() {
-    initializeMultipleForces();
-  });
-  
-  function initializeMultipleForces() {
-    const container = document.getElementById('multiple-forces');
-    if (!container) return;
+interface Force {
+  id: number;
+  magnitude: number;
+  angle: number;
+  unit: string;
+}
+
+class MultipleForces {
+  private container: HTMLElement;
+  private list: HTMLElement;
+  private addBtn: HTMLElement;
+  private clearBtn: HTMLElement;
+  private exampleBtn: HTMLElement;
+  private forces: Force[] = [];
+  private forceCounter = 0;
+  private maxForces: number;
+  private id: string;
+
+  constructor(id: string, maxForces: number = 5) {
+    this.id = id;
+    this.maxForces = maxForces;
+    this.container = document.getElementById(`${id}-container`)!;
+    this.list = document.getElementById(`${id}-list`)!;
+    this.addBtn = document.getElementById(`${id}-add`)!;
+    this.clearBtn = document.getElementById(`${id}-clear`)!;
+    this.exampleBtn = document.getElementById(`${id}-example`)!;
     
-    const addBtn = document.getElementById('multiple-forces-add');
-    const clearBtn = document.getElementById('multiple-forces-clear');
-    
-    // Event listeners
-    addBtn?.addEventListener('click', addForce);
-    clearBtn?.addEventListener('click', clearAllForces);
-    
-    // Agregar primera fuerza por defecto
-    addForce();
+    this.init();
   }
-  
-  function addForce() {
-    if (forces.length >= maxForces) {
-      alert(`Máximo ${maxForces} fuerzas permitidas`);
+
+  private init() {
+    this.addBtn.addEventListener('click', () => this.addForce());
+    this.clearBtn.addEventListener('click', () => this.clearAllForces());
+    this.exampleBtn.addEventListener('click', () => this.loadExample());
+    
+    // Agregar una fuerza inicial
+    this.addForce();
+  }
+
+  private addForce(magnitude: number = 0, angle: number = 0, unit: string = 'N') {
+    if (this.forces.length >= this.maxForces) {
+      this.showNotification(`Máximo ${this.maxForces} fuerzas permitidas`, 'warning');
       return;
     }
-    
-    const forceId = `force-${forceCounter++}`;
+
     const force: Force = {
-      id: forceId,
-      magnitude: 0,
-      angle: 0,
-      unit: 'N',
-      name: `F${forces.length + 1}`
+      id: ++this.forceCounter,
+      magnitude,
+      angle,
+      unit
     };
-    
-    forces.push(force);
-    renderForce(force);
-    updateForcesList();
-    updateNetForcePreview();
+
+    this.forces.push(force);
+    this.renderForce(force);
+    this.updatePreview();
+    this.updateAddButtonState();
   }
-  
-  function renderForce(force: Force) {
-    const list = document.getElementById('multiple-forces-list');
-    if (!list) return;
-    
+
+  private renderForce(force: Force) {
     const forceElement = document.createElement('div');
     forceElement.className = 'force-item';
-    forceElement.id = `force-item-${force.id}`;
+    forceElement.id = `force-${force.id}`;
     
     forceElement.innerHTML = `
       <div class="force-header">
-        <span class="force-title">${force.name || 'Fuerza'}</span>
-        <button type="button" class="remove-force-btn" onclick="removeForce('${force.id}')">
-          Eliminar
+        <span class="force-title">Fuerza ${force.id}</span>
+        <button class="remove-force-btn" onclick="multipleForces.removeForce(${force.id})">
+          ✖ Eliminar
         </button>
       </div>
       <div class="force-inputs">
         <div class="force-input-group">
-          <label class="force-input-label">Magnitud</label>
+          <label for="magnitude-${force.id}">Magnitud:</label>
           <input 
             type="number" 
-            class="force-input" 
-            id="${force.id}-magnitude"
-            placeholder="0" 
-            min="0" 
-            step="0.1"
-            oninput="updateForce('${force.id}', 'magnitude', this.value)"
-          />
-        </div>
-        <div class="force-input-group">
-          <label class="force-input-label">Ángulo (°)</label>
-          <input 
-            type="number" 
-            class="force-input" 
-            id="${force.id}-angle"
-            placeholder="0" 
-            min="0" 
-            max="360" 
-            step="1"
-            oninput="updateForce('${force.id}', 'angle', this.value)"
-          />
-        </div>
-        <div class="force-input-group">
-          <label class="force-input-label">Unidad</label>
-          <select 
-            class="force-unit-select" 
-            id="${force.id}-unit"
-            onchange="updateForce('${force.id}', 'unit', this.value)"
+            id="magnitude-${force.id}" 
+            value="${force.magnitude}"
+            step="0.01"
+            oninput="multipleForces.updateForce(${force.id}, 'magnitude', this.value)"
           >
-            ${forceUnits.map(unit => 
-              `<option value="${unit.value}" ${force.unit === unit.value ? 'selected' : ''}>${unit.label}</option>`
-            ).join('')}
+        </div>
+        <div class="force-input-group">
+          <label for="angle-${force.id}">Ángulo (°):</label>
+          <input 
+            type="number" 
+            id="angle-${force.id}" 
+            value="${force.angle}"
+            step="0.1"
+            oninput="multipleForces.updateForce(${force.id}, 'angle', this.value)"
+          >
+        </div>
+        <div class="force-input-group">
+          <label for="unit-${force.id}">Unidad:</label>
+          <select 
+            id="unit-${force.id}" 
+            onchange="multipleForces.updateForce(${force.id}, 'unit', this.value)"
+          >
+            <option value="N" ${force.unit === 'N' ? 'selected' : ''}>N</option>
+            <option value="kN" ${force.unit === 'kN' ? 'selected' : ''}>kN</option>
+            <option value="dyn" ${force.unit === 'dyn' ? 'selected' : ''}>dyn</option>
+            <option value="lbf" ${force.unit === 'lbf' ? 'selected' : ''}>lbf</option>
           </select>
         </div>
       </div>
     `;
-    
-    list.appendChild(forceElement);
+
+    this.list.appendChild(forceElement);
   }
-  
-  function removeForce(forceId: string) {
-    forces = forces.filter(f => f.id !== forceId);
-    const element = document.getElementById(`force-item-${forceId}`);
-    element?.remove();
-    updateForcesList();
-    updateNetForcePreview();
-  }
-  
-  function clearAllForces() {
-    forces = [];
-    forceCounter = 1;
-    const list = document.getElementById('multiple-forces-list');
-    if (list) {
-      list.innerHTML = '';
+
+  public removeForce(forceId: number) {
+    this.forces = this.forces.filter(f => f.id !== forceId);
+    const element = document.getElementById(`force-${forceId}`);
+    if (element) {
+      element.remove();
     }
-    updateForcesList();
-    updateNetForcePreview();
-    
-    // Agregar una fuerza por defecto
-    setTimeout(addForce, 100);
+    this.updatePreview();
+    this.updateAddButtonState();
   }
-  
-  function updateForce(forceId: string, property: string, value: string) {
-    const force = forces.find(f => f.id === forceId);
-    if (!force) return;
-    
-    switch (property) {
-      case 'magnitude':
-        force.magnitude = parseFloat(value) || 0;
-        break;
-      case 'angle':
-        force.angle = parseFloat(value) || 0;
-        break;
-      case 'unit':
-        force.unit = value;
-        break;
-    }
-    
-    updateNetForcePreview();
-  }
-  
-  function updateForcesList() {
-    const list = document.getElementById('multiple-forces-list');
-    if (!list) return;
-    
-    if (forces.length === 0) {
-      list.classList.add('empty');
-      list.classList.remove('has-forces');
-    } else {
-      list.classList.remove('empty');
-      list.classList.add('has-forces');
-    }
-  }
-  
-  function updateNetForcePreview() {
-    try {
-      if (forces.length === 0 || forces.every(f => f.magnitude === 0)) {
-        hideNetForcePreview();
-        return;
+
+  public updateForce(forceId: number, property: keyof Force, value: string) {
+    const force = this.forces.find(f => f.id === forceId);
+    if (force) {
+      if (property === 'magnitude' || property === 'angle') {
+        (force as any)[property] = parseFloat(value) || 0;
+      } else {
+        (force as any)[property] = value;
       }
-      
-      // Importar y usar la calculadora de fuerzas múltiples
-      // Nota: En un entorno real, esto se haría de manera diferente
-      // Por ahora, calculamos manualmente
-      let totalFx = 0;
-      let totalFy = 0;
-      
-      forces.forEach(force => {
-        if (force.magnitude > 0) {
-          const angleRad = force.angle * Math.PI / 180;
-          totalFx += force.magnitude * Math.cos(angleRad);
-          totalFy += force.magnitude * Math.sin(angleRad);
-        }
-      });
-      
-      const magnitude = Math.sqrt(totalFx * totalFx + totalFy * totalFy);
-      let angle = Math.atan2(totalFy, totalFx) * 180 / Math.PI;
-      if (angle < 0) angle += 360;
-      
-      showNetForcePreview(magnitude, angle);
-      
-    } catch (error) {
-      console.error('Error calculando fuerza neta:', error);
-      hideNetForcePreview();
+      this.updatePreview();
     }
   }
-  
-  function showNetForcePreview(magnitude: number, angle: number) {
-    const preview = document.getElementById('multiple-forces-preview');
-    const magnitudeEl = document.getElementById('multiple-forces-magnitude');
-    const angleEl = document.getElementById('multiple-forces-angle');
+
+  private updatePreview() {
+    const netForce = this.calculateNetForce();
     
-    if (preview && magnitudeEl && angleEl) {
-      magnitudeEl.textContent = `${magnitude.toFixed(2)} N`;
-      angleEl.textContent = `${angle.toFixed(1)}°`;
-      preview.style.display = 'block';
+    document.getElementById(`${this.id}-fx-preview`)!.textContent = `Fx = ${netForce.fx.toFixed(2)} N`;
+    document.getElementById(`${this.id}-fy-preview`)!.textContent = `Fy = ${netForce.fy.toFixed(2)} N`;
+    document.getElementById(`${this.id}-magnitude-preview`)!.textContent = `|F_net| = ${netForce.magnitude.toFixed(2)} N`;
+    document.getElementById(`${this.id}-angle-preview`)!.textContent = `θ = ${netForce.angle.toFixed(1)}°`;
+  }
+
+  private calculateNetForce() {
+    let fx = 0;
+    let fy = 0;
+
+    this.forces.forEach(force => {
+      const magnitudeInN = this.convertToNewtons(force.magnitude, force.unit);
+      const angleRad = (force.angle * Math.PI) / 180;
+      
+      fx += magnitudeInN * Math.cos(angleRad);
+      fy += magnitudeInN * Math.sin(angleRad);
+    });
+
+    const magnitude = Math.sqrt(fx * fx + fy * fy);
+    const angle = Math.atan2(fy, fx) * (180 / Math.PI);
+
+    return { fx, fy, magnitude, angle };
+  }
+
+  private convertToNewtons(value: number, unit: string): number {
+    const conversions: { [key: string]: number } = {
+      'N': 1,
+      'kN': 1000,
+      'dyn': 1e-5,
+      'lbf': 4.448,
+      'kgf': 9.807
+    };
+    return value * (conversions[unit] || 1);
+  }
+
+  private updateAddButtonState() {
+    if (this.forces.length >= this.maxForces) {
+      this.addBtn.style.opacity = '0.5';
+      this.addBtn.style.pointerEvents = 'none';
+    } else {
+      this.addBtn.style.opacity = '1';
+      this.addBtn.style.pointerEvents = 'auto';
     }
   }
-  
-  function hideNetForcePreview() {
-    const preview = document.getElementById('multiple-forces-preview');
-    if (preview) {
-      preview.style.display = 'none';
-    }
+
+  private clearAllForces() {
+    this.forces = [];
+    this.list.innerHTML = '';
+    this.updatePreview();
+    this.updateAddButtonState();
+    this.addForce(); // Agregar una fuerza inicial
   }
-  
-  // Hacer funciones globales para el HTML inline
-  (window as any).removeForce = removeForce;
-  (window as any).updateForce = updateForce;
-  
-  // Exportar las fuerzas para que otros componentes puedan acceder
-  (window as any).getMultipleForces = () => forces;
-  (window as any).validateMultipleForces = () => {
-    return forces.length > 0 && forces.some(f => f.magnitude > 0);
-  };
+
+  private loadExample() {
+    this.clearAllForces();
+    // Ejemplo: Dos fuerzas perpendiculares
+    this.addForce(50, 0, 'N');     // 50 N hacia la derecha
+    this.addForce(30, 90, 'N');    // 30 N hacia arriba
+    this.addForce(20, 180, 'N');   // 20 N hacia la izquierda
+  }
+
+  private showNotification(message: string, type: 'success' | 'warning' | 'error' = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      animation: slideIn 0.3s ease-out;
+    `;
+    
+    const colors = {
+      success: '#28a745',
+      warning: '#ffc107',
+      error: '#dc3545'
+    };
+    
+    notification.style.background = colors[type];
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease-out';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  public getNetForce() {
+    return this.calculateNetForce();
+  }
+
+  public getForces() {
+    return this.forces;
+  }
+}
+
+// Instancia global para acceso desde el HTML
+let multipleForces: MultipleForces;
+
+document.addEventListener('DOMContentLoaded', function() {
+  const container = document.querySelector('.multiple-forces-container');
+  if (container) {
+    const id = container.id.replace('-container', '');
+    multipleForces = new MultipleForces(id, 5);
+    
+    // Hacer disponible globalmente
+    (window as any).multipleForces = multipleForces;
+  }
+});
 </script>

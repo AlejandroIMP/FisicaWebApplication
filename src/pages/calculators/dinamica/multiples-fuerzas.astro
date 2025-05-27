@@ -1,0 +1,613 @@
+---
+import FormulasContainer from "../../../components/calculator/FormulasContainer.astro"
+import FormulaItem from "../../../components/calculator/FormulaItem.astro"
+import CalculatorLayout from "../../../layouts/CalculatorLayout.astro"
+
+title: "Calculadora de Múltiples Fuerzas"
+description: "Calculadora para analizar el efecto de múltiples fuerzas aplicadas a un objeto usando la Segunda Ley de Newton"
+
+---
+<CalculatorLayout title="Calculadora de Múltiples Fuerzas" icon="⚖️">
+
+<div class="calculator-container">
+  <div class="calculator-header">
+    <h1>Calculadora de Múltiples Fuerzas</h1>
+    <p>Analiza el efecto de múltiples fuerzas aplicadas a un objeto</p>
+  </div>
+
+  <!-- Sección de fuerzas -->
+  <div class="forces-section">
+    <div class="section-header">
+      <h2>Gestión de Fuerzas</h2>
+      <div class="force-counter">
+        Fuerzas definidas: <span id="force-count">0</span>
+      </div>
+    </div>
+
+    <!-- Formulario para añadir fuerzas -->
+    <div class="add-force-form">
+      <div class="input-row">
+        <div class="input-group">
+          <label for="force-magnitude">Magnitud (N):</label>
+          <input type="number" id="force-magnitude" step="0.1" min="0" placeholder="Ej: 10">
+        </div>
+        
+        <div class="input-group">
+          <label for="force-angle">Ángulo (°):</label>
+          <input type="number" id="force-angle" step="1" min="0" max="360" placeholder="Ej: 45">
+        </div>
+        
+        <div class="input-group">
+          <label for="force-name">Nombre (opcional):</label>
+          <input type="text" id="force-name" placeholder="Ej: Fricción">
+        </div>
+      </div>
+      
+      <div class="button-row">
+        <button type="button" id="add-force-btn" class="btn btn-primary">
+          <span class="btn-icon">+</span>
+          Añadir Fuerza
+        </button>
+        
+        <button type="button" id="add-multiple-forces-btn" class="btn btn-secondary">
+          <span class="btn-icon">⚡</span>
+          Añadir 3 Fuerzas
+        </button>
+        
+        <button type="button" id="clear-forces-btn" class="btn btn-danger">
+          <span class="btn-icon">🗑️</span>
+          Limpiar Todo
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de fuerzas -->
+    <div id="forces-list" class="forces-list">
+      <p class="no-forces">No hay fuerzas definidas. Añade algunas fuerzas para comenzar el cálculo.</p>
+    </div>
+  </div>
+
+  <!-- Calculadora principal -->
+  <div class="calculator-main">
+    <div class="variable-selector">
+      <label for="variable-to-solve">Variable a calcular:</label>
+      <select id="variable-to-solve">
+        <option value="netForce">Fuerza Neta (N)</option>
+        <option value="acceleration">Aceleración (m/s²)</option>
+        <option value="mass">Masa (kg)</option>
+      </select>
+    </div>
+
+    <!-- Campos de entrada -->
+    <div class="input-groups">
+      <div id="mass-group" class="input-group">
+        <label for="mass">Masa:</label>
+        <div class="input-with-unit">
+          <input type="number" id="mass" step="0.01" min="0" placeholder="Ej: 5">
+          <select id="mass-unit">
+            <option value="kg">kg</option>
+            <option value="g">g</option>
+            <option value="lb">lb</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="acceleration-group" class="input-group">
+        <label for="acceleration">Aceleración:</label>
+        <div class="input-with-unit">
+          <input type="number" id="acceleration" step="0.01" placeholder="Ej: 2">
+          <select id="acceleration-unit">
+            <option value="m/s²">m/s²</option>
+            <option value="ft/s²">ft/s²</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="netForce-group" class="input-group">
+        <label for="netForce">Fuerza Neta:</label>
+        <div class="input-with-unit">
+          <input type="number" id="netForce" step="0.01" placeholder="Calculada automáticamente">
+          <select id="netForce-unit">
+            <option value="N">N</option>
+            <option value="kN">kN</option>
+            <option value="lbf">lbf</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button id="calculate-btn" class="btn btn-calculate">
+      <span class="btn-icon">⚡</span>
+      Calcular
+    </button>
+
+    <!-- Resultados -->
+    <div class="results-section">
+      <div id="result" class="result"></div>
+      <div id="formula-used" class="formula"></div>
+      
+      <!-- Resultados detallados -->
+      <div id="detailed-results" class="detailed-results" style="display: none;">
+        <h3>Análisis Detallado</h3>
+        <div id="components-display" class="components"></div>
+        <div id="force-diagram" class="diagram"></div>
+        <div id="calculation-steps" class="steps"></div>
+      </div>
+    </div>
+    <FormulasContainer
+      title="Fórmulas para Múltiples Fuerzas"
+      icon="⚖️"
+    >
+      <div class="formula-header-with-button">
+        <h4>Fórmulas para Múltiples Fuerzas:</h4>
+        <button type="button" class="quick-add-force-btn" id="quick-add-force">
+          <span class="icon">➕</span>
+          Agregar Fuerza
+        </button>
+      </div>
+      
+      <FormulaItem 
+        formula="F_net = ΣF" 
+        description="Fuerza neta como suma vectorial de todas las fuerzas"
+        example="Para fuerzas en 2D: F_net = √(Fx² + Fy²)" 
+      />
+      <FormulaItem 
+        formula="F_net = F_aplicada - F_fricción" 
+        description="Fuerza neta en una dirección con fricción"
+        example="Si F_ap = 50N y F_f = 20N, entonces F_net = 30N" 
+      />
+      <FormulaItem 
+        formula="F_net = mg·sin(θ) - μ·mg·cos(θ)" 
+        description="Fuerza neta en plano inclinado con fricción"
+        example="Para objeto en rampa con fricción" 
+      />
+    </FormulasContainer>
+  </div>
+</div>
+</CalculatorLayout>
+
+<style>
+  .calculator-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .calculator-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .calculator-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .forces-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .section-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+  }
+
+  .force-counter {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+
+  .add-force-form {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .input-group label {
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .input-group input {
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+
+  .button-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+  }
+
+  .btn-calculate {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    width: 100%;
+    margin: 1.5rem 0;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .forces-list {
+    min-height: 100px;
+    border: 2px dashed #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .no-forces {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .force-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .force-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .force-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .force-label {
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+
+  .force-magnitude {
+    font-weight: 500;
+    color: #1f2937;
+  }
+
+  .force-angle {
+    color: #6b7280;
+  }
+
+  .force-name {
+    color: #9ca3af;
+    font-style: italic;
+  }
+
+  .remove-force-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+
+  .remove-force-btn:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+  }
+
+  .calculator-main {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+  }
+
+  .variable-selector {
+    margin-bottom: 1.5rem;
+  }
+
+  .variable-selector label {
+    display: block;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  .variable-selector select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: white;
+  }
+
+  .input-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-with-unit {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .input-with-unit input {
+    flex: 1;
+  }
+
+  .input-with-unit select {
+    width: 80px;
+    padding: 0.75rem 0.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+  }
+
+  .results-section {
+    margin-top: 1.5rem;
+  }
+
+  .result {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .formula {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    color: #374151;
+  }
+
+  .detailed-results {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .detailed-results h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+  }
+
+  .components, .steps {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .steps {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+
+  @media (max-width: 768px) {
+    .calculator-container {
+      padding: 1rem;
+    }
+
+    .input-row {
+      grid-template-columns: 1fr;
+    }
+
+    .button-row {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .force-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .section-header {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .notification {
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  import { setupCalculator } from '../../../utils/calculators/calculator-controller';
+  import { 
+    calculateMultipleForces, 
+    initializeMultipleForces 
+  } from '../../../utils/calculators/multiple-forces-standalone-calculator';
+
+  // Configuración para el setupCalculator
+  const config = {
+    calculateFunction: calculateMultipleForces,
+    variableGroups: {
+      'netForce': ['mass', 'acceleration'],
+      'acceleration': ['mass', 'netForce'],
+      'mass': ['acceleration', 'netForce']
+    }
+  };
+
+  // Inicializar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeMultipleForces();
+    setupCalculator(config);
+
+    // Interceptar el botón de calcular para mostrar resultados detallados
+    const calculateBtn = document.getElementById('calculate-btn');
+    const originalClickHandler = calculateBtn?.onclick;
+    
+    if (calculateBtn) {
+      calculateBtn.addEventListener('click', (e) => {
+        // Permitir que el cálculo original se ejecute primero
+        setTimeout(() => {
+          showDetailedResults();
+        }, 100);
+      });
+    }
+  });
+
+  function showDetailedResults() {
+    const result = (window as any).lastCalculationResult;
+    if (!result || !result.components) return;
+
+    const detailedResults = document.getElementById('detailed-results');
+    const componentsDisplay = document.getElementById('components-display');
+    const stepsDisplay = document.getElementById('calculation-steps');
+
+    if (detailedResults && componentsDisplay && stepsDisplay) {
+      detailedResults.style.display = 'block';
+
+      // Mostrar componentes
+      componentsDisplay.innerHTML = `
+        <h4>Componentes de la Fuerza Neta:</h4>
+        <p><strong>Componente X:</strong> ${result.components.x.toFixed(2)} N</p>
+        <p><strong>Componente Y:</strong> ${result.components.y.toFixed(2)} N</p>
+        <p><strong>Magnitud:</strong> ${result.value.toFixed(2)} N</p>
+        <p><strong>Ángulo:</strong> ${(Math.atan2(result.components.y, result.components.x) * (180 / Math.PI)).toFixed(2)}°</p>
+      `;
+
+      // Mostrar pasos si están disponibles
+      if (result.steps) {
+        stepsDisplay.innerHTML = `
+          <h4>Pasos del Cálculo:</h4>
+          <div class="steps-content">${result.steps.join('\n')}</div>
+        `;
+      }
+    }
+  }
+
+  // Guardar resultado del último cálculo para análisis detallado
+  const originalSetupCalculator = setupCalculator;
+  
+  declare global {
+    interface Window {
+      lastCalculationResult: any;
+    }
+  }
+</script>
