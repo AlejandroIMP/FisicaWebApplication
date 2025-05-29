@@ -1,0 +1,129 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import ResourceHero from '../components/resources/ResourceHero.astro';
+import ResourceMetadata from '../components/resources/ResourceMetadata.astro';
+import ResourceContent from '../components/resources/ResourceContent.astro';
+import ExternalResourceLink from '../components/resources/ExternalResourceLink.astro';
+import ExamplesGrid from '../components/resources/ExamplesGrid.astro';
+import TagsAndTopics from '../components/resources/TagsAndTopics.astro';
+import RelatedResources from '../components/resources/RelatedResources.astro';
+import ResourceNavigation from '../components/resources/ResourceNavigation.astro';
+
+type Props = CollectionEntry<'resources'>['data'];
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  author,
+  authorLink,
+  source,
+  sourceLink,
+  difficulty,
+  topic,
+  type,
+  tags,
+  examples,
+  relatedTopics,
+  relatedResources,
+  resourceType,
+  resourceLink
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <BaseHead title={title} description={description} />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+  </head>
+  </head>
+
+  <body class="bg-gray-50">
+    <Header />
+    
+    <!-- Hero Section -->
+    <ResourceHero 
+      title={title}
+      description={description}
+      difficulty={difficulty}
+      topic={topic}
+      type={type}
+      heroImage={heroImage}
+    />
+    
+    <!-- Metadata Section -->
+    <ResourceMetadata 
+      readingTime="5 min"
+      lastUpdated={updatedDate || pubDate}
+      difficulty={difficulty}
+    />
+    
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+      <!-- Additional metadata -->
+      {(author || source) && (
+        <div class="text-sm text-gray-500 space-y-1 mb-8">
+          {author && (
+            <div class="flex items-center">
+              👤 Por: 
+              {authorLink ? (
+                <a href={authorLink} class="ml-1 text-blue-600 hover:text-blue-800">
+                  {author}
+                </a>
+              ) : (
+                <span class="ml-1">{author}</span>
+              )}
+            </div>
+          )}
+          
+          {source && (
+            <div class="flex items-center">
+              📖 Fuente: 
+              {sourceLink ? (
+                <a href={sourceLink} class="ml-1 text-blue-600 hover:text-blue-800">
+                  {source}
+                </a>
+              ) : (
+                <span class="ml-1">{source}</span>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+      
+      <!-- External Resource Link -->
+      <ExternalResourceLink 
+        resourceLink={resourceLink}
+        resourceType={resourceType}
+      />
+      
+      <!-- Main Content -->
+      <ResourceContent>
+        <slot />
+      </ResourceContent>
+      
+      <!-- Examples -->
+      <ExamplesGrid examples={examples} />
+      
+      <!-- Tags and Topics -->
+      <TagsAndTopics 
+        tags={tags}
+        relatedTopics={relatedTopics}
+      />
+      
+      <!-- Related Resources -->
+      <RelatedResources resources={relatedResources} />
+      
+      <!-- Navigation -->
+      <ResourceNavigation />
+    </main>
+
+    <Footer />
+  </body>
+</html>

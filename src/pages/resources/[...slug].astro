@@ -1,0 +1,24 @@
+---
+// filepath: /home/alejandrotsx/work/university/physica-platform/src/pages/resources/[...slug].astro
+import { getCollection } from 'astro:content';
+import ResourcePost from '../../layouts/ResourcePost.astro';
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const resources = await getCollection('resources');
+  return resources.map((resource) => ({
+    params: { slug: resource.id },
+    props: resource,
+  }));
+}
+
+type Props = CollectionEntry<'resources'>;
+
+const resource = Astro.props;
+const { Content } = await render(resource);
+---
+
+<ResourcePost {...resource.data}>
+  <Content />
+</ResourcePost>
