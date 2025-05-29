@@ -2,17 +2,219 @@
 export interface Props {
   title: string;
   icon?: string;
+  itemsPerPage?: number;
+  showPagination?: boolean;
 }
 
-const { title, icon } = Astro.props;
+const { title, icon, itemsPerPage = 4, showPagination = true } = Astro.props;
 ---
-<div class="formulas-container">
+
+<div class="formulas-container" data-items-per-page={itemsPerPage} data-show-pagination={showPagination}>
   <div class="formulas-header">
     {icon && <span class="header-icon">{icon}</span>}
     <h3>{title}</h3>
   </div>
-  <slot />
+  
+  <div class="formulas-content">
+    <div class="formulas-list">
+      <slot />
+    </div>
+    
+    {showPagination && (
+      <div class="pagination-container" style="display: none;">
+        <div class="pagination-info">
+          <span class="current-page">1</span> de <span class="total-pages">1</span>
+          (<span class="total-items">0</span> fórmulas)
+        </div>
+        
+        <div class="pagination-controls">
+          <button class="pagination-btn prev-btn" disabled>
+            <span>←</span> Anterior
+          </button>
+          
+          <div class="pagination-numbers">
+            <!-- Los números se generan dinámicamente -->
+          </div>
+          
+          <button class="pagination-btn next-btn" disabled>
+            Siguiente <span>→</span>
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
 </div>
+
+<script>
+
+export function getElementByQueryStrict<T extends HTMLElement>(id: string): T {
+  const element = document.querySelector<T>(id);
+  if (!element) {
+    throw new Error(`Element with query "${id}" not found.`);
+  }
+  return element;
+}
+  class FormulasPagination {
+    public container;
+    public itemsPerPage: number;
+    public showPagination: boolean;
+    public currentPage: number;
+    public totalItems: number;
+    public totalPages: number;
+    public paginationContainer;
+    public currentPageSpan;
+    public totalPagesSpan;
+    public totalItemsSpan;
+    public prevBtn;
+    public nextBtn;
+    public paginationNumbers;
+    public formulaItems;
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.itemsPerPage = parseInt(container.dataset.itemsPerPage || '4') || 4;
+      this.showPagination = container.dataset.showPagination === 'true';
+      this.currentPage = 1;
+      
+      this.formulaItems = container.querySelectorAll('.formula-item');
+      this.totalItems = this.formulaItems.length;
+      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+      
+      this.paginationContainer = container.querySelector('.pagination-container') as HTMLElement;
+      this.currentPageSpan = container.querySelector('.current-page') as HTMLElement;
+      this.totalPagesSpan = container.querySelector('.total-pages') as HTMLElement;
+      this.totalItemsSpan = container.querySelector('.total-items') as HTMLElement;
+      this.prevBtn = container.querySelector('.prev-btn') as HTMLButtonElement;
+      this.nextBtn = container.querySelector('.next-btn') as HTMLButtonElement;
+      this.paginationNumbers = container.querySelector('.pagination-numbers') as HTMLElement;
+      
+      this.init();
+    }
+    
+    init() {
+      // Solo mostrar paginación si hay más elementos que el límite por página
+      if (!this.showPagination || this.totalItems <= this.itemsPerPage) {
+        return;
+      }
+      
+      this.paginationContainer.style.display = 'block';
+      this.updateInfo();
+      this.createPageNumbers();
+      this.setupEventListeners();
+      this.showPage(1);
+    }
+    
+    updateInfo() {
+      this.currentPageSpan.textContent = this.currentPage.toString();
+      this.totalPagesSpan.textContent = this.totalPages.toString();
+      this.totalItemsSpan.textContent = this.totalItems.toString();
+    }
+    
+    createPageNumbers() {
+      this.paginationNumbers.innerHTML = '';
+      
+      // Determinar qué páginas mostrar
+      const maxVisible = 5;
+      let startPage = Math.max(1, this.currentPage - Math.floor(maxVisible / 2));
+      let endPage = Math.min(this.totalPages, startPage + maxVisible - 1);
+      
+      // Ajustar si estamos cerca del final
+      if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+      }
+      
+      // Botón primera página si no está visible
+      if (startPage > 1) {
+        this.addPageButton(1);
+        if (startPage > 2) {
+          this.addEllipsis();
+        }
+      }
+      
+      // Páginas visibles
+      for (let i = startPage; i <= endPage; i++) {
+        this.addPageButton(i);
+      }
+      
+      // Botón última página si no está visible
+      if (endPage < this.totalPages) {
+        if (endPage < this.totalPages - 1) {
+          this.addEllipsis();
+        }
+        this.addPageButton(this.totalPages);
+      }
+    }
+    
+    addPageButton(pageNum: number) {
+      const button = document.createElement('button');
+      button.className = `page-number ${pageNum === this.currentPage ? 'active' : ''}`;
+      button.textContent = pageNum.toString();
+      button.addEventListener('click', () => this.goToPage(pageNum));
+      this.paginationNumbers.appendChild(button);
+    }
+    
+    addEllipsis() {
+      const span = document.createElement('span');
+      span.className = 'page-ellipsis';
+      span.textContent = '...';
+      this.paginationNumbers.appendChild(span);
+    }
+    
+    setupEventListeners() {
+      this.prevBtn.addEventListener('click', () => {
+        if (this.currentPage > 1) {
+          this.goToPage(this.currentPage - 1);
+        }
+      });
+      
+      this.nextBtn.addEventListener('click', () => {
+        if (this.currentPage < this.totalPages) {
+          this.goToPage(this.currentPage + 1);
+        }
+      });
+    }
+    
+    goToPage(pageNum: number) {
+      if (pageNum < 1 || pageNum > this.totalPages) return;
+      
+      this.currentPage = pageNum;
+      this.showPage(pageNum);
+      this.updateInfo();
+      this.createPageNumbers();
+      this.updateButtons();
+      
+      // Scroll suave al contenedor
+      this.container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    showPage(pageNum: number) {
+      const startIndex = (pageNum - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      
+      this.formulaItems.forEach((item, index) => {
+        const htmlItem = item as HTMLElement;
+        if (index >= startIndex && index < endIndex) {
+          htmlItem.style.display = 'block';
+          htmlItem.style.animation = 'fadeIn 0.3s ease-in-out';
+        } else {
+          htmlItem.style.display = 'none';
+        }
+      });
+    }
+    
+    updateButtons() {
+      this.prevBtn.disabled = this.currentPage === 1;
+      this.nextBtn.disabled = this.currentPage === this.totalPages;
+    }
+  }
+  
+  // Inicializar paginación para todos los contenedores de fórmulas
+  document.addEventListener('DOMContentLoaded', () => {
+    const containers = document.querySelectorAll('.formulas-container[data-show-pagination="true"]');
+    containers.forEach(container => {
+      new FormulasPagination(container as HTMLElement);
+    });
+  });
+</script>
 
 <style>
   .formulas-container {
@@ -38,6 +240,127 @@ const { title, icon } = Astro.props;
     margin: 0;
     color: var(--accent-dark);
     font-weight: 700;
+  }
+  
+  .formulas-content {
+    position: relative;
+  }
+  
+  .formulas-list {
+    min-height: 200px; /* Altura mínima para evitar saltos */
+  }
+  
+  /* ESTILOS DE PAGINACIÓN */
+  .pagination-container {
+    margin-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+  }
+  
+  .pagination-info {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .pagination-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #374151;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  
+  .pagination-btn:hover:not(:disabled) {
+    background: #f3f4f6;
+    border-color: var(--accent-highlight);
+  }
+  
+  .pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-numbers {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  
+  .page-number {
+    min-width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #374151;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .page-number:hover {
+    background: #f3f4f6;
+    border-color: var(--accent-highlight);
+  }
+  
+  .page-number.active {
+    background: var(--accent-highlight);
+    color: white;
+    border-color: var(--accent-highlight);
+  }
+  
+  .page-ellipsis {
+    padding: 0 0.5rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+  
+  /* ANIMACIONES */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .pagination-controls {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .pagination-numbers {
+      order: -1;
+    }
+    
+    .pagination-btn {
+      min-width: 120px;
+      justify-content: center;
+    }
   }
   
   @media (min-width: 768px) {
