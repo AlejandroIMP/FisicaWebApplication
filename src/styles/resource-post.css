@@ -1,0 +1,213 @@
+/* Estilos para el componente ResourceHero */
+.resource-hero {
+  @apply relative bg-gradient-to-br from-blue-600 to-purple-700 text-white;
+}
+
+.resource-hero::before {
+  content: '';
+  @apply absolute inset-0 bg-black opacity-30;
+}
+
+.hero-content {
+  @apply relative z-10 max-w-4xl mx-auto px-6 py-16 text-center;
+}
+
+.hero-title {
+  @apply text-4xl md:text-5xl font-bold mb-4 leading-tight;
+}
+
+.hero-description {
+  @apply text-xl md:text-2xl opacity-90 mb-8 leading-relaxed;
+}
+
+/* Estilos para las badges */
+.badge-container {
+  @apply flex flex-wrap justify-center gap-3 mb-8;
+}
+
+.difficulty-badge,
+.topic-badge,
+.type-badge {
+  @apply px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm;
+  @apply bg-white bg-opacity-20 border border-white border-opacity-30;
+}
+
+/* Estilos para el componente ResourceMetadata */
+.metadata-container {
+  @apply bg-white shadow-lg rounded-lg p-6 -mt-8 relative z-20 max-w-4xl mx-auto;
+}
+
+.metadata-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+.metadata-item {
+  @apply text-center;
+}
+
+.metadata-icon {
+  @apply text-3xl mb-2;
+}
+
+.metadata-label {
+  @apply text-sm text-gray-600 uppercase tracking-wide;
+}
+
+.metadata-value {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+/* Estilos para el componente ExternalResources */
+.external-resources {
+  @apply bg-gray-50 py-12;
+}
+
+.external-resources-container {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+.external-resources-title {
+  @apply text-3xl font-bold text-center mb-8 text-gray-900;
+}
+
+.external-resources-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.external-resource-card {
+  @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-6 border-l-4;
+}
+
+.external-resource-header {
+  @apply flex items-start justify-between mb-3;
+}
+
+.external-resource-icon {
+  @apply text-2xl mb-2;
+}
+
+.external-resource-title {
+  @apply font-semibold text-gray-900 mb-2;
+}
+
+.external-resource-description {
+  @apply text-gray-600 text-sm mb-4;
+}
+
+.external-resource-link {
+  @apply inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm;
+}
+
+/* Estilos para el componente ExamplesGrid */
+.examples-section {
+  @apply py-12;
+}
+
+.examples-container {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+.examples-title {
+  @apply text-3xl font-bold text-center mb-8 text-gray-900;
+}
+
+.examples-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+}
+
+.example-card {
+  @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+}
+
+.example-title {
+  @apply text-xl font-semibold mb-4 text-gray-900;
+}
+
+.example-description {
+  @apply text-gray-600 mb-4;
+}
+
+.example-equation {
+  @apply bg-gray-50 p-4 rounded-lg border text-center font-mono;
+}
+
+/* Estilos para el componente RelatedResources */
+.related-resources {
+  @apply bg-blue-50 py-12;
+}
+
+.related-resources-container {
+  @apply max-w-6xl mx-auto px-6;
+}
+
+.related-resources-title {
+  @apply text-3xl font-bold text-center mb-8 text-gray-900;
+}
+
+.related-resources-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.related-resource-card {
+  @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-6;
+}
+
+.related-resource-title {
+  @apply font-semibold text-gray-900 mb-2;
+}
+
+.related-resource-description {
+  @apply text-gray-600 text-sm mb-4;
+}
+
+.related-resource-link {
+  @apply inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm;
+}
+
+/* Estilos para el contenido principal */
+.resource-content {
+  @apply max-w-4xl mx-auto px-6 py-12;
+}
+
+.resource-content h1,
+.resource-content h2,
+.resource-content h3,
+.resource-content h4,
+.resource-content h5,
+.resource-content h6 {
+  @apply font-bold text-gray-900 mb-4;
+}
+
+.resource-content h1 { @apply text-3xl; }
+.resource-content h2 { @apply text-2xl; }
+.resource-content h3 { @apply text-xl; }
+.resource-content h4 { @apply text-lg; }
+
+.resource-content p {
+  @apply mb-4 text-gray-700 leading-relaxed;
+}
+
+.resource-content ul,
+.resource-content ol {
+  @apply mb-4 pl-6;
+}
+
+.resource-content li {
+  @apply mb-2 text-gray-700;
+}
+
+.resource-content blockquote {
+  @apply border-l-4 border-blue-500 pl-4 italic my-4 text-gray-600;
+}
+
+.resource-content code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+}
+
+.resource-content pre {
+  @apply bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.resource-content pre code {
+  @apply bg-transparent p-0;
+}
