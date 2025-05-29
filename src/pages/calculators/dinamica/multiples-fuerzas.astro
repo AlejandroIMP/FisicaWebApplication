@@ -586,7 +586,7 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
         <h4>Componentes de la Fuerza Neta:</h4>
         <p><strong>Componente X:</strong> ${result.components.x.toFixed(2)} N</p>
         <p><strong>Componente Y:</strong> ${result.components.y.toFixed(2)} N</p>
-        <p><strong>Magnitud:</strong> ${result.value ? result.value.toFixed(2) : '0'} N</p>
+        <p><strong>Magnitud:</strong> ${result.result ? result.result.toFixed(2) : '0'} N</p>
         <p><strong>Ángulo:</strong> ${normalizedAngle.toFixed(2)}°</p>
         <p><strong>Fuerzas utilizadas:</strong> ${result.forces ? result.forces.length : 0}</p>
       `;
@@ -631,12 +631,12 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
       const result = calculateMultipleForcesWrapper(variableToSolve, inputs);
       
       // Actualizar display de resultado
-      const resultDiv = document.getElementById('result');
-      const formulaUsedDiv = document.getElementById('formula-used');
+      const resultDiv = document.getElementById('result') as HTMLDivElement;
+      const formulaUsedDiv = document.getElementById('formula-used') as HTMLDivElement;
       
       if (resultDiv && formulaUsedDiv) {
-        if (result.value !== null && !isNaN(result.value)) {
-          resultDiv.innerHTML = `${result.name} = <strong>${result.value.toFixed(4)} ${result.unit}</strong>`;
+        if (result.result !== null && !isNaN(result.result)) {
+          resultDiv.innerHTML = `${result.name} = <strong>${result.result.toFixed(4)} ${result.unit}</strong>`;
           formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
         } else {
           resultDiv.innerHTML = 'Añade fuerzas para calcular la fuerza neta';
