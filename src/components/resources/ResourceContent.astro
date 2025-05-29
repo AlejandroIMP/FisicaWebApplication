@@ -1,0 +1,60 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<article class={`resource-content ${className}`}>
+  <slot />
+</article>
+
+<style>
+  .resource-content {
+    @apply max-w-4xl mx-auto px-6 py-12;
+  }
+
+  .resource-content h1,
+  .resource-content h2,
+  .resource-content h3,
+  .resource-content h4,
+  .resource-content h5,
+  .resource-content h6 {
+    @apply font-bold text-gray-900 mb-4;
+  }
+
+  .resource-content h1 { @apply text-3xl; }
+  .resource-content h2 { @apply text-2xl; }
+  .resource-content h3 { @apply text-xl; }
+  .resource-content h4 { @apply text-lg; }
+
+  .resource-content p {
+    @apply mb-4 text-gray-700 leading-relaxed;
+  }
+
+  .resource-content ul,
+  .resource-content ol {
+    @apply mb-4 pl-6;
+  }
+
+  .resource-content li {
+    @apply mb-2 text-gray-700;
+  }
+
+  .resource-content blockquote {
+    @apply border-l-4 border-blue-500 pl-4 italic my-4 text-gray-600;
+  }
+
+  .resource-content code {
+    @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+  }
+
+  .resource-content pre {
+    @apply bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .resource-content pre code {
+    @apply bg-transparent p-0;
+  }
+</style>

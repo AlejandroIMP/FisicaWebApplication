@@ -1,0 +1,42 @@
+---
+interface Props {
+  tags?: string[];
+  relatedTopics?: string[];
+}
+
+const { tags = [], relatedTopics = [] } = Astro.props;
+---
+
+{(tags.length > 0 || relatedTopics.length > 0) && (
+  <div class="space-y-6 mb-8">
+    {tags.length > 0 && (
+      <section>
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">
+          🏷️ Etiquetas
+        </h3>
+        <div class="flex flex-wrap">
+          {tags.map((tag) => (
+            <span class="inline-block px-3 py-1 text-xs font-medium rounded-full mr-2 mb-2 bg-blue-100 text-blue-800">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </section>
+    )}
+    
+    {relatedTopics.length > 0 && (
+      <section>
+        <h3 class="text-lg font-semibold text-gray-900 mb-3">
+          🔗 Temas Relacionados
+        </h3>
+        <div class="flex flex-wrap">
+          {relatedTopics.map((topic) => (
+            <span class="inline-block px-3 py-1 text-xs font-medium rounded-full mr-2 mb-2 bg-green-100 text-green-800">
+              {topic}
+            </span>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+)}

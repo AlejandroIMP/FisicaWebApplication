@@ -1,0 +1,71 @@
+---
+interface Props {
+  readingTime?: string;
+  lastUpdated?: Date;
+  difficulty?: string;
+}
+
+const { readingTime, lastUpdated, difficulty } = Astro.props;
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(date);
+}
+---
+
+<div class="metadata-container">
+  <div class="metadata-grid">
+    {readingTime && (
+      <div class="metadata-item">
+        <div class="metadata-icon">⏱️</div>
+        <div class="metadata-label">Tiempo de lectura</div>
+        <div class="metadata-value">{readingTime}</div>
+      </div>
+    )}
+    
+    {lastUpdated && (
+      <div class="metadata-item">
+        <div class="metadata-icon">📅</div>
+        <div class="metadata-label">Última actualización</div>
+        <div class="metadata-value">{formatDate(lastUpdated)}</div>
+      </div>
+    )}
+    
+    {difficulty && (
+      <div class="metadata-item">
+        <div class="metadata-icon">📊</div>
+        <div class="metadata-label">Nivel</div>
+        <div class="metadata-value">{difficulty}</div>
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  .metadata-container {
+    @apply bg-white shadow-lg rounded-lg p-6 -mt-8 relative z-20 max-w-4xl mx-auto;
+  }
+
+  .metadata-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+  }
+
+  .metadata-item {
+    @apply text-center;
+  }
+
+  .metadata-icon {
+    @apply text-3xl mb-2;
+  }
+
+  .metadata-label {
+    @apply text-sm text-gray-600 uppercase tracking-wide;
+  }
+
+  .metadata-value {
+    @apply text-lg font-semibold text-gray-900;
+  }
+</style>

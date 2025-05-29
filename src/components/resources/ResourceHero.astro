@@ -1,0 +1,81 @@
+---
+import { difficultyConfig, topicConfig, typeConfig } from '../../constants/resources';
+import type { DifficultyLevel, TopicType, ResourceContentType } from '../../constants/resources';
+
+interface Props {
+  title: string;
+  description?: string;
+  difficulty?: DifficultyLevel;
+  topic?: TopicType;
+  type?: ResourceContentType;
+  heroImage?: string;
+}
+
+const { title, description, difficulty, topic, type, heroImage } = Astro.props;
+---
+
+<div class="resource-hero" style={heroImage ? `background-image: url(${heroImage})` : undefined}>
+  <div class="hero-content">
+    <h1 class="hero-title">{title}</h1>
+    
+    {description && (
+      <p class="hero-description">{description}</p>
+    )}
+    
+    <div class="badge-container">
+      {difficulty && (
+        <span class="difficulty-badge">
+          <span class="mr-2">{difficultyConfig[difficulty].icon}</span>
+          {difficultyConfig[difficulty].label}
+        </span>
+      )}
+      
+      {topic && (
+        <span class="topic-badge">
+          {topicConfig[topic].label}
+        </span>
+      )}
+      
+      {type && (
+        <span class="type-badge">
+          <span class="mr-2">{typeConfig[type].icon}</span>
+          {typeConfig[type].label}
+        </span>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .resource-hero {
+    @apply relative bg-gradient-to-br from-blue-600 to-purple-700 text-white;
+  }
+
+  .resource-hero::before {
+    content: '';
+    @apply absolute inset-0 bg-black opacity-30;
+  }
+
+  .hero-content {
+    @apply relative z-10 max-w-4xl mx-auto px-6 py-16 text-center;
+  }
+
+  .hero-title {
+    @apply text-4xl md:text-5xl font-bold mb-4 leading-tight;
+  }
+
+  .hero-description {
+    @apply text-xl md:text-2xl opacity-90 mb-8 leading-relaxed;
+  }
+
+  .badge-container {
+    @apply flex flex-wrap justify-center gap-3 mb-8;
+  }
+
+  .difficulty-badge,
+  .topic-badge,
+  .type-badge {
+    @apply px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm;
+    @apply bg-white bg-opacity-20 border border-white border-opacity-30;
+  }
+</style>

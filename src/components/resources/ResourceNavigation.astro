@@ -1,0 +1,71 @@
+---
+interface Props {
+  backLink?: string;
+  backLinkText?: string;
+  showPrint?: boolean;
+  showShare?: boolean;
+}
+
+const { 
+  backLink = '/resources',
+  backLinkText = 'Volver a Recursos',
+  showPrint = true,
+  showShare = true
+} = Astro.props;
+---
+
+<nav class="border-t border-gray-200 pt-8">
+  <div class="flex justify-between items-center">
+    <a 
+      href={backLink}
+      class="inline-flex items-center text-blue-600 hover:text-blue-800"
+    >
+      <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      {backLinkText}
+    </a>
+    
+    <div class="flex space-x-4">
+      {showPrint && (
+        <button 
+          onclick="window.print()" 
+          class="text-gray-600 hover:text-gray-800"
+          title="Imprimir recurso"
+        >
+          🖨️ Imprimir
+        </button>
+      )}
+      
+      {showShare && (
+        <button 
+          id="share-button"
+          class="text-gray-600 hover:text-gray-800"
+          title="Compartir recurso"
+        >
+          📤 Compartir
+        </button>
+      )}
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Script para manejar la funcionalidad de compartir
+  document.addEventListener('DOMContentLoaded', function() {
+    const shareButton = document.getElementById('share-button');
+    if (shareButton) {
+      shareButton.onclick = function() {
+        if (navigator.share) {
+          navigator.share({
+            title: document.title,
+            url: window.location.href
+          });
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          alert('Enlace copiado al portapapeles');
+        }
+      };
+    }
+  });
+</script>
