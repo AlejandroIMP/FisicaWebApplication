@@ -246,9 +246,28 @@ export const MCU_CONFIG = {
   variables: MCU_VARIABLES,
   formulas: MCU_FORMULAS,
   variableGroups: {
-    radius: ['angularVelocity', 'linearVelocity', 'period', 'frequency', 'centripetalAcceleration'],
-    angularVelocity: ['radius', 'linearVelocity', 'period', 'frequency', 'centripetalAcceleration', 'angularDisplacement', 'time'],
-    linearVelocity: ['radius', 'angularVelocity', 'period', 'frequency', 'centripetalAcceleration'],
+    radius: [
+      'linearVelocity', 'angularVelocity',  // Método 1
+      'linearVelocity', 'period',           // Método 2  
+      'centripetalAcceleration', 'angularVelocity' // Método 3
+    ],
+    
+    // Para velocidad angular: cualquiera de estas combinaciones
+    angularVelocity: [
+      'period',                            // Método 1
+      'frequency',                         // Método 2
+      'linearVelocity', 'radius',          // Método 3
+      'angularDisplacement', 'time',       // Método 4
+      'centripetalAcceleration', 'radius'  // Método 5
+    ],
+    
+    // Para velocidad lineal
+    linearVelocity: [
+      'angularVelocity', 'radius',         // Método 1
+      'period', 'radius',                  // Método 2
+      'frequency', 'radius',               // Método 3
+      'centripetalAcceleration', 'radius'  // Método 4
+    ],
     period: ['angularVelocity', 'frequency', 'radius', 'linearVelocity'],
     frequency: ['period', 'angularVelocity'],
     centripetalAcceleration: ['linearVelocity', 'radius', 'angularVelocity'],
@@ -286,6 +305,17 @@ export const NEWTON_SECOND_LAW_CONFIG = {
     force: ['mass', 'acceleration'],
     mass: ['force', 'acceleration'],
     acceleration: ['force', 'mass'],
+    systemAcceleration: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2'],
+    systemTension: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2' ],
+    systemDirection: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2'],
+
+    mass1: ['mass2', 'angle1', 'angle2', 'gravity'],
+    mass2: ['mass1', 'angle1', 'angle2', 'gravity'],
+    angle1: ['mass1', 'mass2', 'angle2', 'gravity'],
+    angle2: ['mass1', 'mass2', 'angle1', 'gravity'],
+    frictionCoefficient1: ['normalForce', 'frictionForce'],
+    frictionCoefficient2: ['normalForce', 'frictionForce'],
+
     weight: ['mass', 'gravity'],
     forceX: ['force', 'angle'],
     forceY: ['force', 'angle'],
@@ -294,7 +324,7 @@ export const NEWTON_SECOND_LAW_CONFIG = {
     angle: ['forceX', 'forceY'],
     appliedForce: ['force', 'frictionForce'],
     frictionForce: ['appliedForce', 'normalForce', 'frictionCoefficient'],
-    normalForce: ['mass', 'angle'],
+    normalForce: ['mass', 'angle', 'gravity', 'force', 'weight', 'appliedForce'],
     frictionCoefficient: ['frictionForce', 'normalForce'],
     parallelForce: ['mass', 'gravity', 'angle'],
     planetGravity: ['mass', 'radius'],
@@ -319,6 +349,20 @@ export const NEWTON_ADVANCED_VARIABLES = [
 
   // Variables adicionales
   { value: 'weight', label: 'Peso (W)' },
+
+  // 🔹 SISTEMA DE DOS MASAS EN PLANOS INCLINADOS
+  { value: 'systemAcceleration', label: 'Aceleración del Sistema (a_sistema)' },
+  { value: 'systemTension', label: 'Tensión en la Cuerda (T)' },
+  { value: 'systemDirection', label: 'Dirección del Movimiento' },
+  
+  // Variables para sistema de planos inclinados
+  { value: 'mass1', label: 'Masa 1 (m₁)' },
+  { value: 'mass2', label: 'Masa 2 (m₂)' },
+  { value: 'angle1', label: 'Ángulo del Plano 1 (θ₁)' },
+  { value: 'angle2', label: 'Ángulo del Plano 2 (θ₂)' },
+  { value: 'gravity', label: 'Gravedad (g)' },
+  { value: 'frictionCoefficient1', label: 'Coeficiente de Fricción 1 (μ₁)' },
+  { value: 'frictionCoefficient2', label: 'Coeficiente de Fricción 2 (μ₂)' },
   
   // Componentes bidimensionales
   { value: 'forceX', label: 'Fuerza en X (Fx)' },
@@ -357,70 +401,47 @@ export const NEWTON_ADVANCED_VARIABLES = [
 ];
 
 export const NEWTON_ADVANCED_FORMULAS = [
-  // Fórmulas básicas
+  // ==========================================
+  // 1. FÓRMULAS FUNDAMENTALES
+  // ==========================================
   { 
     formula: 'F = m × a', 
     description: 'Segunda Ley de Newton - Fuerza neta',
     example: 'Si m = 10 kg y a = 2 m/s², entonces F = 20 N'
   },
+  { 
+    formula: 'a = F / m', 
+    description: 'Aceleración desde fuerza y masa',
+    example: 'Si F = 20 N y m = 10 kg, entonces a = 2 m/s²'
+  },
+  { 
+    formula: 'm = F / a', 
+    description: 'Masa desde fuerza y aceleración',
+    example: 'Si F = 20 N y a = 2 m/s², entonces m = 10 kg'
+  },
 
+  // ==========================================
+  // 2. PESO Y GRAVEDAD
+  // ==========================================
   {
     formula: 'W = m × g',
-    description: 'Peso de un objeto en la Tierra',
+    description: 'Peso de un objeto',
     example: 'Si m = 10 kg, entonces W = 10 × 9.81 = 98.1 N'
   },
-
-  // componente de la fuerza de gravedad en un plano inclinado
-  {
-    formula: 'F_parallela = m × g × sin(θ)',
-    description: 'Componente de la fuerza de gravedad paralela al plano inclinado',
-    example: 'Si m = 10 kg, g = 9.81 m/s² y θ = 30°, entonces F_parallel = 10 × 9.81 × sin(30°) ≈ 49.05 N'
-  },
-
-  // Aceleración gravitacional
   {
     formula: 'g = 9.81 m/s²',
-    description: 'Aceleración gravitacional en la superficie de la Tierra',
-    example: 'En la Tierra, g = 9.81 m/s²'
+    description: 'Aceleración gravitacional estándar en la Tierra',
+    example: 'En la superficie terrestre, g = 9.81 m/s²'
   },
-
-  // Aceleracion gravitacional en planetas ajenos a la tierra
   {
     formula: 'g = G × M / r²',
-    description: 'Aceleración gravitacional en un planeta o luna',
-    example: 'Si G = 6.674 × 10⁻¹¹ m³/kg·s², M = 5.972 × 10²⁴ kg (masa de la Tierra) y r = 6.371 × 10⁶ m (radio de la Tierra), entonces g ≈ 9.81 m/s²'
+    description: 'Aceleración gravitacional en cualquier planeta',
+    example: 'Para la Tierra: g = 6.674×10⁻¹¹ × 5.972×10²⁴ / (6.371×10⁶)² ≈ 9.81 m/s²'
   },
 
-
-  // Fuerza neta en un sistema con múltiples fuerzas
-  {
-    formula: 'F_net = ΣF',
-    description: 'Fuerza neta como la suma vectorial de todas las fuerzas actuantes',
-    example: 'Si F1 = 10 N, F2 = -5 N y F3 = 3 N, entonces F_net = 10 - 5 + 3 = 8 N'
-  },
-
-  // Fricción estatica maxima
-  {
-    formula: 'Ff_max = μ_s × N',
-    description: 'Fuerza de fricción estática máxima',
-    example: 'Si μ_s = 0.5 y N = 100 N, entonces Ff_max = 50 N'
-  },
-
-  // Fuerza centripeta para movimiento circular
-  {
-    formula: 'Fc = m × v² / r',
-    description: 'Fuerza centrípeta necesaria para mantener un objeto en movimiento circular',
-    example: 'Si m = 10 kg, v = 5 m/s y r = 2 m, entonces Fc = 12.5 N'
-  },
-
-  // Formula general de la segunda ley en terminos de cantidad de movimiento
-  {
-    formula: 'F = dp/dt',
-    description: 'Fuerza como la tasa de cambio de la cantidad de movimiento',
-    example: 'Si la cantidad de movimiento cambia de 20 kg·m/s a 30 kg·m/s en 5 segundos, entonces F = (30 - 20) / 5 = 2 N'
-  },
-
-  // Componentes bidimensionales
+  // ==========================================
+  // 3. DESCOMPOSICIÓN DE FUERZAS
+  // ==========================================
   { 
     formula: 'Fx = F × cos(θ)', 
     description: 'Componente horizontal de la fuerza',
@@ -441,8 +462,10 @@ export const NEWTON_ADVANCED_FORMULAS = [
     description: 'Ángulo de la fuerza resultante',
     example: 'Si Fx = 86.6 N y Fy = 50 N, entonces θ = 30°' 
   },
-  
-  // Aceleraciones por componentes
+
+  // ==========================================
+  // 4. ACELERACIONES POR COMPONENTES
+  // ==========================================
   { 
     formula: 'ax = Fx / m', 
     description: 'Aceleración en componente X',
@@ -456,49 +479,138 @@ export const NEWTON_ADVANCED_FORMULAS = [
   { 
     formula: 'a = √(ax² + ay²)', 
     description: 'Aceleración resultante',
-    example: 'Si ax = 2 m/s² y ay = 1 m/s², entonces a = √(2² + 1²) = √5 ≈ 2.24 m/s²' 
+    example: 'Si ax = 2 m/s² y ay = 1 m/s², entonces a = √5 ≈ 2.24 m/s²' 
   },
-  
-  // Fricción
-  { 
-    formula: 'Ff = μ × N', 
-    description: 'Fuerza de fricción',
-    example: 'Si μ = 0.5 y N = 100 N, entonces Ff = 50 N' 
+
+  // ==========================================
+  // 5. PLANOS INCLINADOS
+  // ==========================================
+  {
+    formula: 'F_paralela = m × g × sin(θ)',
+    description: 'Componente del peso paralela al plano inclinado',
+    example: 'Si m = 10 kg y θ = 30°, entonces F_paralela = 10 × 9.81 × sin(30°) ≈ 49.05 N'
   },
   { 
     formula: 'N = m × g × cos(θ)', 
     description: 'Fuerza normal en plano inclinado',
-    example: 'Si m = 10 kg, g = 9.81 m/s² y θ = 30°, entonces N = 10 × 9.81 × cos(30°) ≈ 84.87 N'
-  },
-  { 
-    formula: 'Fneta = F_ap - Ff', 
-    description: 'Fuerza neta considerando fricción',
-    example: 'Si F_ap = 100 N y Ff = 50 N, entonces Fneta = 50 N' 
+    example: 'Si m = 10 kg y θ = 30°, entonces N = 10 × 9.81 × cos(30°) ≈ 84.87 N'
   },
 
-  // Fuerzas aplicadas y fricción
-  { 
-    formula: 'F_ap = Ff + N × μ', 
-    description: 'Fuerza aplicada considerando fricción',
-    example: 'Si Ff = 50 N, N = 100 N y μ = 0.5, entonces F_ap = 50 + 100 × 0.5 = 100 N' 
-  },
+  // ==========================================
+  // 6. FRICCIÓN
+  // ==========================================
   { 
     formula: 'Ff = μ × N', 
-    description: 'Fuerza de fricción en función del coeficiente de fricción y la fuerza normal',
-    example: 'Si μ = 0.3 y N = 200 N, entonces Ff = 60 N' 
+    description: 'Fuerza de fricción (cinética o estática)',
+    example: 'Si μ = 0.5 y N = 100 N, entonces Ff = 50 N' 
   },
-
-  // Fuerza normal en un plano inclinado
   {
-    formula: 'N = m × g × cos(θ)',
-    description: 'Fuerza normal en un plano inclinado',
-    example: 'Si m = 10 kg, g = 9.81 m/s² y θ = 30°, entonces N = 10 × 9.81 × cos(30°) ≈ 84.87 N'
+    formula: 'Ff_max = μ_s × N',
+    description: 'Fuerza de fricción estática máxima',
+    example: 'Si μ_s = 0.5 y N = 100 N, entonces Ff_max = 50 N'
   },
-  // Coeficiente de fricción
   {
     formula: 'μ = Ff / N',
-    description: 'Coeficiente de fricción en función de la fuerza de fricción y la fuerza normal',
+    description: 'Coeficiente de fricción',
     example: 'Si Ff = 50 N y N = 100 N, entonces μ = 0.5'
   },
 
+  // ==========================================
+  // 7. FUERZAS NETAS
+  // ==========================================
+  {
+    formula: 'F_net = ΣF',
+    description: 'Fuerza neta como suma vectorial de todas las fuerzas',
+    example: 'Si F1 = 10 N, F2 = -5 N y F3 = 3 N, entonces F_net = 8 N'
+  },
+  { 
+    formula: 'F_net = F_ap - Ff', 
+    description: 'Fuerza neta considerando fricción',
+    example: 'Si F_ap = 100 N y Ff = 50 N, entonces F_net = 50 N' 
+  },
+
+  // ==========================================
+  // 8. SISTEMA DE DOS MASAS EN PLANOS INCLINADOS
+  // ==========================================
+  {
+    formula: 'a = |m₂g sin θ₂ - m₁g sin θ₁ - f₁ - f₂| / (m₁ + m₂)',
+    description: 'Aceleración del sistema de dos masas en planos inclinados',
+    example: 'Si m₁ = 5 kg, m₂ = 8 kg, θ₁ = 30°, θ₂ = 45°, entonces a ≈ 3.4 m/s²'
+  },
+  {
+    formula: 'T = mg sin θ + f + ma',
+    description: 'Tensión en la cuerda del sistema (masa que sube)',
+    example: 'T = 5×9.81×sin(30°) + 10 + 5×3.4 = 24.5 + 10 + 17 = 51.5 N'
+  },
+  {
+    formula: 'Equilibrio: m₁g sin θ₁ + f₁ = m₂g sin θ₂ + f₂',
+    description: 'Condición de equilibrio del sistema (a = 0)',
+    example: 'Sistema en equilibrio cuando fuerzas descendentes = fuerzas ascendentes'
+  },
+
+  // ==========================================
+  // 9. ANÁLISIS DE DIRECCIÓN DEL MOVIMIENTO
+  // ==========================================
+  {
+    formula: 'Si m₂g sin θ₂ > m₁g sin θ₁ + fricciones → masa 2 baja',
+    description: 'Criterio para determinar dirección del movimiento',
+    example: 'Si 55.5 N > 34.5 N, entonces masa 2 baja y masa 1 sube'
+  },
+  {
+    formula: 'Si m₁g sin θ₁ > m₂g sin θ₂ + fricciones → masa 1 baja',
+    description: 'Criterio opuesto para dirección del movimiento',
+    example: 'Si 60 N > 40 N, entonces masa 1 baja y masa 2 sube'
+  },
+
+  // ==========================================
+  // 10. MOVIMIENTO CIRCULAR
+  // ==========================================
+  {
+    formula: 'Fc = m × v² / r',
+    description: 'Fuerza centrípeta para movimiento circular',
+    example: 'Si m = 10 kg, v = 5 m/s y r = 2 m, entonces Fc = 125 N'
+  },
+  {
+    formula: 'Fc = m × ω² × r',
+    description: 'Fuerza centrípeta en función de velocidad angular',
+    example: 'Si m = 10 kg, ω = 2.5 rad/s y r = 2 m, entonces Fc = 125 N'
+  },
+
+  // ==========================================
+  // 11. CANTIDAD DE MOVIMIENTO
+  // ==========================================
+  {
+    formula: 'F = dp/dt',
+    description: 'Segunda Ley en términos de cantidad de movimiento',
+    example: 'Si p cambia de 20 a 30 kg·m/s en 5 s, entonces F = 2 N'
+  },
+  {
+    formula: 'p = m × v',
+    description: 'Cantidad de movimiento',
+    example: 'Si m = 10 kg y v = 5 m/s, entonces p = 50 kg·m/s'
+  },
+
+  // ==========================================
+  // 12. CASOS ESPECIALES Y APLICACIONES
+  // ==========================================
+  { 
+    formula: 'F_ap = F_net + Ff', 
+    description: 'Fuerza aplicada necesaria para vencer fricción',
+    example: 'Para acelerar con F_net = 50 N y Ff = 30 N, se necesita F_ap = 80 N' 
+  },
+  {
+    formula: 'a_max = μ_s × g',
+    description: 'Aceleración máxima sin deslizamiento',
+    example: 'Si μ_s = 0.7, entonces a_max = 0.7 × 9.81 = 6.87 m/s²'
+  },
+  {
+    formula: 'N = mg + F sin θ',
+    description: 'Fuerza normal con fuerza aplicada hacia abajo',
+    example: 'Si m = 10 kg, F = 50 N y θ = 30°, entonces N = 98.1 + 25 = 123.1 N'
+  },
+  {
+    formula: 'N = mg - F sin θ',
+    description: 'Fuerza normal con fuerza aplicada hacia arriba',
+    example: 'Si m = 10 kg, F = 50 N y θ = 30°, entonces N = 98.1 - 25 = 73.1 N'
+  }
 ];

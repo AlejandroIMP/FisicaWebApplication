@@ -138,13 +138,6 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
       title="Fórmulas para Múltiples Fuerzas"
       icon="⚖️"
     >
-      <div class="formula-header-with-button">
-        <h4>Fórmulas para Múltiples Fuerzas:</h4>
-        <button type="button" class="quick-add-force-btn" id="quick-add-force">
-          <span class="icon">➕</span>
-          Agregar Fuerza
-        </button>
-      </div>
       
       <FormulaItem 
         formula="F_net = ΣF" 
@@ -543,13 +536,28 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
     initializeMultipleForces 
   } from '../../../utils/calculators/multiple-forces-standalone-calculator';
 
+  // Función wrapper que conecta el estado global con setupCalculator
+  function calculateMultipleForcesWrapper(variableToSolve: string, inputs: Record<string, number>) {
+    const result = calculateMultipleForces(variableToSolve, inputs);
+    
+    // Guardar resultado inmediatamente para análisis detallado
+    (window as any).lastCalculationResult = result;
+    
+    // Mostrar resultados detallados automáticamente
+    setTimeout(() => {
+      showDetailedResults();
+    }, 50);
+    
+    return result;
+  }
+
   // Configuración para el setupCalculator
   const config = {
-    calculateFunction: calculateMultipleForces,
+    calculateFunction: calculateMultipleForcesWrapper,
     variableGroups: {
       'netForce': ['mass', 'acceleration'],
-      'acceleration': ['mass', 'netForce'],
-      'mass': ['acceleration', 'netForce']
+      'acceleration': ['mass'],
+      'mass': ['acceleration']
     }
   };
 
@@ -557,19 +565,6 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
   document.addEventListener('DOMContentLoaded', () => {
     initializeMultipleForces();
     setupCalculator(config);
-
-    // Interceptar el botón de calcular para mostrar resultados detallados
-    const calculateBtn = document.getElementById('calculate-btn');
-    const originalClickHandler = calculateBtn?.onclick;
-    
-    if (calculateBtn) {
-      calculateBtn.addEventListener('click', (e) => {
-        // Permitir que el cálculo original se ejecute primero
-        setTimeout(() => {
-          showDetailedResults();
-        }, 100);
-      });
-    }
   });
 
   function showDetailedResults() {
@@ -584,27 +579,99 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
       detailedResults.style.display = 'block';
 
       // Mostrar componentes
+      const angle = Math.atan2(result.components.y, result.components.x) * (180 / Math.PI);
+      const normalizedAngle = angle < 0 ? angle + 360 : angle;
+      
       componentsDisplay.innerHTML = `
         <h4>Componentes de la Fuerza Neta:</h4>
         <p><strong>Componente X:</strong> ${result.components.x.toFixed(2)} N</p>
         <p><strong>Componente Y:</strong> ${result.components.y.toFixed(2)} N</p>
-        <p><strong>Magnitud:</strong> ${result.value.toFixed(2)} N</p>
-        <p><strong>Ángulo:</strong> ${(Math.atan2(result.components.y, result.components.x) * (180 / Math.PI)).toFixed(2)}°</p>
+        <p><strong>Magnitud:</strong> ${result.value ? result.value.toFixed(2) : '0'} N</p>
+        <p><strong>Ángulo:</strong> ${normalizedAngle.toFixed(2)}°</p>
+        <p><strong>Fuerzas utilizadas:</strong> ${result.forces ? result.forces.length : 0}</p>
       `;
 
       // Mostrar pasos si están disponibles
-      if (result.steps) {
+      if (result.steps && result.steps.length > 0) {
         stepsDisplay.innerHTML = `
           <h4>Pasos del Cálculo:</h4>
           <div class="steps-content">${result.steps.join('\n')}</div>
+        `;
+      } else {
+        stepsDisplay.innerHTML = `
+          <h4>Pasos del Cálculo:</h4>
+          <p>No hay pasos disponibles para mostrar.</p>
         `;
       }
     }
   }
 
-  // Guardar resultado del último cálculo para análisis detallado
-  const originalSetupCalculator = setupCalculator;
-  
+  // Función para actualizar resultados cuando se añaden/eliminan fuerzas
+  function updateCalculationWhenForcesChange() {
+    const variableToSolveSelect = document.getElementById('variable-to-solve') as HTMLSelectElement;
+    const massInput = document.getElementById('mass') as HTMLInputElement;
+    const accelerationInput = document.getElementById('acceleration') as HTMLInputElement;
+    
+    if (!variableToSolveSelect) return;
+    
+    const variableToSolve = variableToSolveSelect.value;
+    const inputs: Record<string, number> = {};
+    
+    // Recopilar inputs según la variable a resolver
+    if (variableToSolve !== 'mass' && massInput?.value) {
+      inputs.mass = parseFloat(massInput.value);
+    }
+    
+    if (variableToSolve !== 'acceleration' && accelerationInput?.value) {
+      inputs.acceleration = parseFloat(accelerationInput.value);
+    }
+    
+    // Solo calcular automáticamente para fuerza neta si hay fuerzas definidas
+    if (variableToSolve === 'netForce') {
+      const result = calculateMultipleForcesWrapper(variableToSolve, inputs);
+      
+      // Actualizar display de resultado
+      const resultDiv = document.getElementById('result');
+      const formulaUsedDiv = document.getElementById('formula-used');
+      
+      if (resultDiv && formulaUsedDiv) {
+        if (result.value !== null && !isNaN(result.value)) {
+          resultDiv.innerHTML = `${result.name} = <strong>${result.value.toFixed(4)} ${result.unit}</strong>`;
+          formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
+        } else {
+          resultDiv.innerHTML = 'Añade fuerzas para calcular la fuerza neta';
+          formulaUsedDiv.innerHTML = '';
+        }
+      }
+    }
+  }
+
+  // Extender las funciones globales para actualizar cálculos automáticamente
+  const originalAddForce = (window as any).addForce;
+  const originalRemoveForce = (window as any).removeForce;
+  const originalClearForces = (window as any).clearForces;
+
+  if (typeof originalAddForce === 'function') {
+    (window as any).addForce = function(...args: any[]) {
+      originalAddForce.apply(this, args);
+      setTimeout(updateCalculationWhenForcesChange, 100);
+    };
+  }
+
+  if (typeof originalRemoveForce === 'function') {
+    (window as any).removeForce = function(...args: any[]) {
+      originalRemoveForce.apply(this, args);
+      setTimeout(updateCalculationWhenForcesChange, 100);
+    };
+  }
+
+  if (typeof originalClearForces === 'function') {
+    (window as any).clearForces = function(...args: any[]) {
+      originalClearForces.apply(this, args);
+      setTimeout(updateCalculationWhenForcesChange, 100);
+    };
+  }
+
   declare global {
     interface Window {
       lastCalculationResult: any;
