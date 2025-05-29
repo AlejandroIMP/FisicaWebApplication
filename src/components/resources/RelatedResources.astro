@@ -1,0 +1,103 @@
+---
+interface RelatedResource {
+  id?: string;
+  title: string;
+  description?: string;
+  link?: string;
+  image?: string;
+  topic?: string;
+  tags?: string[];
+}
+
+interface Props {
+  resources?: RelatedResource[];
+}
+
+const { resources = [] } = Astro.props;
+
+if (resources.length === 0) {
+  return null;
+}
+---
+
+<section class="related-resources">
+  <div class="related-resources-container">
+    <h2 class="related-resources-title">Recursos Relacionados</h2>
+    
+    <div class="related-resources-grid">
+      {resources.map((resource) => (
+        <div class="related-resource-card">
+          {resource.image && (
+            <img 
+              src={resource.image} 
+              alt={resource.title}
+              class="w-full h-32 object-cover rounded mb-3"
+            />
+          )}
+          
+          <h3 class="related-resource-title">{resource.title}</h3>
+          
+          {resource.description && (
+            <p class="related-resource-description">{resource.description}</p>
+          )}
+          
+          {resource.tags && resource.tags.length > 0 && (
+            <div class="flex flex-wrap gap-1 mb-3">
+              {resource.tags.map((tag) => (
+                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+          
+          {(resource.link || resource.id) && (
+            <a 
+              href={resource.link || `/resources/${resource.id}`}
+              class="related-resource-link"
+            >
+              Leer más
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .related-resources {
+    @apply bg-blue-50 py-12;
+  }
+
+  .related-resources-container {
+    @apply max-w-6xl mx-auto px-6;
+  }
+
+  .related-resources-title {
+    @apply text-3xl font-bold text-center mb-8 text-gray-900;
+  }
+
+  .related-resources-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .related-resource-card {
+    @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-6;
+  }
+
+  .related-resource-title {
+    @apply font-semibold text-gray-900 mb-2;
+  }
+
+  .related-resource-description {
+    @apply text-gray-600 text-sm mb-4;
+  }
+
+  .related-resource-link {
+    @apply inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm;
+  }
+</style>
