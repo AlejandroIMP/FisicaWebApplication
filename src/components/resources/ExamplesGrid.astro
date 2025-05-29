@@ -1,0 +1,80 @@
+---
+interface Example {
+  title: string;
+  description: string;
+  image?: string;
+  link?: string;
+}
+
+interface Props {
+  examples?: Example[];
+}
+
+const { examples = [] } = Astro.props;
+
+if (examples.length === 0) {
+  return null;
+}
+---
+
+<section class="examples-section">
+  <div class="examples-container">
+    <h2 class="examples-title">Ejemplos Prácticos</h2>
+    
+    <div class="examples-grid">
+      {examples.map((example) => (
+        <div class="example-card">
+          {example.image && (
+            <img 
+              src={example.image} 
+              alt={example.title}
+              class="w-full h-32 object-cover rounded mb-3"
+            />
+          )}
+          
+          <h3 class="example-title">{example.title}</h3>
+          <p class="example-description">{example.description}</p>
+          
+          {example.link && (
+            <a 
+              href={example.link}
+              class="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              Ver ejemplo →
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .examples-section {
+    @apply py-12;
+  }
+
+  .examples-container {
+    @apply max-w-6xl mx-auto px-6;
+  }
+
+  .examples-title {
+    @apply text-3xl font-bold text-center mb-8 text-gray-900;
+  }
+
+  .examples-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-8;
+  }
+
+  .example-card {
+    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
+  }
+
+  .example-title {
+    @apply text-xl font-semibold mb-4 text-gray-900;
+  }
+
+  .example-description {
+    @apply text-gray-600 mb-4;
+  }
+</style>
