@@ -1,0 +1,100 @@
+---
+import { resourceTypeConfig } from '../../constants/resources';
+import type { ExternalResourceType } from '../../constants/resources';
+
+interface ExternalResource {
+  title: string;
+  description: string;
+  url: string;
+  type: ExternalResourceType;
+}
+
+interface Props {
+  resources?: ExternalResource[];
+}
+
+const { resources = [] } = Astro.props;
+
+if (resources.length === 0) {
+  return null;
+}
+---
+
+<section class="external-resources">
+  <div class="external-resources-container">
+    <h2 class="external-resources-title">Recursos Adicionales</h2>
+    
+    <div class="external-resources-grid">
+      {resources.map((resource) => {
+        const config = resourceTypeConfig[resource.type];
+        return (
+          <div class={`external-resource-card ${config.color}`}>
+            <div class="external-resource-header">
+              <div>
+                <div class="external-resource-icon">{config.icon}</div>
+                <h3 class="external-resource-title">{resource.title}</h3>
+              </div>
+              <span class="text-xs text-gray-500">{config.label}</span>
+            </div>
+            
+            <p class="external-resource-description">{resource.description}</p>
+            
+            <a 
+              href={resource.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="external-resource-link"
+            >
+              Ver recurso
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+            </a>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .external-resources {
+    @apply bg-gray-50 py-12;
+  }
+
+  .external-resources-container {
+    @apply max-w-6xl mx-auto px-6;
+  }
+
+  .external-resources-title {
+    @apply text-3xl font-bold text-center mb-8 text-gray-900;
+  }
+
+  .external-resources-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .external-resource-card {
+    @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-6 border-l-4;
+  }
+
+  .external-resource-header {
+    @apply flex items-start justify-between mb-3;
+  }
+
+  .external-resource-icon {
+    @apply text-2xl mb-2;
+  }
+
+  .external-resource-title {
+    @apply font-semibold text-gray-900 mb-2;
+  }
+
+  .external-resource-description {
+    @apply text-gray-600 text-sm mb-4;
+  }
+
+  .external-resource-link {
+    @apply inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm;
+  }
+</style>
