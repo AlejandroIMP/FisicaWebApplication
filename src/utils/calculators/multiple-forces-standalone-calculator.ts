@@ -267,8 +267,11 @@ function updateForcesDisplay(): void {
 /**
  * Inicializa la funcionalidad de múltiples fuerzas
  */
+/**
+ * Inicializa la funcionalidad de múltiples fuerzas
+ */
 export function initializeMultipleForces(): void {
-  // Exponer funciones globalmente para uso en HTML
+  // Exponer funciones globalmente para uso en HTML PRIMERO
   (window as any).addForce = addForce;
   (window as any).removeForce = removeForce;
   (window as any).getForces = getForces;
@@ -310,6 +313,8 @@ export function initializeMultipleForces(): void {
       }
     });
   }
+
+  // ... resto del código igual
 
   if (addMultipleForcesBtn) {
     addMultipleForcesBtn.addEventListener('click', () => {
