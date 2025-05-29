@@ -1,5 +1,6 @@
 import { MultiMethodCalculator, type CalculationMethod, type MultiMethodResult } from './multi-method-calculator';
 
+
 import { type CalculationResult } from '../../types/calculator-controller-type';
 
 

@@ -1,5 +1,5 @@
 
-import { MultiMethodCalculator, type CalculationMethod, type MultiMethodResult } from '../../multi-method-calculator'
+import { MultiMethodCalculator, type CalculationMethod, type MultiMethodResult, type DirectionCalculationMethod } from '../../multi-method-calculator'
 
 import { type CalculationResult } from '../../../../types/calculator-controller-type';
 
@@ -284,435 +284,983 @@ const SYSTEM_ACCELERATION_METHODS: CalculationMethod[] = [
   }
 ];
 
-export function calculateNewton(variableToSolve: string, values: Record<string, number>): CalculationResult {
-  if (!values) {
-    return { value: null, unit: '', name: '', formula: '' };
+const SYSTEM_TENSION_METHODS: CalculationMethod[] = [
+  {
+    id: 'system_tension_two_masses',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
+    formula: 'T = m₁gcosθ₁ + m₂gsinθ₂',
+    description: 'Calcula la tensión en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+
+      const T1 = m1 * g * Math.cos(theta1Rad);
+      const T2 = m2 * g * Math.sin(theta2Rad);
+
+      return T1 + T2;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses and gravity must be positive',
+          userMessage: 'Las masas y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
   }
-  let result: CalculationResult = { value: null, unit: '', name: '', formula: '' };
+];
 
+
+const SYSTEM_DIRECTION_METHODS: DirectionCalculationMethod[] = [
+  {
+    id: 'system_direction_two_masses',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
+    formula: 'Dirección del movimiento: m₂gsinθ₂ > m₁gsinθ₁',
+    description: 'Determina la dirección del movimiento en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+
+      const F1_parallel = m1 * g * Math.sin(theta1Rad);
+      const F2_parallel = m2 * g * Math.sin(theta2Rad);
+
+      return F2_parallel > F1_parallel ? 'm₂ baja, m₁ sube' : 'm₁ baja, m₂ sube';
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
+        return {
+          isValid: false,
+          type: 'out_of_range',
+          message: 'Masses and gravity must be positive',
+          userMessage: 'Las masas y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const MASS1_METHODS: CalculationMethod[] = [
+  {
+    id: 'mass1_system_acceleration',
+    requiredVariables: ['mass2', 'angle1', 'angle2', 'gravity'],
+    formula: 'm₁ = (m₂gsinθ₂ - a(m₂ + m₁)) / (gsinθ₁ - a)',
+    description: 'Calcula la masa 1 en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const a = values.acceleration;
+
+      const F2_parallel = m2 * g * Math.sin(theta2Rad);
+      const F1_parallel = g * Math.sin(theta1Rad);
+
+      const m1 = (F2_parallel - a * m2) / (F1_parallel - a);
+
+      return m1;
+    },
+    validate: (values) => {
+      if (values.mass2 <= 0 || values.gravity <= 0 || values.acceleration <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses, gravity and acceleration must be positive',
+          userMessage: 'Las masas, la gravedad y la aceleración deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const MASS2_METHODS: CalculationMethod[] = [
+  {
+    id: 'mass2_system_acceleration',
+    requiredVariables: ['mass1', 'angle1', 'angle2', 'gravity'],
+    formula: 'm₂ = (a(m₁ + m₂) + m₁gsinθ₁) / gsinθ₂',
+    description: 'Calcula la masa 2 en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const a = values.acceleration;
+
+      const F1_parallel = m1 * g * Math.sin(theta1Rad);
+      const F2_parallel = g * Math.sin(theta2Rad);
+
+      // Rearranging: m₂gsinθ₂ = a(m₁ + m₂) + m₁gsinθ₁
+      // m₂gsinθ₂ = am₁ + am₂ + m₁gsinθ₁
+      // m₂gsinθ₂ - am₂ = am₁ + m₁gsinθ₁
+      // m₂(gsinθ₂ - a) = am₁ + m₁gsinθ₁
+      const m2 = (a * m1 + F1_parallel) / (F2_parallel - a);
+
+      return m2;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.gravity <= 0 || values.acceleration <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses, gravity and acceleration must be positive',
+          userMessage: 'Las masas, la gravedad y la aceleración deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const ANGLE_METHODS: CalculationMethod[] = [
+  {
+    id: 'angle_force_components',
+    requiredVariables: ['forceX', 'forceY'],
+    formula: 'θ = arctan(Fy / Fx)',
+    description: 'Calcula el ángulo de una fuerza a partir de sus componentes X e Y',
+    priority: 1,
+    calculate: (values) => {
+      const fx = values.forceX;
+      const fy = values.forceY;
+      return Math.atan2(fy, fx) * (180 / Math.PI); // Convertir a grados
+    },
+    validate: (values) => {
+      if (values.forceX === 0 && values.forceY === 0) {
+        return {
+          type: 'invalid_values',
+          message: 'Force components cannot both be zero',
+          userMessage: 'Las componentes de la fuerza no pueden ser ambas cero',
+          suggestions: [
+            'Ingresa al menos una componente diferente de cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const ANGLE1_METHODS: CalculationMethod[] = [
+  {
+    id: 'angle1_system_acceleration',
+    requiredVariables: ['mass1', 'mass2', 'angle2', 'gravity'],
+    formula: 'θ₁ = arcsin((m₂gsinθ₂ - a(m₁ + m₂)) / (m₁g))',
+    description: 'Calcula el ángulo 1 en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const a = values.acceleration;
+
+      const F2_parallel = m2 * g * Math.sin(theta2Rad);
+      const numerator = F2_parallel - a * (m1 + m2);
+      const denominator = m1 * g;
+
+      if (denominator === 0) {
+        throw new Error('Cannot calculate angle with zero mass');
+      }
+
+      return Math.asin(numerator / denominator) * (180 / Math.PI); // Convertir a grados
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0 || values.acceleration <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses, gravity and acceleration must be positive',
+          userMessage: 'Las masas, la gravedad y la aceleración deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const ANGLE2_METHODS: CalculationMethod[] = [
+  {
+    id: 'angle2_system_acceleration',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'gravity'],
+    formula: 'θ₂ = arcsin((a(m₁ + m₂) + m₁gcosθ₁) / (m₂g))',
+    description: 'Calcula el ángulo 2 en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const a = values.acceleration;
+
+      const F1_parallel = m1 * g * Math.sin(theta1Rad);
+      const numerator = a * (m1 + m2) + F1_parallel;
+      const denominator = m2 * g;
+
+      if (denominator === 0) {
+        throw new Error('Cannot calculate angle with zero mass');
+      }
+
+      return Math.asin(numerator / denominator) * (180 / Math.PI); // Convertir a grados
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0 || values.acceleration <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses, gravity and acceleration must be positive',
+          userMessage: 'Las masas, la gravedad y la aceleración deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const FRICTION_COEFFICIENT1_METHODS: CalculationMethod[] = [
+  {
+    id: 'friction_coefficient1_system_acceleration',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'acceleration'],
+    formula: 'μ₁ = (m₂gsinθ₂ - a(m₁ + m₂) - m₁gcosθ₁) / (m₁gcosθ₁)',
+    description: 'Calcula el coeficiente de fricción 1 en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const a = values.acceleration;
+
+      const F2_parallel = m2 * g * Math.sin(theta2Rad);
+      const F1_normal = m1 * g * Math.cos(theta1Rad);
+
+      if (F1_normal === 0) {
+        throw new Error('Cannot calculate friction coefficient with zero normal force');
+      }
+
+      return (F2_parallel - a * (m1 + m2) - F1_normal) / F1_normal;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0 || values.acceleration <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses, gravity and acceleration must be positive',
+          userMessage: 'Las masas, la gravedad y la aceleración deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const FRICTION_COEFFICIENT2_METHODS: CalculationMethod[] = [
+  {
+    id: 'friction_coefficient2_system_acceleration',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'acceleration'],
+    formula: 'μ₂ = (a(m₁ + m₂) + m₁gcosθ₁ - m₂gsinθ₂) / (m₂gcosθ₂)',
+    description: 'Calcula el coeficiente de fricción 2 en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const a = values.acceleration;
+
+      const F1_normal = m1 * g * Math.cos(theta1Rad);
+      const F2_normal = m2 * g * Math.cos(theta2Rad);
+
+      if (F2_normal === 0) {
+        throw new Error('Cannot calculate friction coefficient with zero normal force');
+      }
+
+      return (a * (m1 + m2) + F1_normal - m2 * g * Math.sin(theta2Rad)) / F2_normal;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0 || values.acceleration <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses, gravity and acceleration must be positive',
+          userMessage: 'Las masas, la gravedad y la aceleración deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const PARALLEL_FORCE_METHODS: CalculationMethod[] = [
+  {
+    id: 'parallel_force_system_acceleration',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
+    formula: 'F_parallel = |m₂gsinθ₂ - m₁gsinθ₁|',
+    description: 'Calcula la fuerza paralela en un sistema de dos masas en planos inclinados con polea',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const F1_parallel = m1 * g * Math.sin(theta1Rad);
+      const F2_parallel = m2 * g * Math.sin(theta2Rad);
+      return Math.abs(F2_parallel - F1_parallel);
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses and gravity must be positive',
+          userMessage: 'Las masas y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'parallel_force_only_mass1',
+    requiredVariables: ['mass1', 'angle1', 'gravity'],
+    formula: 'F_parallel = m₁gsinθ₁',
+    description: 'Calcula la fuerza paralela solo con la masa 1 en un plano inclinado',
+    priority: 2,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const g = values.gravity;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      return m1 * g * Math.sin(theta1Rad);
+    }
+    ,
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Mass and gravity must be positive',
+          userMessage: 'La masa y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+    return null;
+    }
+  },
+  {
+    id: 'parallel_force_only_mass2',
+    requiredVariables: ['mass2', 'angle2', 'gravity'],
+    formula: 'F_parallel = m₂gsinθ₂',
+    description: 'Calcula la fuerza paralela solo con la masa 2 en un plano inclinado',
+    priority: 3,
+    calculate: (values) => {
+      const m2 = values.mass2;
+      const g = values.gravity;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      return m2 * g * Math.sin(theta2Rad);
+    },
+    validate: (values) => {
+      if (values.mass2 <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Mass and gravity must be positive',
+          userMessage: 'La masa y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const PLANET_GRAVITY_METHODS: CalculationMethod[] = [
+  {
+    id: 'planet_gravity',
+    requiredVariables: ['mass', 'radius'],
+    formula: 'g = G × (m / r²)',
+    description: 'Calcula la gravedad de un planeta usando su masa y radio',
+    priority: 1,
+    calculate: (values) => {
+      const G = 6.67430e-11; // Constante de gravitación universal en m³/(kg·s²)
+      const m = values.mass; // Masa del planeta en kg
+      const r = values.radius; // Radio del planeta en metros
+      if (r === 0) {
+        throw new Error('Radius cannot be zero');
+      }
+      return G * (m / (r * r)); // Gravedad en m/s²
+    },
+    validate: (values) => {
+      if (values.mass <= 0 || values.radius <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Mass and radius must be positive',
+          userMessage: 'La masa y el radio deben ser positivos',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.radius === 0) {
+        return {
+          type: 'division_by_zero',
+          message: 'Cannot divide by zero radius',
+          userMessage: 'No se puede calcular la gravedad con radio cero',
+          suggestions: [
+            'Ingresa un radio diferente de cero',
+            'Verifica que el valor de radio sea correcto'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const NET_FORCE_METHODS: CalculationMethod[] = [
+  {
+    id: 'net_force',
+    requiredVariables: ['forceX', 'forceY'],
+    formula: 'F_net = √(Fx² + Fy²)',
+    description: 'Calcula la fuerza neta a partir de sus componentes X e Y',
+    priority: 1,
+    calculate: (values) => {
+      const fx = values.forceX;
+      const fy = values.forceY;
+      return Math.sqrt(fx * fx + fy * fy); // Fuerza neta en N
+    },
+    validate: (values) => {
+      if (values.forceX === 0 && values.forceY === 0) {
+        return {
+          type: 'invalid_values',
+          message: 'Force components cannot both be zero',
+          userMessage: 'Las componentes de la fuerza no pueden ser ambas cero',
+          suggestions: [
+            'Ingresa al menos una componente diferente de cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'net_force_with_angle',
+    requiredVariables: ['force', 'angle'],
+    formula: 'F_net = F × cos(θ)',
+    description: 'Calcula la fuerza neta a partir de una fuerza y un ángulo',
+    priority: 2,
+    calculate: (values) => {
+      const force = values.force;
+      const angleRad = (values.angle * Math.PI) / 180; // Convertir a radianes
+      return force * Math.cos(angleRad); // Fuerza neta en N
+    },
+    validate: (values) => {
+      if (values.force <= 0 || values.angle < 0 || values.angle > 360) {
+        return {
+          type: 'out_of_range',
+          message: 'Force must be positive and angle must be between 0 and 360 degrees',
+          userMessage: 'La fuerza debe ser positiva y el ángulo entre 0 y 360 grados',
+          suggestions: [
+            'Asegúrate de que la fuerza sea mayor que cero',
+            'Verifica que el ángulo esté dentro del rango permitido'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+];
+
+const NET_FORCE_INCLINED_METHODS: CalculationMethod[] = [
+  {
+    id: 'net_force_inclined',
+    requiredVariables: ['force', 'angle'],
+    formula: 'F_net = F × sin(θ)',
+    description: 'Calcula la fuerza neta en un plano inclinado a partir de una fuerza y un ángulo',
+    priority: 1,
+    calculate: (values) => {
+      const force = values.force;
+      const angleRad = (values.angle * Math.PI) / 180; // Convertir a radianes
+      return force * Math.sin(angleRad); // Fuerza neta en N
+    },
+    validate: (values) => {
+      if (values.force <= 0 || values.angle < 0 || values.angle > 360) {
+        return {
+          type: 'out_of_range',
+          message: 'Force must be positive and angle must be between 0 and 360 degrees',
+          userMessage: 'La fuerza debe ser positiva y el ángulo entre 0 y 360 grados',
+          suggestions: [
+            'Asegúrate de que la fuerza sea mayor que cero',
+            'Verifica que el ángulo esté dentro del rango permitido'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+];
+
+const MAX_STATIC_FRICTION_METHODS: CalculationMethod[] = [
+  {
+    id: 'max_static_friction',
+    requiredVariables: ['normalForce', 'frictionCoefficient'],
+    formula: 'F_friction_max = μ_s × N',
+    description: 'Calcula la máxima fuerza de fricción estática a partir de la fuerza normal y el coeficiente de fricción estática',
+    priority: 1,
+    calculate: (values) => {
+      const normalForce = values.normalForce; // Fuerza normal en N
+      const frictionCoefficient = values.frictionCoefficient; // Coeficiente de fricción estática
+      return frictionCoefficient * normalForce; // Fuerza de fricción máxima en N
+    },
+    validate: (values) => {
+      if (values.normalForce <= 0 || values.frictionCoefficient <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Normal force and friction coefficient must be positive',
+          userMessage: 'La fuerza normal y el coeficiente de fricción deben ser positivos',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const MOMENTUM_CHANGE_METHODS: CalculationMethod[] = [
+  {
+    id: 'momentum_change',
+    requiredVariables: ['mass', 'initialVelocity', 'finalVelocity'],
+    formula: 'Δp = m × (v_f - v_i)',
+    description: 'Calcula el cambio de momento lineal a partir de la masa y las velocidades inicial y final',
+    priority: 1,
+    calculate: (values) => {
+      const mass = values.mass; // Masa en kg
+      const initialVelocity = values.initialVelocity; // Velocidad inicial en m/s
+      const finalVelocity = values.finalVelocity; // Velocidad final en m/s
+      return mass * (finalVelocity - initialVelocity); // Cambio de momento lineal en kg·m/s
+    },
+    validate: (values) => {
+      if (values.mass <= 0 || values.initialVelocity === undefined || values.finalVelocity === undefined) {
+        return {
+          type: 'out_of_range',
+          message: 'Mass must be positive and velocities must be defined',
+          userMessage: 'La masa debe ser positiva y las velocidades deben estar definidas',
+          suggestions: [
+            'Asegúrate de que la masa sea mayor que cero',
+            'Verifica que las velocidades inicial y final estén definidas'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const APPLIED_FORCE_WITH_FRICTION_METHODS: CalculationMethod[] = [
+  {
+    id: 'applied_force_with_friction',
+    requiredVariables: ['force', 'frictionCoefficient', 'normalForce'],
+    formula: 'F_applied = F - (μ_k × N)',
+    description: 'Calcula la fuerza aplicada considerando la fricción cinética',
+    priority: 1,
+    calculate: (values) => {
+      const force = values.force; // Fuerza aplicada en N
+      const frictionCoefficient = values.frictionCoefficient; // Coeficiente de fricción cinética
+      const normalForce = values.normalForce; // Fuerza normal en N
+      return force - (frictionCoefficient * normalForce); // Fuerza aplicada en N
+    },
+    validate: (values) => {
+      if (values.force <= 0 || values.frictionCoefficient < 0 || values.normalForce <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Force must be positive, friction coefficient must be non-negative, and normal force must be positive',
+          userMessage: 'La fuerza debe ser positiva, el coeficiente de fricción no negativo y la fuerza normal positiva',
+          suggestions: [
+            'Asegúrate de que la fuerza sea mayor que cero',
+            'Verifica que el coeficiente de fricción sea no negativo',
+            'Asegúrate de que la fuerza normal sea mayor que cero'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const WEIGHT_METHODS: CalculationMethod[] = [
+  {
+    id: 'weight',
+    requiredVariables: ['mass', 'gravity'],
+    formula: 'W = m × g',
+    description: 'Calcula el peso de un objeto a partir de su masa y la gravedad',
+    priority: 1,
+    calculate: (values) => {
+      const mass = values.mass; // Masa en kg
+      const gravity = values.gravity; // Gravedad en m/s²
+      if (gravity === 0) {
+        throw new Error('Gravity cannot be zero');
+      }
+      return mass * gravity; // Peso en N
+    },
+    validate: (values) => {
+      if (values.mass <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Mass and gravity must be positive',
+          userMessage: 'La masa y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.gravity === 0) {
+        return {
+          type: 'division_by_zero',
+          message: 'Cannot calculate weight with zero gravity',
+          userMessage: 'No se puede calcular el peso con gravedad cero',
+          suggestions: [
+            'Ingresa un valor de gravedad diferente de cero',
+            'Verifica que el valor de gravedad sea correcto'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const ACCELERATIONX_METHODS: CalculationMethod[] = [
+  {
+    id: 'accelerationX',
+    requiredVariables: ['forceX', 'mass'],
+    formula: 'a_x = F_x / m',
+    description: 'Calcula la aceleración en el eje X a partir de la fuerza en X y la masa',
+    priority: 1,
+    calculate: (values) => {
+      const forceX = values.forceX; // Fuerza en N
+      const mass = values.mass; // Masa en kg
+      if (mass === 0) {
+        throw new Error('Mass cannot be zero');
+      }
+      return forceX / mass; // Aceleración en m/s²
+    },
+    validate: (values) => {
+      if (values.forceX === 0 || values.mass <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Force must be non-zero and mass must be positive',
+          userMessage: 'La fuerza debe ser diferente de cero y la masa positiva',
+          suggestions: [
+            'Asegúrate de que la fuerza sea diferente de cero',
+            'Verifica que la masa sea mayor que cero'
+          ]
+        };
+      }
+      if (values.mass === 0) {
+        return {
+          type: 'division_by_zero',
+          message: 'Cannot calculate acceleration with zero mass',
+          userMessage: 'No se puede calcular la aceleración con masa cero',
+          suggestions: [
+            'Ingresa un valor de masa diferente de cero',
+            'Verifica que el valor de masa sea correcto'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+const ACCELERATIONY_METHODS: CalculationMethod[] = [
+  {
+    id: 'accelerationY',
+    requiredVariables: ['forceY', 'mass'],
+    formula: 'a_y = F_y / m',
+    description: 'Calcula la aceleración en el eje Y a partir de la fuerza en Y y la masa',
+    priority: 1,
+    calculate: (values) => {
+      const forceY = values.forceY; // Fuerza en N
+      const mass = values.mass; // Masa en kg
+      if (mass === 0) {
+        throw new Error('Mass cannot be zero');
+      }
+      return forceY / mass; // Aceleración en m/s²
+    },
+    validate: (values) => {
+      if (values.forceY === 0 || values.mass <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Force must be non-zero and mass must be positive',
+          userMessage: 'La fuerza debe ser diferente de cero y la masa positiva',
+          suggestions: [
+            'Asegúrate de que la fuerza sea diferente de cero',
+            'Verifica que la masa sea mayor que cero'
+          ]
+        };
+      }
+      if (values.mass === 0) {
+        return {
+          type: 'division_by_zero',
+          message: 'Cannot calculate acceleration with zero mass',
+          userMessage: 'No se puede calcular la aceleración con masa cero',
+          suggestions: [
+            'Ingresa un valor de masa diferente de cero',
+            'Verifica que el valor de masa sea correcto'
+          ]
+        };
+      }
+      return null;
+    }
+  }
+];
+
+export function calculateNewton(variableToSolve: string, values: Record<string, number>): CalculationResult {
+  if(!values){
+    return {
+      value: null, 
+      unit: '', 
+      name: '', 
+      formula: '',
+      error: {
+        type: 'missing_values',
+        message: 'No values provided',
+        userMessage: 'No se proporcionaron valores para el cálculo',
+        suggestions: ['Ingresa al menos algunos valores para realizar el cálculo']
+      }
+    }
+  }
+  let multiresult: MultiMethodResult;
   switch (variableToSolve) {
-    case 'force':
-      if ('mass' in values && 'acceleration' in values) {
-        result.value = values.mass * values.acceleration;
-        result.unit = 'N';
-        result.name = 'Fuerza (F)';
-        result.formula = 'F = m × a';
-      } else if ('weight' in values) {
-        result.value = values.weight;
-        result.unit = 'N';
-        result.name = 'Peso (P)';
-        result.formula = 'P = m × g';
-      }
+    case "mass":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'mass',
+        MASS_METHODS,
+        values,
+        'Masa',
+        'kg'
+        );
+      break;
+    case "mass1":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'mass1',
+        MASS1_METHODS,
+        values,
+        'Masa 1',
+        'kg'
+        );
+      break;
+    case "mass2":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'mass2',
+        MASS2_METHODS,
+        values,
+        'Masa 2',
+        'kg'
+        );
+      break;
+    case "angle":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'angle',
+        ANGLE_METHODS,
+        values,
+        'Ángulo',
+        '°'
+        );
+      break;
+    case "angle1":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'angle1',
+        ANGLE1_METHODS,
+        values,
+        'Ángulo 1',
+        '°'
+        );
+      break;
+    case "angle2":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'angle2',
+        ANGLE2_METHODS,
+        values,
+        'Ángulo 2',
+        '°'
+        );
+      break;
+    case "frictionCoefficient1":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'frictionCoefficient1',
+        FRICTION_COEFFICIENT1_METHODS,
+        values,
+        'Coeficiente de fricción 1',
+        ''
+        );
+      break;
+    case "frictionCoefficient2":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'frictionCoefficient2',
+        FRICTION_COEFFICIENT2_METHODS,
+        values,
+        'Coeficiente de fricción 2',
+        ''
+        );
+      break;
+    case "parallelForce":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'parallelForce',
+        PARALLEL_FORCE_METHODS,
+        values,
+        'Fuerza paralela',
+        'N'
+        );
+      break;
+    case "planetGravity":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'planetGravity',
+        PLANET_GRAVITY_METHODS,
+        values,
+        'Gravedad del planeta',
+        'm/s²'
+        );
+      break;
+    case "netForce":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'netForce',
+        NET_FORCE_METHODS,
+        values,
+        'Fuerza neta',
+        'N'
+        );
+      break;
+    case "netForceInclined":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'netForceInclined',
+        NET_FORCE_INCLINED_METHODS,
+        values,
+        'Fuerza neta en plano inclinado',
+        'N'
+        );
+      break;
+    case "maxStaticFriction":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'maxStaticFriction',
+        MAX_STATIC_FRICTION_METHODS,
+        values,
+        'Fricción estática máxima',
+        'N'
+        );
+      break;
+    case "momentumChange":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'momentumChange',
+        MOMENTUM_CHANGE_METHODS,
+        values,
+        'Cambio de momento lineal',
+        'kg·m/s'
+        );
+      break;
+    case "appliedForceWithFriction":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'appliedForceWithFriction',
+        APPLIED_FORCE_WITH_FRICTION_METHODS,
+        values,
+        'Fuerza aplicada con fricción',
+        'N'
+        );
+      break;
+    case "weight":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'weight',
+        WEIGHT_METHODS,
+        values,
+        'Peso',
+        'N'
+        );
+      break;
+    case "accelerationX":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'accelerationX',
+        ACCELERATIONX_METHODS,
+        values,
+        'Aceleración en X',
+        'm/s²'
+        );
+      break;
+    case "accelerationY":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'accelerationY',
+        ACCELERATIONY_METHODS,
+        values,
+        'Aceleración en Y',
+        'm/s²'
+        );
       break;
 
-    case 'mass':
-      if ('force' in values && 'acceleration' in values && values.acceleration !== 0) {
-        result.value = values.force / values.acceleration;
-        result.unit = 'kg';
-        result.name = 'Masa (m)';
-        result.formula = 'm = F / a';
-      } else if ('weight' in values && 'gravity' in values && values.gravity !== 0) {
-        result.value = values.weight / values.gravity;
-        result.unit = 'kg';
-        result.name = 'Masa (m)';
-        result.formula = 'm = P / g';
-      } else if ('weight' in values) {
-        result.value = values.weight / 9.807; // Gravedad estándar como fallback
-        result.unit = 'kg';
-        result.name = 'Masa (m)';
-        result.formula = 'm = P / g (g = 9.807 m/s²)';
-      }
-      break;
-
-    case 'acceleration':
-      if ('force' in values && 'mass' in values && values.mass !== 0) {
-        result.value = values.force / values.mass;
-        result.unit = 'm/s²';
-        result.name = 'Aceleración (a)';
-        result.formula = 'a = F / m';
-      }
-      break;
-
-    case 'weight':
-      if ('mass' in values && 'gravity' in values) {
-        result.value = values.mass * values.gravity;
-        result.unit = 'N';
-        result.name = 'Peso (P)';
-        result.formula = 'P = m × g';
-      } else if ('mass' in values) {
-        result.value = values.mass * 9.807; // Gravedad estándar
-        result.unit = 'N';
-        result.name = 'Peso (P)';
-        result.formula = 'P = m × g (g = 9.807 m/s²)';
-      }
-      break;
-
-    case 'forceX':
-      if ('force' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.force * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Componente X de la Fuerza (Fx)';
-        result.formula = 'Fx = F × cos(θ)';
-      }
-      break;
-
-    case 'forceY':
-      if ('force' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.force * Math.sin(angleRad);
-        result.unit = 'N';
-        result.name = 'Componente Y de la Fuerza (Fy)';
-        result.formula = 'Fy = F × sin(θ)';
-      }
-      break;
-
-    case 'accelerationX':
-      if ('acceleration' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.acceleration * Math.cos(angleRad);
-        result.unit = 'm/s²';
-        result.name = 'Componente X de la Aceleración (Ax)';
-        result.formula = 'Ax = a × cos(θ)';
-      }
-      break;
-
-    case 'accelerationY':
-      if ('acceleration' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.acceleration * Math.sin(angleRad);
-        result.unit = 'm/s²';
-        result.name = 'Componente Y de la Aceleración (Ay)';
-        result.formula = 'Ay = a × sin(θ)';
-      }
-      break;
-
-    case 'angle':
-      if ('forceX' in values && 'forceY' in values) {
-        const fx = values.forceX;
-        const fy = values.forceY;
-        result.value = Math.atan2(fy, fx) * (180 / Math.PI);
-        result.unit = '°';
-        result.name = 'Ángulo de la Fuerza (θ)';
-        result.formula = 'θ = arctan(Fy / Fx)';
-      }
-      break;
-
-    case 'appliedForce':
-      if ('force' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.force * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Aplicada (F_aplicada)';
-        result.formula = 'F_aplicada = F × cos(θ)';
-      }
-      break;
-
-    case 'appliedAcceleration':
-      if ('acceleration' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.acceleration * Math.cos(angleRad);
-        result.unit = 'm/s²';
-        result.name = 'Aceleración Aplicada (a_aplicada)';
-        result.formula = 'a_aplicada = a × cos(θ)';
-      }
-      break;
-
-    case 'frictionForce':
-      if ('normalForce' in values && 'frictionCoefficient' in values) {
-        result.value = values.normalForce * values.frictionCoefficient;
-        result.unit = 'N';
-        result.name = 'Fuerza de Fricción (F_fricción)';
-        result.formula = 'F_fricción = N × μ';
-      }
-      break;
-
-    case 'normalForce':
-      // 1. PLANO INCLINADO con masa y gravedad
-      if ('mass' in values && 'gravity' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.mass * values.gravity * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Normal en Plano Inclinado (N)';
-        result.formula = 'N = m × g × cos(θ)';
-      } 
-      // 2. PLANO INCLINADO con peso directo
-      else if ('weight' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.weight * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Normal en Plano Inclinado (N)';
-        result.formula = 'N = P × cos(θ)';
-      }
-      // 3. PLANO INCLINADO con masa (gravedad estándar)
-      else if ('mass' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.mass * 9.807 * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Normal en Plano Inclinado (N)';
-        result.formula = 'N = m × g × cos(θ) (g = 9.807 m/s²)';
-      }
-      // 4. SUPERFICIE HORIZONTAL con masa y gravedad
-      else if ('mass' in values && 'gravity' in values) {
-        result.value = values.mass * values.gravity;
-        result.unit = 'N';
-        result.name = 'Fuerza Normal Horizontal (N)';
-        result.formula = 'N = m × g';
-      }
-      // 5. SUPERFICIE HORIZONTAL con peso directo
-      else if ('weight' in values) {
-        result.value = values.weight;
-        result.unit = 'N';
-        result.name = 'Fuerza Normal Horizontal (N)';
-        result.formula = 'N = P (superficie horizontal)';
-      }
-      // 6. SUPERFICIE HORIZONTAL con masa (gravedad estándar)
-      else if ('mass' in values) {
-        result.value = values.mass * 9.807;
-        result.unit = 'N';
-        result.name = 'Fuerza Normal Horizontal (N)';
-        result.formula = 'N = m × g (g = 9.807 m/s²)';
-      }
-      // 7. COMPONENTE PERPENDICULAR de fuerza aplicada
-      else if ('force' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.force * Math.sin(angleRad);
-        result.unit = 'N';
-        result.name = 'Componente Normal de Fuerza (N)';
-        result.formula = 'N = F × sin(θ)';
-      }
-      // 8. CASO CON FUERZAS ADICIONALES (avanzado)
-      else if ('weight' in values && 'appliedForce' in values && 'angle' in values) {
-        const angleRad = (values.angle * Math.PI) / 180;
-        const normalFromWeight = values.weight * Math.cos(angleRad);
-        const normalFromApplied = values.appliedForce * Math.sin(angleRad);
-        result.value = normalFromWeight + normalFromApplied;
-        result.unit = 'N';
-        result.name = 'Fuerza Normal Total (N)';
-        result.formula = 'N = P × cos(θ) + F_aplicada × sin(θ)';
-      }
-      break;
-
-    case 'frictionCoefficient':
-      if ('frictionForce' in values && 'normalForce' in values && values.normalForce !== 0) {
-        result.value = values.frictionForce / values.normalForce;
-        result.unit = '';
-        result.name = 'Coeficiente de Fricción (μ)';
-        result.formula = 'μ = F_fricción / N';
-      }
-      break;
-
-    case 'netForce':
-      if ('forceX' in values && 'forceY' in values) {
-        const fx = values.forceX;
-        const fy = values.forceY;
-        result.value = Math.sqrt(fx * fx + fy * fy);
-        result.unit = 'N';
-        result.name = 'Fuerza Neta (F_net)';
-        result.formula = 'F_net = √(Fx² + Fy²)';
-      }
-      break;
-
-    case 'parallelForce':
-      if ('force' in values && 'angle' in values) {
-        // Componente paralela de una fuerza aplicada
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.force * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Paralela (F_paralela)';
-        result.formula = 'F_paralela = F × cos(θ)';
-      } else if ('mass' in values && 'gravity' in values && 'angle' in values) {
-        // Componente del peso paralela al plano inclinado
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.mass * values.gravity * Math.sin(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Paralela al Plano (F_paralela)';
-        result.formula = 'F_paralela = m × g × sin(θ)';
-      } else if ('mass' in values && 'angle' in values) {
-        // Usando gravedad estándar
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.mass * 9.807 * Math.sin(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Paralela al Plano (F_paralela)';
-        result.formula = 'F_paralela = m × g × sin(θ) (g = 9.807 m/s²)';
-      }
-      break; // 
-
-    case 'perpendicularForce':
-      if ('force' in values && 'angle' in values) {
-        // Componente perpendicular de una fuerza aplicada
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.force * Math.sin(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Perpendicular (F_perpendicular)';
-        result.formula = 'F_perpendicular = F × sin(θ)';
-      } else if ('mass' in values && 'gravity' in values && 'angle' in values) {
-        // Componente del peso perpendicular al plano inclinado
-        const angleRad = (values.angle * Math.PI) / 180;
-        result.value = values.mass * values.gravity * Math.cos(angleRad);
-        result.unit = 'N';
-        result.name = 'Fuerza Perpendicular al Plano (F_perpendicular)';
-        result.formula = 'F_perpendicular = m × g × cos(θ)';
-      }
-      break;
-    case 'systemAcceleration':
-    // SISTEMA DE DOS MASAS EN PLANOS INCLINADOS CON POLEA
-    if ('mass1' in values && 'mass2' in values && 'angle1' in values && 'angle2' in values && 'gravity' in values) {
-      // Con coeficientes de fricción opcionales
-      const mu1 = values.frictionCoefficient1 || 0;
-      const mu2 = values.frictionCoefficient2 || 0;
-      
-      const m1 = values.mass1;
-      const m2 = values.mass2;
-      const g = values.gravity;
-      const theta1Rad = (values.angle1 * Math.PI) / 180;
-      const theta2Rad = (values.angle2 * Math.PI) / 180;
-      
-      // Fuerzas paralelas al plano para cada masa
-      const F1_parallel = m1 * g * Math.sin(theta1Rad);
-      const F2_parallel = m2 * g * Math.sin(theta2Rad);
-      
-      // Fuerzas normales
-      const N1 = m1 * g * Math.cos(theta1Rad);
-      const N2 = m2 * g * Math.cos(theta2Rad);
-      
-      // Fuerzas de fricción
-      const f1 = mu1 * N1;
-      const f2 = mu2 * N2;
-      
-      // Determinar dirección del movimiento y calcular aceleración
-      // Asumimos que masa2 baja si F2_parallel > F1_parallel + fricciones
-      const netForce = F2_parallel - F1_parallel - f1 - f2;
-      const totalMass = m1 + m2;
-      const acceleration = Math.abs(netForce) / totalMass;
-      
-      result.value = acceleration;
-      result.unit = 'm/s²';
-      result.name = 'Aceleración del Sistema (a)';
-      
-      if (mu1 === 0 && mu2 === 0) {
-        result.formula = 'a = |m₂gsinθ₂ - m₁gsinθ₁| / (m₁ + m₂)';
-      } else {
-        result.formula = 'a = |m₂gsinθ₂ - m₁gsinθ₁ - μ₁m₁gcosθ₁ - μ₂m₂gcosθ₂| / (m₁ + m₂)';
-      }
-    }
-    // SISTEMA SIMPLIFICADO: solo con masas, ángulos y gravedad estándar
-    else if ('mass1' in values && 'mass2' in values && 'angle1' in values && 'angle2' in values) {
-      const m1 = values.mass1;
-      const m2 = values.mass2;
-      const g = 9.807; // Gravedad estándar
-      const theta1Rad = (values.angle1 * Math.PI) / 180;
-      const theta2Rad = (values.angle2 * Math.PI) / 180;
-      
-      const F1_parallel = m1 * g * Math.sin(theta1Rad);
-      const F2_parallel = m2 * g * Math.sin(theta2Rad);
-      
-      const netForce = Math.abs(F2_parallel - F1_parallel);
-      const totalMass = m1 + m2;
-      const acceleration = netForce / totalMass;
-      
-      result.value = acceleration;
-      result.unit = 'm/s²';
-      result.name = 'Aceleración del Sistema (a)';
-      result.formula = 'a = |m₂gsinθ₂ - m₁gsinθ₁| / (m₁ + m₂) (g = 9.807 m/s²)';
-    }
-    // SISTEMA CON UNA MASA HORIZONTAL Y OTRA EN PLANO INCLINADO
-    else if ('mass1' in values && 'mass2' in values && 'angle2' in values && 'gravity' in values) {
-      const m1 = values.mass1; // Masa horizontal
-      const m2 = values.mass2; // Masa en plano inclinado
-      const g = values.gravity;
-      const theta2Rad = (values.angle2 * Math.PI) / 180;
-      const mu1 = values.frictionCoefficient1 || 0; // Fricción masa horizontal
-      const mu2 = values.frictionCoefficient2 || 0; // Fricción masa inclinada
-      
-      // Fuerzas
-      const F2_parallel = m2 * g * Math.sin(theta2Rad);
-      const N1 = m1 * g; // Normal masa horizontal
-      const N2 = m2 * g * Math.cos(theta2Rad); // Normal masa inclinada
-      const f1 = mu1 * N1; // Fricción masa horizontal
-      const f2 = mu2 * N2; // Fricción masa inclinada
-      
-      const netForce = F2_parallel - f1 - f2;
-      const totalMass = m1 + m2;
-      const acceleration = Math.abs(netForce) / totalMass;
-      
-      result.value = acceleration;
-      result.unit = 'm/s²';
-      result.name = 'Aceleración del Sistema (a)';
-      result.formula = 'a = |m₂gsinθ₂ - μ₁m₁g - μ₂m₂gcosθ₂| / (m₁ + m₂)';
-    }
-    break;
-
-    case 'systemTension':
-      // TENSIÓN EN LA CUERDA DEL SISTEMA DE PLANOS INCLINADOS
-      if ('mass1' in values && 'mass2' in values && 'angle1' in values && 'angle2' in values && 'gravity' in values) {
-        const m1 = values.mass1;
-        const m2 = values.mass2;
-        const g = values.gravity;
-        const theta1Rad = (values.angle1 * Math.PI) / 180;
-        const theta2Rad = (values.angle2 * Math.PI) / 180;
-        const mu1 = values.frictionCoefficient1 || 0;
-        const mu2 = values.frictionCoefficient2 || 0;
-        
-        // Calcular primero la aceleración del sistema
-        const F1_parallel = m1 * g * Math.sin(theta1Rad);
-        const F2_parallel = m2 * g * Math.sin(theta2Rad);
-        const N1 = m1 * g * Math.cos(theta1Rad);
-        const N2 = m2 * g * Math.cos(theta2Rad);
-        const f1 = mu1 * N1;
-        const f2 = mu2 * N2;
-        
-        const netForce = F2_parallel - F1_parallel - f1 - f2;
-        const acceleration = Math.abs(netForce) / (m1 + m2);
-        
-        // Calcular tensión usando la masa que sube (asumiendo m1 sube)
-        const tension = F1_parallel + f1 + m1 * acceleration;
-        
-        result.value = tension;
-        result.unit = 'N';
-        result.name = 'Tensión en la Cuerda (T)';
-        result.formula = 'T = m₁gsinθ₁ + f₁ + m₁a';
-      }
-      break;
-
-    case 'systemDirection':
-      // DETERMINAR DIRECCIÓN DEL MOVIMIENTO
-      if ('mass1' in values && 'mass2' in values && 'angle1' in values && 'angle2' in values && 'gravity' in values) {
-        const m1 = values.mass1;
-        const m2 = values.mass2;
-        const g = values.gravity;
-        const theta1Rad = (values.angle1 * Math.PI) / 180;
-        const theta2Rad = (values.angle2 * Math.PI) / 180;
-        const mu1 = values.frictionCoefficient1 || 0;
-        const mu2 = values.frictionCoefficient2 || 0;
-        
-        const F1_parallel = m1 * g * Math.sin(theta1Rad);
-        const F2_parallel = m2 * g * Math.sin(theta2Rad);
-        const f1 = mu1 * m1 * g * Math.cos(theta1Rad);
-        const f2 = mu2 * m2 * g * Math.cos(theta2Rad);
-        
-        const F1_total = F1_parallel + f1;
-        const F2_total = F2_parallel + f2;
-        
-        // Resultado como código: 1 = masa2 baja, -1 = masa1 baja, 0 = equilibrio
-        if (F2_total > F1_total) {
-          result.value = 1; // Masa 2 baja, masa 1 sube
-        } else if (F1_total > F2_total) {
-          result.value = -1; // Masa 1 baja, masa 2 sube
-        } else {
-          result.value = 0; // Equilibrio
-        }
-        
-        result.unit = '';
-        result.name = 'Dirección del Movimiento';
-        result.formula = 'Comparar: m₂gsinθ₂ vs m₁gsinθ₁ + fricciones';
-      }
-      break;  
     default:
-        return { value: null, unit: '', name: '', formula: '' };
+      return {
+        value: null,
+        unit: '',
+        name: '',
+        formula: '',
+        error: {
+          type: 'invalid_values',
+          message: `Variable '${variableToSolve}' is not supported for Newton calculations`,
+          userMessage: `La variable '${variableToSolve}' no es compatible con los cálculos de Newton`,
+          suggestions: ['Verifica la variable ingresada y prueba con otra']
+        }
+      };
     }
-
-  return result;
+    return multiresult;
 };
 
 export interface NewtonCalculationResult {

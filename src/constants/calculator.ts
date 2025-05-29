@@ -360,7 +360,7 @@ export const NEWTON_ADVANCED_VARIABLES = [
   { value: 'mass2', label: 'Masa 2 (m₂)' },
   { value: 'angle1', label: 'Ángulo del Plano 1 (θ₁)' },
   { value: 'angle2', label: 'Ángulo del Plano 2 (θ₂)' },
-  { value: 'gravity', label: 'Gravedad (g)' },
+
   { value: 'frictionCoefficient1', label: 'Coeficiente de Fricción 1 (μ₁)' },
   { value: 'frictionCoefficient2', label: 'Coeficiente de Fricción 2 (μ₂)' },
   

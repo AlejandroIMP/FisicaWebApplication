@@ -1,5 +1,5 @@
 import { CalculationErrorHandler } from '../Handlers/calculator-error-handler';
-import { type CalculationError } from '../../types/calculator-controller-type';
+import { type CalculationError, type ValidationResult } from '../../types/calculator-controller-type';
 
 export interface CalculationMethod {
   id: string;
@@ -9,6 +9,16 @@ export interface CalculationMethod {
   priority: number; // Menor número = mayor prioridad
   calculate: (values: Record<string, number>) => number;
   validate?: (values: Record<string, number>) => CalculationError | null;
+}
+
+export interface DirectionCalculationMethod {
+  id: string;
+  requiredVariables: string[];
+  formula: string;
+  description: string;
+  priority: number;
+  calculate: (values: Record<string, number>) => string;
+  validate?: (values: Record<string, number>) => ValidationResult | null;
 }
 
 export interface MultiMethodResult {
