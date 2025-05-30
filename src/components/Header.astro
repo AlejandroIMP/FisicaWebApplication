@@ -10,7 +10,8 @@ interface HeaderLink {
 
 const headerLinks: HeaderLink[] = [
 	{ href: '/', text: 'Inicio' },
-	{ href: '/calculator', text: 'Calculadora' },
+	{ href: '/calculator', text: 'Calculadoras' },
+	{ href: '/simulators', text: 'Simuladores' },
 	{ href: '/exercise', text: 'Ejercicios' },
 	{ href: '/resources', text: 'Recursos' },
 	{ href: '/MIT_License', text: 'Licencia' },
@@ -89,6 +90,12 @@ const headerLinks: HeaderLink[] = [
   });
 </script>
 <style>
+
+	@media print{
+		header, .internal-links-menu, .menu-links {
+			display: none;
+		}
+	}
 	header {
 		margin: 0;
 		padding: 0 1em;
