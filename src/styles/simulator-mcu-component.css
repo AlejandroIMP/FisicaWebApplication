@@ -118,6 +118,10 @@ hr {
     border-top: 1px solid rgb(var(--gray-light));
 }
 
+/* ========================================
+   ESTILOS ESPECÍFICOS DEL SIMULADOR MCU
+======================================== */
+
 /* Contenedor principal */
 .mcu-simulation-container {
   padding: 20px;
@@ -126,6 +130,34 @@ hr {
   font-family: 'Atkinson', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Header del simulador */
+.simulation-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  border: 1px solid #e1e8ed;
+}
+
+.simulation-header h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.simulation-header p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin: 0;
+}
 
 /* Layout principal */
 .simulation-layout {
@@ -608,4 +640,3 @@ hr {
     clip-path: inset(50%);
     white-space: nowrap;
 }
-
