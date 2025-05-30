@@ -1,7 +1,7 @@
-
 import { MultiMethodCalculator, type CalculationMethod, type MultiMethodResult, type DirectionCalculationMethod } from '../../multi-method-calculator'
 
 import { type CalculationResult } from '../../../../types/calculator-controller-type';
+import VariableSelector from '../../../../components/calculator/VariableSelector.astro';
 
 const FORCE_METHODS: CalculationMethod[] = [
   {
@@ -321,12 +321,12 @@ const SYSTEM_TENSION_METHODS: CalculationMethod[] = [
 ];
 
 
-const SYSTEM_DIRECTION_METHODS: DirectionCalculationMethod[] = [
+const SYSTEM_DIRECTION_METHODS: CalculationMethod[] = [
   {
     id: 'system_direction_two_masses',
     requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
-    formula: 'Dirección del movimiento: m₂gsinθ₂ > m₁gsinθ₁',
-    description: 'Determina la dirección del movimiento en un sistema de dos masas en planos inclinados con polea',
+    formula: 'θ = arctan((m₂gsinθ₂ - m₁gsinθ₁) / (m₁gcosθ₁ + m₂gcosθ₂))',
+    description: 'Calcula la dirección del movimiento de un sistema de dos masas en planos inclinados con polea',
     priority: 1,
     calculate: (values) => {
       const m1 = values.mass1;
@@ -337,25 +337,16 @@ const SYSTEM_DIRECTION_METHODS: DirectionCalculationMethod[] = [
 
       const F1_parallel = m1 * g * Math.sin(theta1Rad);
       const F2_parallel = m2 * g * Math.sin(theta2Rad);
+      const F1_normal = m1 * g * Math.cos(theta1Rad);
+      const F2_normal = m2 * g * Math.cos(theta2Rad);
 
-      return F2_parallel > F1_parallel ? 'm₂ baja, m₁ sube' : 'm₁ baja, m₂ sube';
+      const netForceY = F2_parallel - F1_parallel;
+      const netForceX = F1_normal + F2_normal;
+
+      return Math.atan2(netForceY, netForceX) * (180 / Math.PI); // Convertir a grados
     },
-    validate: (values) => {
-      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
-        return {
-          isValid: false,
-          type: 'out_of_range',
-          message: 'Masses and gravity must be positive',
-          userMessage: 'Las masas y la gravedad deben ser positivas',
-          suggestions: [
-            'Asegúrate de que todos los valores sean mayores que cero'
-          ]
-        };
-      }
-      return null;
-    }
   }
-];
+]
 
 const MASS1_METHODS: CalculationMethod[] = [
   {
@@ -1246,6 +1237,43 @@ export function calculateNewton(variableToSolve: string, values: Record<string, 
         );
       break;
 
+      case "acceleration":
+    multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+      'acceleration',
+      ACCELERATION_METHODS,
+      values,
+      'Aceleración',
+      'm/s²'
+    );
+      break;
+    case "systemAcceleration":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'systemAcceleration',
+        SYSTEM_ACCELERATION_METHODS,
+        values,
+        'Aceleración del sistema',
+        'm/s²'
+      );
+      break;
+    case "systemTension":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'systemTension',
+        SYSTEM_TENSION_METHODS,
+        values,
+        'Tensión del sistema',
+        'N'
+      );
+      break;
+    case "systemDirection":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'systemDirection',
+        SYSTEM_DIRECTION_METHODS,
+        values,
+        'Dirección del sistema',
+        '°'
+      );
+      break;
+
     default:
       return {
         value: null,
@@ -1262,6 +1290,7 @@ export function calculateNewton(variableToSolve: string, values: Record<string, 
     }
     return multiresult;
 };
+
 
 export interface NewtonCalculationResult {
   result: number;
