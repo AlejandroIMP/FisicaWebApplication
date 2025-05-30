@@ -6,11 +6,13 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import icon from 'astro-icon';
 
+import react from '@astrojs/react';
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://example.com',
     integrations: [mdx({
       remarkPlugins: [remarkMath],
       rehypePlugins: [rehypeKatex]
-    }), sitemap(), icon(),],
+    }), sitemap(), icon(), react()],
 });
