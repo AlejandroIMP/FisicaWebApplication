@@ -144,6 +144,12 @@ export const UNITS = {
     { value: 'yd/s', label: 'yd/s' },
     { value: 'ft/s', label: 'ft/s' },
     { value: 'in/s', label: 'in/s' }
+  ],
+
+  efficiency: [
+    { value: 'percentage', label: 'Porcentaje (%)' },
+    { value: 'decimal', label: 'Decimal' },
+    { value: 'fraction', label: 'Fracción' }
   ]
 };
 
@@ -305,8 +311,8 @@ export const NEWTON_SECOND_LAW_CONFIG = {
     force: ['mass', 'acceleration'],
     mass: ['force', 'acceleration'],
     acceleration: ['force', 'mass'],
-    systemAcceleration: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2'],
-    systemTension: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2' ],
+    systemAcceleration: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2', 'externalForce', 'externalForceAngle' ],
+    systemTension: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2','acceleration', 'externalForce', 'efficiency', 'altitude', 'externalForceAngle' ],
     systemDirection: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2'],
 
     mass1: ['mass2', 'angle1', 'angle2', 'gravity'],

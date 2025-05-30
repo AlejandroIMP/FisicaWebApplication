@@ -17,7 +17,7 @@ export type UnitType =
   'appliedForce' | 'frictionForce' | 'normalForce' | 'frictionCoefficient'
   
   // MRU y MRUA
-  | 'distance' | 'velocity' | 'coefficient' 
+  | 'distance' | 'velocity' | 'coefficient' | 'efficiency' 
 
 
   ;
@@ -96,4 +96,6 @@ export type UnitMap = {
   // Tipos para cálculos avanzados
 
   coefficient: 'dimensionless';
+
+  efficiency: 'percentage' | 'decimal' | 'fraction'; // Porcentaje o decimal
 }

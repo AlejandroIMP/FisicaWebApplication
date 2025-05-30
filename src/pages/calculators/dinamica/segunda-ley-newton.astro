@@ -50,6 +50,18 @@ import '../../../styles/calculator-components.css';
         />
         
         <div class="input-groups-container">
+          <InputGroup
+            id="external-force"
+            label="Fuerza externa (Fe):"
+            placeholder="Ingresa la fuerza externa"
+            units={UNITS.force}
+          />
+          <InputGroup 
+            id="efficiency"
+            label="Eficiencia (η):"
+            placeholder="Ingresa la eficiencia"
+            units={UNITS.efficiency}
+          />
           <InputGroup 
             id="mass"
             label="Masa (m):"
@@ -136,6 +148,13 @@ import '../../../styles/calculator-components.css';
             placeholder="Ingresa la fuerza aplicada"
             units={UNITS.force}          
           />   
+
+          <InputGroup 
+            id="altitude",
+            label="Altitud (h):"
+            placeholder="Ingresa la altitud"
+            units={UNITS.distance}
+          />
           
           <InputGroup 
             id="friction-coefficient",
@@ -143,6 +162,12 @@ import '../../../styles/calculator-components.css';
             placeholder="Ingresa el coeficiente de fricción"
             units={UNITS.coefficient}          
           />     
+          <InputGroup 
+            id="externalForceAngle",
+            label="Ángulo de la fuerza externa (θe):"
+            placeholder="Ingresa el ángulo de la fuerza externa"
+            units={UNITS.angle}
+          />
           
           <InputGroup 
             id="radius"

@@ -1,7 +1,6 @@
-import { MultiMethodCalculator, type CalculationMethod, type MultiMethodResult, type DirectionCalculationMethod } from '../../multi-method-calculator'
+import { MultiMethodCalculator, type CalculationMethod, type MultiMethodResult  } from '../../multi-method-calculator'
 
 import { type CalculationResult } from '../../../../types/calculator-controller-type';
-import VariableSelector from '../../../../components/calculator/VariableSelector.astro';
 
 const FORCE_METHODS: CalculationMethod[] = [
   {
@@ -183,13 +182,24 @@ const SYSTEM_ACCELERATION_METHODS: CalculationMethod[] = [
       const g = values.gravity;
       const theta1Rad = (values.angle1 * Math.PI) / 180;
       const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const frictionCoefficient1 = values.frictionCoefficient1 || 0;
+      const frictionCoefficient2 = values.frictionCoefficient2 || 0;
 
-      const F1_parallel = m1 * g * Math.sin(theta1Rad);
-      const F2_parallel = m2 * g * Math.sin(theta2Rad);
-
-      const netForce = F2_parallel - F1_parallel;
+      // Fuerzas paralelas
+      const F1_parallel = m1 * g * Math.sin(theta1Rad) - frictionCoefficient1 * m1 * g * Math.cos(theta1Rad);
+      const F2_parallel = m2 * g * Math.sin(theta2Rad) - frictionCoefficient2 * m2 * g * Math.cos(theta2Rad);
+      // Fuerza neta
+      const F_net = F2_parallel - F1_parallel;
+      // Aceleración
       const totalMass = m1 + m2;
-      return Math.abs(netForce) / totalMass;
+      if (totalMass === 0) {
+        throw new Error('Total mass cannot be zero');
+      }
+      const acceleration = F_net / totalMass;
+      if (isNaN(acceleration)) {
+        throw new Error('Invalid calculation resulting in NaN');
+      }
+      return Math.abs(acceleration); // Aceleración en m/s²
     },
     validate: (values) => {
       if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
@@ -215,16 +225,27 @@ const SYSTEM_ACCELERATION_METHODS: CalculationMethod[] = [
     calculate: (values) => {
       const m1 = values.mass1;
       const m2 = values.mass2;
-      const g = 9.807; // Gravedad estándar
+      const g = 9.087;
       const theta1Rad = (values.angle1 * Math.PI) / 180;
       const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const frictionCoefficient1 = values.frictionCoefficient1 || 0;
+      const frictionCoefficient2 = values.frictionCoefficient2 || 0;
 
-      const F1_parallel = m1 * g * Math.sin(theta1Rad);
-      const F2_parallel = m2 * g * Math.sin(theta2Rad);
-
-      const netForce = F2_parallel - F1_parallel;
+      // Fuerzas paralelas
+      const F1_parallel = m1 * g * Math.sin(theta1Rad) - frictionCoefficient1 * m1 * g * Math.cos(theta1Rad);
+      const F2_parallel = m2 * g * Math.sin(theta2Rad) - frictionCoefficient2 * m2 * g * Math.cos(theta2Rad);
+      // Fuerza neta
+      const F_net = F2_parallel - F1_parallel;
+      // Aceleración
       const totalMass = m1 + m2;
-      return netForce / totalMass;
+      if (totalMass === 0) {
+        throw new Error('Total mass cannot be zero');
+      }
+      const acceleration = F_net / totalMass;
+      if (isNaN(acceleration)) {
+        throw new Error('Invalid calculation resulting in NaN');
+      }
+      return Math.abs(acceleration); // Aceleración en m/s²
     },
     validate: (values) => {
       if (values.mass1 <= 0 || values.mass2 <= 0) {
@@ -286,11 +307,45 @@ const SYSTEM_ACCELERATION_METHODS: CalculationMethod[] = [
 
 const SYSTEM_TENSION_METHODS: CalculationMethod[] = [
   {
-    id: 'system_tension_two_masses',
-    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
-    formula: 'T = m₁gcosθ₁ + m₂gsinθ₂',
-    description: 'Calcula la tensión en un sistema de dos masas en planos inclinados con polea',
+    id: 'system_tension_two_masses_basic',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2'],
+    formula: 'T = (m₁m₂g(sinθ₂ + sinθ₁)) / (m₁ + m₂)',
+    description: 'Calcula la tensión en un sistema de dos masas en planos inclinados con polea (caso básico)',
     priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity || 9.807;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+
+      // Fórmula correcta para tensión en sistema de polea
+      const numerator = m1 * m2 * g * (Math.sin(theta2Rad) + Math.sin(theta1Rad));
+      const denominator = m1 + m2;
+      
+      return numerator / denominator;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_with_gravity',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
+    formula: 'T = (m₁m₂g(sinθ₂ + sinθ₁)) / (m₁ + m₂)',
+    description: 'Calcula la tensión en un sistema de dos masas con gravedad específica',
+    priority: 2,
     calculate: (values) => {
       const m1 = values.mass1;
       const m2 = values.mass2;
@@ -298,10 +353,10 @@ const SYSTEM_TENSION_METHODS: CalculationMethod[] = [
       const theta1Rad = (values.angle1 * Math.PI) / 180;
       const theta2Rad = (values.angle2 * Math.PI) / 180;
 
-      const T1 = m1 * g * Math.cos(theta1Rad);
-      const T2 = m2 * g * Math.sin(theta2Rad);
-
-      return T1 + T2;
+      const numerator = m1 * m2 * g * (Math.sin(theta2Rad) + Math.sin(theta1Rad));
+      const denominator = m1 + m2;
+      
+      return numerator / denominator;
     },
     validate: (values) => {
       if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
@@ -317,36 +372,353 @@ const SYSTEM_TENSION_METHODS: CalculationMethod[] = [
       }
       return null;
     }
-  }
-];
-
-
-const SYSTEM_DIRECTION_METHODS: CalculationMethod[] = [
+  },
   {
-    id: 'system_direction_two_masses',
-    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity'],
-    formula: 'θ = arctan((m₂gsinθ₂ - m₁gsinθ₁) / (m₁gcosθ₁ + m₂gcosθ₂))',
-    description: 'Calcula la dirección del movimiento de un sistema de dos masas en planos inclinados con polea',
-    priority: 1,
+    id: 'system_tension_with_friction',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'gravity', 'frictionCoefficient1', 'frictionCoefficient2'],
+    formula: 'T = (m₁m₂g(sinθ₂ + sinθ₁ - μ₁cosθ₁ - μ₂cosθ₂)) / (m₁ + m₂)',
+    description: 'Calcula la tensión en un sistema con fricción en ambos planos inclinados',
+    priority: 3,
     calculate: (values) => {
       const m1 = values.mass1;
       const m2 = values.mass2;
       const g = values.gravity;
       const theta1Rad = (values.angle1 * Math.PI) / 180;
       const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const mu1 = values.frictionCoefficient1;
+      const mu2 = values.frictionCoefficient2;
 
-      const F1_parallel = m1 * g * Math.sin(theta1Rad);
-      const F2_parallel = m2 * g * Math.sin(theta2Rad);
-      const F1_normal = m1 * g * Math.cos(theta1Rad);
-      const F2_normal = m2 * g * Math.cos(theta2Rad);
+      const sin1 = Math.sin(theta1Rad);
+      const sin2 = Math.sin(theta2Rad);
+      const cos1 = Math.cos(theta1Rad);
+      const cos2 = Math.cos(theta2Rad);
 
-      const netForceY = F2_parallel - F1_parallel;
-      const netForceX = F1_normal + F2_normal;
-
-      return Math.atan2(netForceY, netForceX) * (180 / Math.PI); // Convertir a grados
+      // Considerando fricción en ambas superficies
+      const effectiveForce = sin2 + sin1 - mu1 * cos1 - mu2 * cos2;
+      const numerator = m1 * m2 * g * effectiveForce;
+      const denominator = m1 + m2;
+      
+      return Math.abs(numerator / denominator);
     },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses and gravity must be positive',
+          userMessage: 'Las masas y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.frictionCoefficient1 < 0 || values.frictionCoefficient2 < 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Friction coefficients must be non-negative',
+          userMessage: 'Los coeficientes de fricción deben ser no negativos',
+          suggestions: [
+            'Ingresa valores de fricción válidos (≥ 0)',
+            'Verifica que los coeficientes sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_horizontal_vertical',
+    requiredVariables: ['mass1', 'mass2'],
+    formula: 'T = (m₁m₂g) / (m₁ + m₂)',
+    description: 'Calcula la tensión en un sistema con una masa horizontal y otra colgando verticalmente',
+    priority: 4,
+    calculate: (values) => {
+      const m1 = values.mass1; // masa horizontal
+      const m2 = values.mass2; // masa vertical
+      const g = values.gravity || 9.807;
+
+      // Sistema clásico de Atwood modificado
+      return (m1 * m2 * g) / (m1 + m2);
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas masas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_atwood_machine',
+    requiredVariables: ['mass1', 'mass2', 'gravity'],
+    formula: 'T = (2m₁m₂g) / (m₁ + m₂)',
+    description: 'Calcula la tensión en una máquina de Atwood (dos masas colgando)',
+    priority: 5,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity;
+
+      // Máquina de Atwood clásica
+      return (2 * m1 * m2 * g) / (m1 + m2);
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0 || values.gravity <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses and gravity must be positive',
+          userMessage: 'Las masas y la gravedad deben ser positivas',
+          suggestions: [
+            'Asegúrate de que todos los valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_with_acceleration',
+    requiredVariables: ['mass1', 'mass2', 'acceleration'],
+    formula: 'T = m₁(g + a) o T = m₂(g - a)',
+    description: 'Calcula la tensión cuando se conoce la aceleración del sistema',
+    priority: 6,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const a = values.acceleration;
+      const g = values.gravity || 9.807;
+
+      // Asumiendo que m2 > m1 y m2 baja
+      // Para m1: T = m1(g + a)
+      // Para m2: T = m2(g - a)
+      // Usamos el promedio para mayor precisión
+      const T1 = m1 * (g + a);
+      const T2 = m2 * (g - a);
+      
+      return (T1 + T2) / 2;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas masas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_inclined_one_angle',
+    requiredVariables: ['mass1', 'mass2', 'angle1'],
+    formula: 'T = (m₁m₂g(1 + sinθ₁)) / (m₁ + m₂)',
+    description: 'Calcula la tensión con una masa en plano inclinado y otra colgando',
+    priority: 7,
+    calculate: (values) => {
+      const m1 = values.mass1; // masa en plano inclinado
+      const m2 = values.mass2; // masa colgando
+      const g = values.gravity || 9.807;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+
+      // Una masa en plano inclinado, otra colgando verticalmente
+      const numerator = m1 * m2 * g * (1 + Math.sin(theta1Rad));
+      const denominator = m1 + m2;
+      
+      return numerator / denominator;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas masas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.angle1 < 0 || values.angle1 > 90) {
+        return {
+          type: 'out_of_range',
+          message: 'Angle must be between 0 and 90 degrees',
+          userMessage: 'El ángulo debe estar entre 0 y 90 grados',
+          suggestions: [
+            'Ingresa un ángulo válido para el plano inclinado',
+            'Verifica que el ángulo sea físicamente posible'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_with_external_force',
+    requiredVariables: ['mass1', 'mass2', 'externalForce'],
+    formula: 'T = (m₁m₂g + F_ext × m₁) / (m₁ + m₂)',
+    description: 'Calcula la tensión cuando hay una fuerza externa aplicada',
+    priority: 8,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const F_ext = values.externalForce;
+      const g = values.gravity || 9.807;
+
+      // Fuerza externa aplicada en dirección del movimiento
+      const numerator = m1 * m2 * g + F_ext * m1;
+      const denominator = m1 + m2;
+      
+      return numerator / denominator;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas masas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_from_forces',
+    requiredVariables: ['force1', 'force2'],
+    formula: 'T = (F₁ + F₂) / 2',
+    description: 'Calcula la tensión promedio cuando se conocen las fuerzas en cada masa',
+    priority: 9,
+    calculate: (values) => {
+      const F1 = values.force1;
+      const F2 = values.force2;
+
+      // Tensión como promedio de las fuerzas
+      return (F1 + F2) / 2;
+    },
+    validate: (values) => {
+      if (values.force1 <= 0 || values.force2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Forces must be positive',
+          userMessage: 'Las fuerzas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas fuerzas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_pulley_efficiency',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'efficiency'],
+    formula: 'T = η × (m₁m₂g(sinθ₂ + sinθ₁)) / (m₁ + m₂)',
+    description: 'Calcula la tensión considerando la eficiencia de la polea',
+    priority: 10,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity || 9.807;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const efficiency = values.efficiency;
+
+      const idealTension = (m1 * m2 * g * (Math.sin(theta2Rad) + Math.sin(theta1Rad))) / (m1 + m2);
+      
+      return efficiency * idealTension;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas masas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.efficiency <= 0 || values.efficiency > 1) {
+        return {
+          type: 'out_of_range',
+          message: 'Efficiency must be between 0 and 1',
+          userMessage: 'La eficiencia debe estar entre 0 y 1',
+          suggestions: [
+            'Ingresa una eficiencia válida (0 < η ≤ 1)',
+            'Verifica que el valor de eficiencia sea correcto'
+          ]
+        };
+      }
+      return null;
+    }
+  },
+  {
+    id: 'system_tension_variable_gravity',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'altitude'],
+    formula: 'T = (m₁m₂g(h)(sinθ₂ + sinθ₁)) / (m₁ + m₂)',
+    description: 'Calcula la tensión considerando variación de gravedad con la altitud',
+    priority: 11,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const h = values.altitude; // altitud en metros
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+
+      // Variación de gravedad con altitud: g(h) = g₀(1 - 2h/R)
+      const g0 = 9.807; // gravedad al nivel del mar
+      const R = 6.371e6; // radio terrestre en metros
+      const g_h = g0 * (1 - 2 * h / R);
+
+      const numerator = m1 * m2 * g_h * (Math.sin(theta2Rad) + Math.sin(theta1Rad));
+      const denominator = m1 + m2;
+      
+      return numerator / denominator;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambas masas sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.altitude < 0 || values.altitude > 100000) {
+        return {
+          type: 'out_of_range',
+          message: 'Altitude must be between 0 and 100km',
+          userMessage: 'La altitud debe estar entre 0 y 100km',
+          suggestions: [
+            'Ingresa una altitud válida',
+            'Para altitudes mayores, usa fórmulas de gravitación universal'
+          ]
+        };
+      }
+      return null;
+    }
   }
-]
+];
 
 const MASS1_METHODS: CalculationMethod[] = [
   {
@@ -1057,6 +1429,163 @@ const ACCELERATIONY_METHODS: CalculationMethod[] = [
   }
 ];
 
+const SYSTEM_DIRECTION_METHODS: CalculationMethod[] = [
+  {
+    id: 'system_direction_two_masses',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2'],
+    formula: 'Direction = sign(m₂sinθ₂ - m₁sinθ₁)',
+    description: 'Determina la dirección del movimiento en un sistema de dos masas en planos inclinados',
+    priority: 1,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      
+      // Fuerzas paralelas
+      const F1_parallel = m1 * (values.gravity || 9.807) * Math.sin(theta1Rad);
+      const F2_parallel = m2 * (values.gravity || 9.807) * Math.sin(theta2Rad);
+      
+      // Determinar dirección basada en cual fuerza es mayor
+      const netForce = F2_parallel - F1_parallel;
+      
+      if (Math.abs(netForce) < 1e-6) return 0; // Equilibrio
+      return netForce > 0 ? 1 : -1; // 1: masa 2 desciende, -1: masa 1 desciende
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    },
+    getDirectionText: (direction:number) => {
+      if (direction === 0) return "Sistema en equilibrio";
+      return direction > 0 ? "La masa 2 desciende" : "La masa 1 desciende";
+    }
+  },
+  {
+    id: 'system_direction_with_friction',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'frictionCoefficient1', 'frictionCoefficient2'],
+    formula: 'Direction = sign(m₂gsinθ₂ - μ₂m₂gcosθ₂ - m₁gsinθ₁ + μ₁m₁gcosθ₁)',
+    description: 'Determina la dirección del movimiento en un sistema con fricción',
+    priority: 2,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity || 9.807;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const mu1 = values.frictionCoefficient1;
+      const mu2 = values.frictionCoefficient2;
+      
+      // Componentes de fuerzas con fricción
+      const F1_parallel = m1 * g * Math.sin(theta1Rad) - mu1 * m1 * g * Math.cos(theta1Rad);
+      const F2_parallel = m2 * g * Math.sin(theta2Rad) - mu2 * m2 * g * Math.cos(theta2Rad);
+      
+      // Fuerza neta
+      const netForce = F2_parallel - F1_parallel;
+      
+      if (Math.abs(netForce) < 1e-6) return 0; // Equilibrio
+      return netForce > 0 ? 1 : -1;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.frictionCoefficient1 < 0 || values.frictionCoefficient2 < 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Friction coefficients cannot be negative',
+          userMessage: 'Los coeficientes de fricción no pueden ser negativos',
+          suggestions: [
+            'Ingresa valores no negativos para los coeficientes de fricción',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      return null;
+    },
+    getDirectionText: (direction:number) => {
+      if (direction === 0) return "Sistema en equilibrio";
+      return direction > 0 ? "La masa 2 desciende" : "La masa 1 desciende";
+    }
+  },
+  {
+    id: 'system_direction_with_external_force',
+    requiredVariables: ['mass1', 'mass2', 'angle1', 'angle2', 'externalForce', 'externalForceAngle'],
+    formula: 'Direction = sign(m₂gsinθ₂ - m₁gsinθ₁ + F_ext·cos(θ_ext))',
+    description: 'Determina la dirección del movimiento con una fuerza externa aplicada',
+    priority: 3,
+    calculate: (values) => {
+      const m1 = values.mass1;
+      const m2 = values.mass2;
+      const g = values.gravity || 9.807;
+      const theta1Rad = (values.angle1 * Math.PI) / 180;
+      const theta2Rad = (values.angle2 * Math.PI) / 180;
+      const extForce = values.externalForce;
+      const extForceAngleRad = (values.externalForceAngle * Math.PI) / 180;
+      
+      // Componentes de fuerzas
+      const F1_parallel = m1 * g * Math.sin(theta1Rad);
+      const F2_parallel = m2 * g * Math.sin(theta2Rad);
+      
+      // Componente de fuerza externa en la dirección del movimiento
+      const F_ext_component = extForce * Math.cos(extForceAngleRad);
+      
+      // Fuerza neta
+      const netForce = F2_parallel - F1_parallel + F_ext_component;
+      
+      if (Math.abs(netForce) < 1e-6) return 0; // Equilibrio
+      return netForce > 0 ? 1 : -1;
+    },
+    validate: (values) => {
+      if (values.mass1 <= 0 || values.mass2 <= 0) {
+        return {
+          type: 'out_of_range',
+          message: 'Masses must be positive',
+          userMessage: 'Las masas deben ser positivas',
+          suggestions: [
+            'Asegúrate de que ambos valores sean mayores que cero',
+            'Verifica que los valores ingresados sean correctos'
+          ]
+        };
+      }
+      if (values.externalForceAngle < 0 || values.externalForceAngle > 360) {
+        return {
+          type: 'out_of_range',
+          message: 'External force angle must be between 0 and 360 degrees',
+          userMessage: 'El ángulo de la fuerza externa debe estar entre 0 y 360 grados',
+          suggestions: [
+            'Ingresa un ángulo válido para la fuerza externa',
+            'Verifica que el ángulo sea físicamente posible'
+          ]
+        };
+      }
+      return null;
+    },
+    getDirectionText: (direction:number) => {
+      if (direction === 0) return "Sistema en equilibrio";
+      return direction > 0 ? "La masa 2 desciende" : "La masa 1 desciende";
+    }
+  }
+];
+
 export function calculateNewton(variableToSolve: string, values: Record<string, number>): CalculationResult {
   if(!values){
     return {
@@ -1074,6 +1603,15 @@ export function calculateNewton(variableToSolve: string, values: Record<string, 
   }
   let multiresult: MultiMethodResult;
   switch (variableToSolve) {
+    case "force":
+      multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
+        'force',
+        FORCE_METHODS,
+        values,
+        'Fuerza',
+        'N'
+      );
+      break;
     case "mass":
       multiresult = MultiMethodCalculator.calculateWithMultipleMethods(
         'mass',
@@ -1270,7 +1808,7 @@ export function calculateNewton(variableToSolve: string, values: Record<string, 
         SYSTEM_DIRECTION_METHODS,
         values,
         'Dirección del sistema',
-        '°'
+        '°',
       );
       break;
 

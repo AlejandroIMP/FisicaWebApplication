@@ -206,6 +206,12 @@ export const conversionFactors = {
     'unitless': 1,
     'percent': 0.01,
     'ratio': 1
+  },
+
+  efficiency: {
+    'percent': 0.01, // 1% = 0.01
+    'decimal': 1,    // 1 = 100%
+    'fraction': 1    // 1 = 100%
   }
   
 };

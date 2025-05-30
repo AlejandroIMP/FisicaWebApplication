@@ -9,6 +9,7 @@ export interface CalculationMethod {
   priority: number; // Menor número = mayor prioridad
   calculate: (values: Record<string, number>) => number;
   validate?: (values: Record<string, number>) => CalculationError | null;
+  getDirectionText?: (direction:number) => string;
 }
 
 export interface DirectionCalculationMethod {
@@ -26,6 +27,7 @@ export interface MultiMethodResult {
   unit: string;
   name: string;
   formula: string;
+  direction?: string; // Solo si es relevante para el cálculo
   methodUsed?: string;
   methodDescription?: string;
   availableMethods?: string[];
@@ -51,6 +53,7 @@ export class MultiMethodCalculator {
       unit: defaultUnit,
       name: displayName,
       formula: '',
+      direction: undefined,
       availableMethods: []
     };
 

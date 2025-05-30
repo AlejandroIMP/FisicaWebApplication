@@ -3,6 +3,7 @@ export interface CalculationResult {
   unit: string;
   name: string;
   formula: string;
+  direction?: string;
   error?: CalculationError;
   errorMessage?: string;
   warnings?: string[];
