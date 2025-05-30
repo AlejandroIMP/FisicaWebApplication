@@ -1,5 +1,5 @@
 import { getElementByIdStrict, setupCalculator, type CalculatorConfig } from '../calculators/calculator-controller';
-import { type CalculationResult } from '../calculators/mcu-calculator';
+import { type CalculationResult } from '../../types/calculator-controller-type';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { JSDOM } from 'jsdom';
 

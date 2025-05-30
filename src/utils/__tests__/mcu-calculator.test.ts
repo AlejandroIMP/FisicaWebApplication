@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { calculateMCU, type CalculationResult } from '../calculators/mcu-calculator';
+import { calculateMCU } from '../calculators/mcu-calculator';
+import { type CalculationResult } from '../../types/calculator-controller-type';
 
 describe('MCU Calculator', () => {
   // Tests para el cálculo del radio

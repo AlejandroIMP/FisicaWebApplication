@@ -1,4 +1,4 @@
-import { type CalculationResult } from "../mcu-calculator";
+import { type CalculationResult } from "../../../types/calculator-controller-type";
 
 export function calculateMRU(variableToSolve: string, values: Record<string, number>): CalculationResult {
   // Verificar si values es indefinido o null y manejarlo apropiadamente

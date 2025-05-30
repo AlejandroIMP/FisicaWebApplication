@@ -1,4 +1,4 @@
-import { type CalculationResult } from './mcu-calculator';
+import { type CalculationResult } from '../../types/calculator-controller-type';
 
 /**
  * Calculadora independiente para fuerzas múltiples
