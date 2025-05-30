@@ -137,7 +137,12 @@ const MCUASimulationPage: React.FC = () => {
 
   return (
     <div className="mcua-simulation-container">
-      <p>Explora las relaciones entre velocidad angular, aceleración angular y los vectores de aceleración</p>
+      <header className='simulation-header'>
+        
+        <h1>Simulación de Movimiento Circular Uniforme Acelerado (MCUA)</h1>
+        <p>Explora las relaciones entre velocidad angular, aceleración angular y los vectores de aceleración</p>
+
+      </header>
 
 
       <div className="simulation-layout">
