@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import CanvasComponent, { useMCUSimulator, type MCUSimulatorRef } from './CanvasComponent';
-
 import { 
   Play, 
   Pause, 
@@ -73,17 +72,25 @@ const MCUSimulationPage: React.FC = () => {
 
   return (
     <div className="mcu-simulation-container">
-      {/* Título mejorado con icono */}
-
-
+      {/* Título mejorado con icono - ESTO FALTABA */}
+      <header className="simulation-header">
+        <h1>
+          <Circle className="header-icon" size={28} />
+          Simulador de Movimiento Circular Uniforme (MCU)
+        </h1>
+        <p>
+          <Info className="inline-icon" size={16} />
+          Explora las relaciones entre velocidad angular, aceleración centrípeta y vectores en movimiento circular
+        </p>
+      </header>
 
       <div className="simulation-layout">
         {/* Panel de visualización */}
         <div className="visualization-panel">
           <CanvasComponent 
             ref={canvasRef}
-            width={600}
-            height={400}
+            width={700} // CAMBIO: Aumentar el tamaño igual que MCUA
+            height={500} // CAMBIO: Aumentar el tamaño igual que MCUA
             canvasId="mcu-simulator"
           />
           
@@ -148,14 +155,14 @@ const MCUSimulationPage: React.FC = () => {
                 id="radius"
                 type="range"
                 min="50"
-                max="200"
+                max="250" // CAMBIO: Aumentar rango igual que MCUA
                 value={radius}
                 onChange={(e) => setRadius(Number(e.target.value))}
                 className="parameter-slider"
               />
               <div className="slider-info">
                 <span>50px</span>
-                <span>200px</span>
+                <span>250px</span>
               </div>
             </div>
 
