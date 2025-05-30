@@ -86,7 +86,7 @@ export const SIMULATORS_CINEMATICA = [
   {
     name: 'Simulador de Movimiento Circular Uniformemente Acelerado (MCUA)',
     description: 'Simula el movimiento de un objeto en una trayectoria circular con aceleración constante.',
-    url: '/simulators/cinematica/mcua',
+    url: '/simulators/cinematica/simulator-mcua',
     image: '/images/simulator-mcua.png',
     buttonText: 'Iniciar simulación',
   },
