@@ -1,0 +1,46 @@
+---
+import SimulatorLayout from "../../../layouts/SimulatorLayout.astro";
+import SimulatorComponent from "../../../components/simulator/SimulatorComponent"
+---
+<SimulatorLayout
+  title="MCU Simulador"
+  description="Simulador de movimiento circular uniforme (MCU) con un objeto que se mueve en un círculo"
+>
+  <h1 class="simulator-title">Simulador de Movimiento Ciruclar Uniforme</h1>
+  <section class="simulator-container">
+    <div class="simulator-visualizer">
+      <SimulatorComponent client:load/>
+    </div>
+    <div class="simulator-container--parameters">
+      <div class="simulator-parameters"> 
+      </div>
+      <div class="simulator-controls">
+      </div>
+    </div>
+    <div>
+      <div class="simulator-content">
+      </div>
+      <div class="simulator-graph">
+      </div>
+    </div>
+  </section>
+  <script>
+    
+  </script>
+</SimulatorLayout>
+<style>
+.simulator-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+  color: var(--accent-dark);
+}
+
+.simulator-container{
+  display: grid;
+}
+h1 {
+  margin-top: 2em;
+}
+
+</style>
