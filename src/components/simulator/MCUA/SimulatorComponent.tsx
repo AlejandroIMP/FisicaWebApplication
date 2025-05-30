@@ -1,5 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 import CanvasComponent, { useMCUASimulator, type MCUASimulatorRef } from './CanvasComponent';
+import { 
+  Play, 
+  Pause, 
+  RotateCcw, 
+  Eye, 
+  EyeOff, 
+  Activity, 
+  Zap, 
+  Settings,
+  Info,
+  Circle,
+  TrendingUp
+} from 'lucide-react';
 import '../../../styles/simulator-mcua-component.css'
 
 const MCUASimulationPage: React.FC = () => {
@@ -7,7 +20,7 @@ const MCUASimulationPage: React.FC = () => {
   const simulator = useMCUASimulator(canvasRef);
 
   // Estados para los controles
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [showVectors, setShowVectors] = useState(true);
   const [showTrail, setShowTrail] = useState(true);
   const [showAccelerationComponents, setShowAccelerationComponents] = useState(false);
@@ -124,13 +137,10 @@ const MCUASimulationPage: React.FC = () => {
 
   return (
     <div className="mcua-simulation-container">
-      {/* Título */}
-      <header className="simulation-header">
-        <p>Explora las relaciones entre velocidad angular, aceleración angular y los vectores de aceleración</p>
-      </header>
+      <p>Explora las relaciones entre velocidad angular, aceleración angular y los vectores de aceleración</p>
+
 
       <div className="simulation-layout">
-        {/* Panel de visualización */}
         <div className="visualization-panel">
           <CanvasComponent 
             ref={canvasRef}
@@ -139,23 +149,34 @@ const MCUASimulationPage: React.FC = () => {
             canvasId="mcua-simulator"
           />
           
-          {/* Controles de reproducción */}
           <div className="playback-controls">
             <button 
               onClick={handlePlayPause}
               className={`btn ${isPlaying ? 'btn-pause' : 'btn-play'}`}
             >
-              {isPlaying ? '⏸️ Pausar' : '▶️ Reproducir'}
+              {isPlaying ? (
+                <>
+                  <Pause size={16} />
+                  Pausar
+                </>
+              ) : (
+                <>
+                  <Play size={16} />
+                  Reproducir
+                </>
+              )}
             </button>
             
             <button 
               onClick={handleReset}
               className="btn btn-reset"
             >
-              🔄 Reiniciar
+              <RotateCcw size={16} />
+              Reiniciar
             </button>
 
             <div className="preset-selector">
+              <Settings size={16} className="mr-2" />
               <label htmlFor="preset-select">Preset:</label>
               <select 
                 id="preset-select"
@@ -173,15 +194,18 @@ const MCUASimulationPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Panel de controles */}
         <div className="controls-panel">
           <div className="control-section">
-            <h3>⚙️ Parámetros MCUA</h3>
+            <h3>
+              <Settings size={20} className="inline mr-2" />
+              Parámetros MCUA
+            </h3>
             
             {/* Control de radio */}
             <div className="parameter-control">
               <label htmlFor="radius">
-                📏 Radio (px): <span className="parameter-value">{radius}</span>
+                <Circle size={16} className="inline mr-1" />
+                Radio (px): <span className="parameter-value">{radius}</span>
               </label>
               <input
                 id="radius"
@@ -197,7 +221,8 @@ const MCUASimulationPage: React.FC = () => {
             {/* Control de velocidad angular inicial */}
             <div className="parameter-control">
               <label htmlFor="initial-angular-velocity">
-                🚀 ω₀ (rad/s): <span className="parameter-value">{initialAngularVelocity.toFixed(2)}</span>
+                <Activity size={16} className="inline mr-1" />
+                ω₀ (rad/s): <span className="parameter-value">{initialAngularVelocity.toFixed(2)}</span>
               </label>
               <input
                 id="initial-angular-velocity"
@@ -214,7 +239,8 @@ const MCUASimulationPage: React.FC = () => {
             {/* Control de aceleración angular */}
             <div className="parameter-control">
               <label htmlFor="angular-acceleration">
-                ⚡ α (rad/s²): <span className="parameter-value">{angularAcceleration.toFixed(2)}</span>
+                <Zap size={16} className="inline mr-1" />
+                α (rad/s²): <span className="parameter-value">{angularAcceleration.toFixed(2)}</span>
               </label>
               <input
                 id="angular-acceleration"
@@ -232,35 +258,21 @@ const MCUASimulationPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Control de ángulo inicial */}
-            <div className="parameter-control">
-              <label htmlFor="initial-angle">
-                📐 θ₀: <span className="parameter-value">{(initialAngle / Math.PI).toFixed(2)}π rad</span>
-              </label>
-              <input
-                id="initial-angle"
-                type="range"
-                min="0"
-                max={2 * Math.PI}
-                step={Math.PI / 8}
-                value={initialAngle}
-                onChange={(e) => setInitialAngle(Number(e.target.value))}
-                className="parameter-slider"
-              />
-            </div>
-
-            {/* Botón de aplicar cambios */}
             <button 
               onClick={handleParameterChange}
               className="btn btn-apply"
             >
-              🔄 Aplicar Cambios
+              <RotateCcw size={16} />
+              Aplicar Cambios
             </button>
           </div>
 
           {/* Controles de visualización */}
           <div className="control-section">
-            <h3>👁️ Visualización</h3>
+            <h3>
+              <Eye size={20} className="inline mr-2" />
+              Visualización
+            </h3>
             
             <div className="toggle-controls">
               <label className="toggle">
@@ -269,7 +281,8 @@ const MCUASimulationPage: React.FC = () => {
                   checked={showVectors}
                   onChange={handleToggleVectors}
                 />
-                <span>🏹 Mostrar vectores</span>
+                {showVectors ? <Eye size={16} /> : <EyeOff size={16} />}
+                <span>Mostrar vectores</span>
               </label>
 
               <label className="toggle">
@@ -278,7 +291,8 @@ const MCUASimulationPage: React.FC = () => {
                   checked={showTrail}
                   onChange={handleToggleTrail}
                 />
-                <span>✨ Mostrar trayectoria</span>
+                <Activity size={16} />
+                <span>Mostrar trayectoria</span>
               </label>
 
               <label className="toggle">
@@ -287,85 +301,57 @@ const MCUASimulationPage: React.FC = () => {
                   checked={showAccelerationComponents}
                   onChange={handleToggleAccelerationComponents}
                 />
-                <span>🔍 Componentes de aceleración</span>
+                <TrendingUp size={16} />
+                <span>Componentes de aceleración</span>
               </label>
             </div>
 
-            {/* Leyenda de vectores */}
+            {/* Leyenda de vectores mejorada */}
             <div className="vector-legend">
-              <h4>Leyenda de Vectores:</h4>
+              <h4>
+                <Info size={16} className="inline mr-1" />
+                Leyenda de Vectores:
+              </h4>
               <div className="legend-item">
-                <span className="legend-color velocity"></span>
+                <Activity size={14} style={{ color: '#00ff00' }} />
                 <span>Velocidad (V) - Verde</span>
               </div>
               {showAccelerationComponents ? (
                 <>
                   <div className="legend-item">
-                    <span className="legend-color centripetal"></span>
+                    <Zap size={14} style={{ color: '#ff4444' }} />
                     <span>Aceleración centrípeta (ac) - Rojo</span>
                   </div>
                   <div className="legend-item">
-                    <span className="legend-color tangential"></span>
+                    <TrendingUp size={14} style={{ color: '#ff8800' }} />
                     <span>Aceleración tangencial (at) - Naranja</span>
                   </div>
                   <div className="legend-item">
-                    <span className="legend-color total"></span>
+                    <Zap size={14} style={{ color: '#8800ff' }} />
                     <span>Aceleración total (atotal) - Morado</span>
                   </div>
                 </>
               ) : (
                 <div className="legend-item">
-                  <span className="legend-color acceleration"></span>
+                  <Zap size={14} style={{ color: '#ff0000' }} />
                   <span>Aceleración (a) - Rojo</span>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Información teórica */}
+          {/* Estado actual mejorado */}
           <div className="control-section">
-            <h3>📚 Fórmulas MCUA</h3>
-            <div className="info-content">
-              <div className="formula-group">
-                <h4>Cinemática Angular:</h4>
-                <div className="formula">
-                  <strong>θ(t) = θ₀ + ω₀t + ½αt²</strong>
-                </div>
-                <div className="formula">
-                  <strong>ω(t) = ω₀ + αt</strong>
-                </div>
-              </div>
-              
-              <div className="formula-group">
-                <h4>Velocidad Tangencial:</h4>
-                <div className="formula">
-                  <strong>|v| = R·ω(t)</strong>
-                </div>
-              </div>
-              
-              <div className="formula-group">
-                <h4>Aceleraciones:</h4>
-                <div className="formula">
-                  <strong>|ac| = R·ω(t)²</strong><br/>
-                  <small>(centrípeta)</small>
-                </div>
-                <div className="formula">
-                  <strong>|at| = R·α</strong><br/>
-                  <small>(tangencial)</small>
-                </div>
-                <div className="formula">
-                  <strong>|atotal| = √(ac² + at²)</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Estado actual */}
-          <div className="control-section">
-            <h3>📊 Estado Actual</h3>
+            <h3>
+              <Info size={20} className="inline mr-2" />
+              Estado Actual
+            </h3>
             <div className="current-state">
               <div className="state-item">
-                <span>Tipo de movimiento:</span>
+                <span>
+                  <Activity size={14} className="inline mr-1" />
+                  Tipo de movimiento:
+                </span>
                 <span className={`movement-type ${
                   angularAcceleration === 0 ? 'uniform' : 
                   angularAcceleration > 0 ? 'accelerating' : 'decelerating'
@@ -375,7 +361,10 @@ const MCUASimulationPage: React.FC = () => {
                 </span>
               </div>
               <div className="state-item">
-                <span>Radio:</span>
+                <span>
+                  <Circle size={14} className="inline mr-1" />
+                  Radio:
+                </span>
                 <span>{radius} px</span>
               </div>
               <div className="state-item">

@@ -2,6 +2,22 @@ import React, { forwardRef, useImperativeHandle, useRef, useEffect, useCallback,
 import { Application, Graphics, Container, Text, TextStyle } from 'pixi.js';
 import { MCUAParticle, MCUASimulator } from '../../../scripts/cinematica/mcua-simulator';
 
+import {
+  Play, 
+  Pause, 
+  RotateCcw, 
+  Eye, 
+  EyeOff, 
+  Activity, 
+  Circle,
+  Zap,
+  Settings,
+  Info,
+  MapPin,
+  Timer,
+  TrendingUp,
+  Target
+} from 'lucide-react';
 
 interface Props {
   width?: number;
