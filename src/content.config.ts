@@ -26,7 +26,7 @@ const exercise = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
-		difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+		difficulty: z.enum(['Facil', 'Medio', 'Dificil']).optional(),
 		tags: z.array(z.string()).optional(),
 		topic: z.enum(['cinematica', 'dinamica', 'estatica', 'termica', 'vibraciones', 'electromagnetismo','termodinamica']).optional(),
 		solution: z.string().optional(),
@@ -53,7 +53,7 @@ const resources = defineCollection({
 		authorLink: z.string().optional(),
 		source: z.string().optional(),
 		sourceLink: z.string().optional(),
-		difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+		difficulty: z.enum(['Facil', 'Medio', 'Dificil']).optional(),
 		topic: z.enum(['cinematica', 'dinamica', 'estatica', 'termica', 'vibraciones', 'electromagnetismo','termodinamica']).optional(),
 		type: z.enum(['texto', 'video', 'interactivo', 'ejemplo practico']).optional(),
 		title: z.string(),
