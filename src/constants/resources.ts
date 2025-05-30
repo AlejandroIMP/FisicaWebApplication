@@ -1,9 +1,9 @@
 // Configuraciones para el sistema de recursos
 
 export const difficultyConfig = {
-  easy: { label: 'Fácil', color: 'bg-green-100 text-green-800', icon: '📗' },
-  medium: { label: 'Intermedio', color: 'bg-yellow-100 text-yellow-800', icon: '📙' },
-  hard: { label: 'Avanzado', color: 'bg-red-100 text-red-800', icon: '📕' }
+  Facil: { label: 'Fácil', color: 'bg-green-100 text-green-800', icon: '📗' },
+  Medio: { label: 'Intermedio', color: 'bg-yellow-100 text-yellow-800', icon: '📙' },
+  Dificil: { label: 'Avanzado', color: 'bg-red-100 text-red-800', icon: '📕' }
 } as const;
 
 export const topicConfig = {
