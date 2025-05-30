@@ -79,7 +79,7 @@ export const SIMULATORS_CINEMATICA = [
   {
     name: 'Simulador de Movimiento Circular Uniforme (MCU)',
     description: 'Simula el movimiento de un objeto en una trayectoria circular con velocidad constante.',
-    url: '/simulators/cinematica/mcu',
+    url: '/simulators/cinematica/simulator-mcu',
     image: '/images/simulator-mcu.png',
     buttonText: 'Iniciar simulación',
   },
