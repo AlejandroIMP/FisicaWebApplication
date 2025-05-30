@@ -483,6 +483,137 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
     white-space: pre-line;
   }
 
+  /* Enhanced error and warning styles for setupCalculator integration */
+  .error-container {
+    border: 1px solid #f44336;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #ffebee;
+    margin: 16px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .error-container .error-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .error-container .error-content h4 {
+    margin: 0 0 8px 0;
+    color: #d32f2f;
+    font-size: 1.1rem;
+  }
+
+  .error-container .error-content p {
+    margin: 8px 0;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .error-container .suggestions {
+    margin-top: 12px;
+  }
+
+  .error-container .suggestions strong {
+    color: #d32f2f;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .error-container .suggestions ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .error-container .suggestions li {
+    margin: 4px 0;
+    color: #555;
+  }
+
+  .error-container .missing-fields,
+  .error-container .invalid-fields {
+    margin: 8px 0;
+    padding: 8px;
+    background-color: #fff8e1;
+    border-radius: 4px;
+    border-left: 4px solid #ff9800;
+  }
+
+  .error-container .technical-details {
+    margin-top: 12px;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+
+  .error-container .technical-details summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+    outline: none;
+  }
+
+  .error-container .technical-details summary:hover {
+    color: #333;
+  }
+
+  .success-container {
+    border: 1px solid #4caf50;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #e8f5e8;
+    margin: 16px 0;
+  }
+
+  .success-container .result-main {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2e7d32;
+    text-align: center;
+  }
+
+  .success-container .warnings {
+    margin-top: 12px;
+    padding: 8px;
+    background-color: #fff3e0;
+    border-left: 4px solid #ff9800;
+    border-radius: 4px;
+  }
+
+  .success-container .warnings .warning {
+    margin: 4px 0;
+    color: #f57c00;
+    font-weight: 500;
+  }
+
+  /* Override default result styling when using error containers */
+  .result:has(.error-container),
+  .result:has(.success-container) {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  /* Animation for error/success messages */
+  .error-container,
+  .success-container {
+    animation: slideInError 0.3s ease-out;
+  }
+
+  @keyframes slideInError {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   @media (max-width: 768px) {
     .calculator-container {
       padding: 1rem;
@@ -533,22 +664,172 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
   import { setupCalculator } from '../../../utils/calculators/calculator-controller';
   import { 
     calculateMultipleForces, 
-    initializeMultipleForces 
+    initializeMultipleForces,
+    getForces
   } from '../../../utils/calculators/multiple-forces-standalone-calculator';
 
   // Función wrapper que conecta el estado global con setupCalculator
   function calculateMultipleForcesWrapper(variableToSolve: string, inputs: Record<string, number>) {
-    const result = calculateMultipleForces(variableToSolve, inputs);
-    
-    // Guardar resultado inmediatamente para análisis detallado
-    (window as any).lastCalculationResult = result;
-    
-    // Mostrar resultados detallados automáticamente
-    setTimeout(() => {
-      showDetailedResults();
-    }, 50);
-    
-    return result;
+    try {
+      // Obtener fuerzas actuales del estado global
+      const currentForces = getForces();
+      
+      // Validaciones específicas para múltiples fuerzas
+      if (variableToSolve === 'netForce' && currentForces.length === 0) {
+        return {
+          value: null,
+          unit: 'N',
+          name: 'Fuerza Neta',
+          formula: 'F_neta = √(ΣFx² + ΣFy²)',
+          error: {
+            type: 'insufficient_data' as const,
+            message: 'No forces defined for calculation',
+            userMessage: 'No hay fuerzas definidas para calcular la fuerza neta',
+            suggestions: [
+              'Añade al menos una fuerza usando el formulario superior',
+              'Verifica que las fuerzas tengan magnitud y ángulo válidos',
+              'Usa el botón "Añadir 3 Fuerzas" para cargar fuerzas de ejemplo'
+            ],
+            technicalDetails: 'Net force calculation requires at least one force vector'
+          }
+        };
+      }
+
+      // Validaciones para masa cuando se calcula aceleración
+      if (variableToSolve === 'acceleration' && (!inputs.mass || inputs.mass <= 0)) {
+        return {
+          value: null,
+          unit: 'm/s²',
+          name: 'Aceleración',
+          formula: 'a = F_neta / m',
+          error: {
+            type: 'invalid_values' as const,
+            message: 'Invalid mass value for acceleration calculation',
+            userMessage: 'La masa debe ser un valor positivo para calcular la aceleración',
+            suggestions: [
+              'Ingresa un valor de masa mayor que cero',
+              'Verifica que la masa esté en las unidades correctas',
+              'Recuerda que la masa no puede ser negativa en física clásica'
+            ],
+            invalidFields: ['mass'],
+            technicalDetails: `Mass value: ${inputs.mass}`
+          }
+        };
+      }
+
+      // Validaciones para aceleración cero cuando se calcula masa
+      if (variableToSolve === 'mass' && (!inputs.acceleration || inputs.acceleration === 0)) {
+        return {
+          value: null,
+          unit: 'kg',
+          name: 'Masa',
+          formula: 'm = F_neta / a',
+          error: {
+            type: 'division_by_zero' as const,
+            message: 'Cannot divide by zero acceleration',
+            userMessage: 'La aceleración no puede ser cero para calcular la masa',
+            suggestions: [
+              'Ingresa un valor de aceleración diferente de cero',
+              'Verifica que la aceleración esté correctamente especificada',
+              'Si el objeto no acelera, la masa no se puede determinar con este método'
+            ],
+            invalidFields: ['acceleration'],
+            technicalDetails: `Acceleration value: ${inputs.acceleration}`
+          }
+        };
+      }
+
+      // Realizar el cálculo
+      const result = calculateMultipleForces(variableToSolve, inputs);
+      
+      // Añadir advertencias si es necesario
+      if (result.value !== null && result.value !== undefined) {
+        const warnings: string[] = [];
+        
+        // Advertencias para valores muy grandes
+        if (variableToSolve === 'netForce' && result.value > 10000) {
+          warnings.push('Esta es una fuerza muy grande. Verifica las magnitudes de las fuerzas individuales.');
+        }
+        
+        if (variableToSolve === 'acceleration' && result.value > 100) {
+          warnings.push('Esta aceleración es muy alta. Verifica los valores de fuerza y masa.');
+        }
+        
+        if (variableToSolve === 'mass' && result.value > 10000) {
+          warnings.push('Esta es una masa muy grande. Verifica los valores de fuerza y aceleración.');
+        }
+        
+        // Advertencias para valores muy pequeños
+        if (result.value < 0.001 && result.value > 0) {
+          warnings.push('El resultado es muy pequeño. Considera usar unidades más apropiadas.');
+        }
+        
+        // Agregar advertencias al resultado si existen
+        if (warnings.length > 0) {
+          result.warnings = warnings;
+        }
+      }
+      
+      // Guardar resultado inmediatamente para análisis detallado
+      (window as any).lastCalculationResult = result;
+      
+      // Mostrar resultados detallados automáticamente si el cálculo fue exitoso
+      if (result.value !== null && !result.error) {
+        setTimeout(() => {
+          showDetailedResults();
+        }, 50);
+      }
+      
+      return result;
+      
+    } catch (error) {
+      // Manejo de errores inesperados
+      return {
+        value: null,
+        unit: getUnitForVariable(variableToSolve),
+        name: getNameForVariable(variableToSolve),
+        formula: getFormulaForVariable(variableToSolve),
+        error: {
+          type: 'mathematical_error' as const,
+          message: error instanceof Error ? error.message : 'Unknown calculation error',
+          userMessage: 'Ocurrió un error inesperado durante el cálculo',
+          suggestions: [
+            'Verifica que todos los valores sean números válidos',
+            'Intenta limpiar las fuerzas y añadirlas nuevamente',
+            'Recarga la página si el problema persiste'
+          ],
+          technicalDetails: error instanceof Error ? error.stack || error.message : String(error)
+        }
+      };
+    }
+  }
+
+  // Funciones auxiliares para obtener metadatos según la variable
+  function getUnitForVariable(variable: string): string {
+    switch (variable) {
+      case 'netForce': return 'N';
+      case 'acceleration': return 'm/s²';
+      case 'mass': return 'kg';
+      default: return '';
+    }
+  }
+
+  function getNameForVariable(variable: string): string {
+    switch (variable) {
+      case 'netForce': return 'Fuerza Neta';
+      case 'acceleration': return 'Aceleración';
+      case 'mass': return 'Masa';
+      default: return 'Variable';
+    }
+  }
+
+  function getFormulaForVariable(variable: string): string {
+    switch (variable) {
+      case 'netForce': return 'F_neta = √(ΣFx² + ΣFy²)';
+      case 'acceleration': return 'a = F_neta / m';
+      case 'mass': return 'm = F_neta / a';
+      default: return '';
+    }
   }
 
   // Configuración para el setupCalculator
@@ -586,7 +867,7 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
         <h4>Componentes de la Fuerza Neta:</h4>
         <p><strong>Componente X:</strong> ${result.components.x.toFixed(2)} N</p>
         <p><strong>Componente Y:</strong> ${result.components.y.toFixed(2)} N</p>
-        <p><strong>Magnitud:</strong> ${result.result ? result.result.toFixed(2) : '0'} N</p>
+        <p><strong>Magnitud:</strong> ${result.value ? result.value.toFixed(2) : '0'} N</p>
         <p><strong>Ángulo:</strong> ${normalizedAngle.toFixed(2)}°</p>
         <p><strong>Fuerzas utilizadas:</strong> ${result.forces ? result.forces.length : 0}</p>
       `;
@@ -635,8 +916,8 @@ description: "Calculadora para analizar el efecto de múltiples fuerzas aplicada
       const formulaUsedDiv = document.getElementById('formula-used') as HTMLDivElement;
       
       if (resultDiv && formulaUsedDiv) {
-        if (result.result !== null && !isNaN(result.result)) {
-          resultDiv.innerHTML = `${result.name} = <strong>${result.result.toFixed(4)} ${result.unit}</strong>`;
+        if (result.value !== null && !isNaN(result.value)) {
+          resultDiv.innerHTML = `${result.name} = <strong>${result.value.toFixed(4)} ${result.unit}</strong>`;
           formulaUsedDiv.innerHTML = `Fórmula: ${result.formula}`;
         } else {
           resultDiv.innerHTML = 'Añade fuerzas para calcular la fuerza neta';
