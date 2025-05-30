@@ -14,7 +14,9 @@ interface Props {
 const { title, description, difficulty, topic, type, heroImage } = Astro.props;
 ---
 
-<div class="resource-hero" style={heroImage ? `background-image: url(${heroImage})` : undefined}>
+<div class="resource-hero" 
+
+>
   <div class="hero-content">
     <h1 class="hero-title">{title}</h1>
     
@@ -25,7 +27,7 @@ const { title, description, difficulty, topic, type, heroImage } = Astro.props;
     <div class="badge-container">
       {difficulty && (
         <span class="difficulty-badge">
-          <span class="mr-2">{difficultyConfig[difficulty].icon}</span>
+          <span class="badge-icon">{difficultyConfig[difficulty].icon}</span>
           {difficultyConfig[difficulty].label}
         </span>
       )}
@@ -38,7 +40,7 @@ const { title, description, difficulty, topic, type, heroImage } = Astro.props;
       
       {type && (
         <span class="type-badge">
-          <span class="mr-2">{typeConfig[type].icon}</span>
+          <span class="badge-icon">{typeConfig[type].icon}</span>
           {typeConfig[type].label}
         </span>
       )}
@@ -48,34 +50,208 @@ const { title, description, difficulty, topic, type, heroImage } = Astro.props;
 
 <style>
   .resource-hero {
-    @apply relative bg-gradient-to-br from-blue-600 to-purple-700 text-white;
+    position: relative;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   .resource-hero::before {
     content: '';
-    @apply absolute inset-0 bg-black opacity-30;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
   .hero-content {
-    @apply relative z-10 max-w-4xl mx-auto px-6 py-16 text-center;
+    position: relative;
+    z-index: 10;
+    max-width: 896px; /* max-w-4xl */
+    margin: 0 auto;
+    padding: 64px 24px; /* py-16 px-6 */
+    text-align: center;
   }
 
   .hero-title {
-    @apply text-4xl md:text-5xl font-bold mb-4 leading-tight;
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.125; /* leading-tight */
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 
   .hero-description {
-    @apply text-xl md:text-2xl opacity-90 mb-8 leading-relaxed;
+    font-size: 1.25rem; /* text-xl */
+    opacity: 0.9;
+    margin-bottom: 32px;
+    line-height: 1.625; /* leading-relaxed */
   }
 
   .badge-container {
-    @apply flex flex-wrap justify-center gap-3 mb-8;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
   }
 
   .difficulty-badge,
   .topic-badge,
   .type-badge {
-    @apply px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm;
-    @apply bg-white bg-opacity-20 border border-white border-opacity-30;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .difficulty-badge:hover,
+  .topic-badge:hover,
+  .type-badge:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .badge-icon {
+    margin-right: 8px;
+  }
+
+  /* Responsive breakpoints */
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 3rem; /* md:text-5xl */
+    }
+
+    .hero-description {
+      font-size: 1.5rem; /* md:text-2xl */
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-content {
+      padding: 48px 16px;
+    }
+
+    .hero-title {
+      font-size: 1.875rem;
+      line-height: 1.2;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      margin-bottom: 24px;
+    }
+
+    .badge-container {
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .difficulty-badge,
+    .topic-badge,
+    .type-badge {
+      padding: 6px 12px;
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .badge-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .difficulty-badge,
+    .topic-badge,
+    .type-badge {
+      width: fit-content;
+      min-width: 120px;
+      justify-content: center;
+    }
+  }
+
+  /* Enhanced visual effects */
+  .resource-hero {
+    overflow: hidden;
+  }
+
+  .resource-hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  @keyframes shimmer {
+    0% {
+      opacity: 0.5;
+      transform: rotate(0deg);
+    }
+    100% {
+      opacity: 0.8;
+      transform: rotate(1deg);
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .resource-hero::after {
+      animation: none;
+    }
+    
+    .difficulty-badge,
+    .topic-badge,
+    .type-badge {
+      transition: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .resource-hero::before {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+    
+    .difficulty-badge,
+    .topic-badge,
+    .type-badge {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #1f2937;
+      border-color: #374151;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .resource-hero {
+      background: #2563eb !important;
+      color: white !important;
+    }
+    
+    .resource-hero::before,
+    .resource-hero::after {
+      display: none;
+    }
+    
+    .badge-container {
+      margin-bottom: 16px;
+    }
   }
 </style>

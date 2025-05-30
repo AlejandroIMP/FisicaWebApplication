@@ -1,4 +1,6 @@
 ---
+import { difficultyConfig, topicConfig, typeConfig } from '../../constants/resources';
+import type { DifficultyLevel, TopicType, ResourceContentType } from '../../constants/resources';
 interface Props {
   readingTime?: string;
   lastUpdated?: Date;
@@ -36,9 +38,9 @@ function formatDate(date: Date): string {
     
     {difficulty && (
       <div class="metadata-item">
-        <div class="metadata-icon">📊</div>
+        <div class="metadata-icon">{difficultyConfig[difficulty].icon}</div>
         <div class="metadata-label">Nivel</div>
-        <div class="metadata-value">{difficulty}</div>
+        <div class="metadata-value">{difficultyConfig[difficulty].label}</div>
       </div>
     )}
   </div>
@@ -46,26 +48,290 @@ function formatDate(date: Date): string {
 
 <style>
   .metadata-container {
-    @apply bg-white shadow-lg rounded-lg p-6 -mt-8 relative z-20 max-w-4xl mx-auto;
+    background-color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    border-radius: 8px; /* rounded-lg */
+    padding: 24px; /* p-6 */
+    margin-top: -32px; /* -mt-8 */
+    position: relative;
+    z-index: 20;
+    max-width: 896px; /* max-w-4xl */
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s ease;
+  }
+
+  .metadata-container:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
   }
 
   .metadata-grid {
-    @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+    display: grid;
+    grid-template-columns: 1fr; /* grid-cols-1 */
+    gap: 24px; /* gap-6 */
   }
 
   .metadata-item {
-    @apply text-center;
+    text-align: center;
+    padding: 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .metadata-item:hover {
+    background-color: #f9fafb;
+    transform: translateY(-1px);
   }
 
   .metadata-icon {
-    @apply text-3xl mb-2;
+    font-size: 1.875rem; /* text-3xl */
+    margin-bottom: 8px; /* mb-2 */
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   }
 
   .metadata-label {
-    @apply text-sm text-gray-600 uppercase tracking-wide;
+    font-size: 0.875rem; /* text-sm */
+    color: #4b5563; /* text-gray-600 */
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* tracking-wide */
+    margin-bottom: 4px;
+    font-weight: 500;
   }
 
   .metadata-value {
-    @apply text-lg font-semibold text-gray-900;
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 600; /* font-semibold */
+    color: #111827; /* text-gray-900 */
+    line-height: 1.4;
+  }
+
+  /* Responsive breakpoints */
+  @media (min-width: 768px) {
+    .metadata-grid {
+      grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
+    }
+
+    .metadata-container {
+      padding: 32px;
+    }
+
+    .metadata-icon {
+      font-size: 2.25rem;
+      margin-bottom: 12px;
+    }
+
+    .metadata-value {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .metadata-container {
+      margin: -24px 16px 0 16px;
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    .metadata-grid {
+      gap: 16px;
+    }
+
+    .metadata-item {
+      padding: 12px;
+    }
+
+    .metadata-icon {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+    }
+
+    .metadata-label {
+      font-size: 0.8125rem;
+    }
+
+    .metadata-value {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .metadata-container {
+      margin: -20px 12px 0 12px;
+      padding: 16px;
+    }
+
+    .metadata-grid {
+      gap: 12px;
+    }
+
+    .metadata-item {
+      padding: 8px;
+    }
+  }
+
+  /* Enhanced visual effects */
+  .metadata-container {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  .metadata-item {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metadata-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .metadata-item:hover::before {
+    left: 100%;
+  }
+
+  /* Loading animation for dynamic content */
+  .metadata-value:empty {
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+    height: 1.5rem;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .metadata-container,
+    .metadata-item,
+    .metadata-item::before {
+      transition: none;
+      animation: none;
+    }
+
+    .metadata-container:hover {
+      transform: none;
+    }
+
+    .metadata-item:hover {
+      transform: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .metadata-container {
+      background: white;
+      border: 2px solid #374151;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .metadata-label {
+      color: #1f2937;
+      font-weight: 600;
+    }
+
+    .metadata-value {
+      color: #000000;
+    }
+
+    .metadata-item:hover {
+      background-color: #f3f4f6;
+      border: 1px solid #6b7280;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .metadata-container {
+      box-shadow: none;
+      border: 1px solid #d1d5db;
+      margin-top: 0;
+      background: white;
+    }
+
+    .metadata-grid {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .metadata-item {
+      flex: 1;
+      padding: 8px;
+    }
+
+    .metadata-icon {
+      display: none;
+    }
+
+    .metadata-label {
+      font-size: 0.75rem;
+      margin-bottom: 2px;
+    }
+
+    .metadata-value {
+      font-size: 0.875rem;
+    }
+  }
+
+  /* Dark mode support (if needed)
+  @media (prefers-color-scheme: dark) {
+    .metadata-container {
+      background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+      border-color: #374151;
+      color: white;
+    }
+
+    .metadata-label {
+      color: #9ca3af;
+    }
+
+    .metadata-value {
+      color: #f9fafb;
+    }
+
+    .metadata-item:hover {
+      background-color: rgba(55, 65, 81, 0.5);
+    }
+  } */
+
+  /* Focus states for accessibility */
+  .metadata-item:focus-within {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Animation for entry */
+  .metadata-container {
+    animation: slideInUp 0.6s ease-out;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>

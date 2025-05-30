@@ -14,56 +14,439 @@ const {
 } = Astro.props;
 ---
 
-<nav class="border-t border-gray-200 pt-8">
-  <div class="flex justify-between items-center">
-    <a 
-      href={backLink}
-      class="inline-flex items-center text-blue-600 hover:text-blue-800"
-    >
-      <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<nav class="resource-navigation">
+  <div class="navigation-container">
+    <a href={backLink} class="back-link">
+      <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
       </svg>
       {backLinkText}
     </a>
     
-    <div class="flex space-x-4">
+    <div class="action-buttons">
       {showPrint && (
         <button 
           onclick="window.print()" 
-          class="text-gray-600 hover:text-gray-800"
+          class="action-button print-button"
           title="Imprimir recurso"
         >
-          🖨️ Imprimir
+          <span class="button-icon">🖨️</span>
+          <span class="button-text">Imprimir</span>
         </button>
       )}
       
       {showShare && (
         <button 
           id="share-button"
-          class="text-gray-600 hover:text-gray-800"
+          class="action-button share-button"
           title="Compartir recurso"
         >
-          📤 Compartir
+          <span class="button-icon">📤</span>
+          <span class="button-text">Compartir</span>
         </button>
       )}
     </div>
   </div>
 </nav>
 
+<style>
+  .resource-navigation {
+    border-top: 1px solid #e5e7eb; /* border-t border-gray-200 */
+    padding-top: 32px; /* pt-8 */
+    margin-top: 32px;
+  }
+
+  .navigation-container {
+    display: flex; /* flex */
+    justify-content: space-between; /* justify-between */
+    align-items: center; /* items-center */
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .back-link {
+    display: inline-flex; /* inline-flex */
+    align-items: center; /* items-center */
+    color: #2563eb; /* text-blue-600 */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    padding: 8px 12px;
+    border-radius: 6px;
+    position: relative;
+  }
+
+  .back-link:hover {
+    color: #1d4ed8; /* hover:text-blue-800 */
+    background-color: rgba(37, 99, 235, 0.05);
+    transform: translateX(-2px);
+  }
+
+  .back-link:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .back-icon {
+    margin-right: 8px; /* mr-2 */
+    width: 16px; /* w-4 */
+    height: 16px; /* h-4 */
+    transition: transform 0.2s ease;
+  }
+
+  .back-link:hover .back-icon {
+    transform: translateX(-2px);
+  }
+
+  .action-buttons {
+    display: flex; /* flex */
+    gap: 16px; /* space-x-4 */
+    align-items: center;
+  }
+
+  .action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #4b5563; /* text-gray-600 */
+    background: linear-gradient(135deg, rgba(75, 85, 99, 0.1), rgba(75, 85, 99, 0.05));
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .action-button:hover {
+    color: #1f2937; /* hover:text-gray-800 */
+    background-color: rgba(75, 85, 99, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .action-button:focus {
+    outline: 2px solid #6b7280;
+    outline-offset: 2px;
+  }
+
+  .action-button:active {
+    transform: translateY(0);
+  }
+
+  .button-icon {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+
+  .button-text {
+    font-weight: 500;
+    color: black;
+  }
+
+  /* Enhanced visual effects */
+  .print-button:hover {
+    color: #059669;
+    background-color: rgba(5, 150, 105, 0.05);
+  }
+
+  .share-button:hover {
+    color: #7c3aed;
+    background-color: rgba(124, 58, 237, 0.05);
+  }
+
+  /* Loading state for share button */
+  .share-button.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .share-button.loading .button-icon {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Success state for actions */
+  .action-button.success {
+    color: #059669;
+    background-color: rgba(5, 150, 105, 0.1);
+  }
+
+  .action-button.success .button-icon {
+    animation: bounce 0.6s ease;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 53%, 100% {
+      transform: translateY(0);
+    }
+    40%, 43% {
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 768px) {
+    .navigation-container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .back-link {
+      justify-content: center;
+      padding: 12px 16px;
+      font-size: 1rem;
+    }
+
+    .action-buttons {
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .action-button {
+      flex: 1;
+      justify-content: center;
+      padding: 12px 16px;
+      min-height: 48px;
+    }
+
+    .button-text {
+      display: block;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .resource-navigation {
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+
+    .navigation-container {
+      gap: 16px;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .action-button {
+      width: 100%;
+      min-height: 44px;
+      font-size: 0.9375rem;
+    }
+
+    .back-link {
+      padding: 10px 14px;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .resource-navigation {
+      display: none;
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .back-link,
+    .action-button,
+    .back-icon,
+    .button-icon {
+      transition: none;
+      animation: none;
+    }
+
+    .back-link:hover {
+      transform: none;
+    }
+
+    .back-link:hover .back-icon {
+      transform: none;
+    }
+
+    .action-button:hover {
+      transform: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .resource-navigation {
+      border-top-color: #374151;
+      border-top-width: 2px;
+    }
+
+    .back-link {
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+
+    .action-button {
+      color: #1f2937;
+      border: 1px solid #6b7280;
+    }
+
+    .action-button:hover {
+      background-color: #f3f4f6;
+      border-color: #374151;
+    }
+  }
+
+  /* Dark mode support */
+  /* @media (prefers-color-scheme: dark) {
+    .resource-navigation {
+      border-top-color: #4b5563;
+    }
+
+    .back-link {
+      color: #60a5fa;
+    }
+
+    .back-link:hover {
+      color: #93c5fd;
+      background-color: rgba(96, 165, 250, 0.1);
+    }
+
+    .action-button {
+      color: #d1d5db;
+    }
+
+    .action-button:hover {
+      color: #f9fafb;
+      background-color: rgba(209, 213, 219, 0.1);
+    }
+
+    .print-button:hover {
+      color: #34d399;
+      background-color: rgba(52, 211, 153, 0.1);
+    }
+
+    .share-button:hover {
+      color: #a78bfa;
+      background-color: rgba(167, 139, 250, 0.1);
+    }
+  } */
+
+  /* Focus-visible support for better keyboard navigation */
+  .back-link:focus-visible,
+  .action-button:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Enhanced interaction feedback */
+  .back-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background-color: #2563eb;
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+  }
+
+  .back-link:hover::before {
+    transform: scaleX(1);
+  }
+
+  /* Tooltip-like enhancement for buttons */
+  .action-button::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1f2937;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    margin-bottom: 5px;
+  }
+
+  .action-button:hover::after {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .action-button::after {
+      display: none;
+    }
+  }
+</style>
+
 <script>
-  // Script para manejar la funcionalidad de compartir
+  // Enhanced script for share functionality with better UX
   document.addEventListener('DOMContentLoaded', function() {
-    const shareButton = document.getElementById('share-button');
+    const shareButton = document.getElementById('share-button') as HTMLButtonElement;
+    
     if (shareButton) {
-      shareButton.onclick = function() {
-        if (navigator.share) {
-          navigator.share({
-            title: document.title,
-            url: window.location.href
-          });
-        } else {
-          navigator.clipboard.writeText(window.location.href);
-          alert('Enlace copiado al portapapeles');
+      shareButton.onclick = async function() {
+        // Add loading state
+        shareButton.classList.add('loading');
+        
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: document.title,
+              text: document.querySelector('meta[name="description"]')?.content || '',
+              url: window.location.href
+            });
+            
+            // Success feedback
+            shareButton.classList.remove('loading');
+            shareButton.classList.add('success');
+            setTimeout(() => shareButton.classList.remove('success'), 2000);
+            
+          } else {
+            // Fallback to clipboard
+            await navigator.clipboard.writeText(window.location.href);
+            
+            // Update button text temporarily
+            const originalText = shareButton.querySelector('.button-text').textContent ;
+            shareButton.querySelector('.button-text').textContent = '¡Copiado!';
+            shareButton.classList.remove('loading');
+            shareButton.classList.add('success');
+            
+            setTimeout(() => {
+              shareButton.querySelector('.button-text').textContent = originalText;
+              shareButton.classList.remove('success');
+            }, 2000);
+          }
+        } catch (error) {
+          console.error('Error sharing:', error);
+          shareButton.classList.remove('loading');
+          
+          // Fallback alert
+          alert('No se pudo compartir. URL: ' + window.location.href);
         }
       };
     }

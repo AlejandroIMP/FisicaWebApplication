@@ -23,15 +23,15 @@ if (!resourceLink || !resourceType) {
 const config = resourceTypeConfig[resourceType];
 ---
 
-<div class={`mb-8 p-4 border-2 rounded-lg ${config.color}`}>
-  <div class="flex items-center justify-between">
-    <div class="flex items-center space-x-3">
-      <span class="text-2xl">{config.icon}</span>
-      <div>
-        <h3 class="font-semibold text-gray-900">
+<div class={`external-resource-link-container ${config.color}`}>
+  <div class="external-resource-content">
+    <div class="resource-info">
+      <span class="resource-icon">{config.icon}</span>
+      <div class="resource-details">
+        <h3 class="resource-title">
           {title}: {config.label}
         </h3>
-        <p class="text-sm text-gray-600">
+        <p class="resource-description">
           {description}
         </p>
       </div>
@@ -40,12 +40,454 @@ const config = resourceTypeConfig[resourceType];
       href={resourceLink}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+      class="access-button"
     >
       Acceder al recurso
-      <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
       </svg>
     </a>
   </div>
 </div>
+
+<style>
+  .external-resource-link-container {
+    margin-bottom: 32px; /* mb-8 */
+    padding: 16px; /* p-4 */
+    border: 2px solid; /* border-2 */
+    border-radius: 8px; /* rounded-lg */
+    background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .external-resource-link-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .external-resource-link-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .external-resource-link-container:hover::before {
+    left: 100%;
+  }
+
+  .external-resource-content {
+    display: flex; /* flex */
+    align-items: center; /* items-center */
+    justify-content: space-between; /* justify-between */
+    gap: 16px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .resource-info {
+    display: flex; /* flex */
+    align-items: center; /* items-center */
+    gap: 12px; /* space-x-3 */
+    flex: 1;
+  }
+
+  .resource-icon {
+    font-size: 1.5rem; /* text-2xl */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .external-resource-link-container:hover .resource-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .resource-details {
+    flex: 1;
+  }
+
+  .resource-title {
+    font-weight: 600; /* font-semibold */
+    color: #111827; /* text-gray-900 */
+    margin-bottom: 4px;
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+
+  .resource-description {
+    font-size: 0.875rem; /* text-sm */
+    color: #4b5563; /* text-gray-600 */
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .access-button {
+    display: inline-flex; /* inline-flex */
+    align-items: center; /* items-center */
+    padding: 8px 16px; /* px-4 py-2 */
+    background-color: #2563eb; /* bg-blue-600 */
+    color: white; /* text-white */
+    border-radius: 8px; /* rounded-lg */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease; /* hover:bg-blue-700 transition-colors */
+    position: relative;
+    overflow: hidden;
+    gap: 8px;
+  }
+
+  .access-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.4s ease;
+  }
+
+  .access-button:hover {
+    background-color: #1d4ed8; /* hover:bg-blue-700 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  }
+
+  .access-button:hover::before {
+    left: 100%;
+  }
+
+  .access-button:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+  }
+
+  .access-button:active {
+    transform: translateY(0);
+  }
+
+  .button-icon {
+    width: 16px; /* w-4 */
+    height: 16px; /* h-4 */
+    transition: transform 0.2s ease;
+  }
+
+  .access-button:hover .button-icon {
+    transform: translateX(2px);
+  }
+
+  /* Color variants for different resource types */
+  .external-resource-link-container.red {
+    border-color: #ef4444;
+  }
+
+  .external-resource-link-container.red .resource-icon {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .external-resource-link-container.blue {
+    border-color: #3b82f6;
+  }
+
+  .external-resource-link-container.blue .resource-icon {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .external-resource-link-container.green {
+    border-color: #10b981;
+  }
+
+  .external-resource-link-container.green .resource-icon {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+  }
+
+  .external-resource-link-container.yellow {
+    border-color: #f59e0b;
+  }
+
+  .external-resource-link-container.yellow .resource-icon {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+  }
+
+  .external-resource-link-container.purple {
+    border-color: #8b5cf6;
+  }
+
+  .external-resource-link-container.purple .resource-icon {
+    color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+  }
+
+  .external-resource-link-container.pink {
+    border-color: #ec4899;
+  }
+
+  .external-resource-link-container.pink .resource-icon {
+    color: #ec4899;
+    background: rgba(236, 72, 153, 0.1);
+  }
+
+  .external-resource-link-container.indigo {
+    border-color: #6366f1;
+  }
+
+  .external-resource-link-container.indigo .resource-icon {
+    color: #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+  }
+
+  /* Enhanced visual effects */
+  .external-resource-link-container {
+    backdrop-filter: blur(10px);
+    border-style: solid;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 768px) {
+    .external-resource-content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    .resource-info {
+      text-align: center;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .access-button {
+      justify-content: center;
+      padding: 12px 20px;
+      font-size: 1rem;
+    }
+
+    .resource-icon {
+      align-self: center;
+    }
+
+    .resource-title {
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .resource-description {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .external-resource-link-container {
+      margin-bottom: 24px;
+      padding: 16px;
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.25rem;
+    }
+
+    .resource-title {
+      font-size: 0.9375rem;
+      margin-bottom: 6px;
+    }
+
+    .resource-description {
+      font-size: 0.8125rem;
+    }
+
+    .access-button {
+      padding: 10px 16px;
+      font-size: 0.875rem;
+    }
+  }
+
+  /* Loading state */
+  .external-resource-link-container.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .external-resource-link-container.loading .access-button {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+
+  .external-resource-link-container.loading .resource-icon {
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .external-resource-link-container,
+    .resource-icon,
+    .access-button,
+    .button-icon,
+    .external-resource-link-container::before,
+    .access-button::before {
+      transition: none;
+      animation: none;
+    }
+
+    .external-resource-link-container:hover {
+      transform: none;
+    }
+
+    .external-resource-link-container:hover .resource-icon {
+      transform: none;
+    }
+
+    .access-button:hover {
+      transform: none;
+    }
+
+    .access-button:hover .button-icon {
+      transform: none;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .external-resource-link-container {
+      background: white;
+      border-width: 3px;
+    }
+
+    .resource-title {
+      color: #000000;
+    }
+
+    .resource-description {
+      color: #1f2937;
+    }
+
+    .access-button {
+      background-color: #1d4ed8;
+      border: 2px solid #000000;
+    }
+
+    .access-button:hover {
+      background-color: #1e40af;
+    }
+
+    .resource-icon {
+      background: white;
+      border: 2px solid currentColor;
+    }
+  }
+
+  /* Dark mode support */
+  /* @media (prefers-color-scheme: dark) {
+    .external-resource-link-container {
+      background: linear-gradient(145deg, #374151 0%, #1f2937 100%);
+      border-color: currentColor;
+    }
+
+    .resource-title {
+      color: #f9fafb;
+    }
+
+    .resource-description {
+      color: #d1d5db;
+    }
+
+    .resource-icon {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .access-button {
+      background-color: #3b82f6;
+    }
+
+    .access-button:hover {
+      background-color: #2563eb;
+    }
+  } */
+
+  /* Print styles */
+  @media print {
+    .external-resource-link-container {
+      background: white;
+      border: 2px solid #666666;
+      box-shadow: none;
+      margin-bottom: 16px;
+      break-inside: avoid;
+    }
+
+    .access-button {
+      background-color: transparent;
+      color: #000000;
+      border: 1px solid #666666;
+      box-shadow: none;
+    }
+
+    .access-button::after {
+      content: " (" attr(href) ")";
+      font-size: 0.75rem;
+      color: #666666;
+    }
+
+    .button-icon {
+      display: none;
+    }
+  }
+
+  /* Focus management for keyboard navigation */
+  .external-resource-link-container:focus-within {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Success state after interaction */
+  .external-resource-link-container.success .access-button {
+    background-color: #10b981;
+  }
+
+  .external-resource-link-container.success .access-button:hover {
+    background-color: #059669;
+  }
+
+  /* Entry animation */
+  .external-resource-link-container {
+    animation: slideInUp 0.6s ease-out;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
