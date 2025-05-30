@@ -1,0 +1,551 @@
+:root {
+	/* Colores principales */
+	--accent: #2563EB; /* Azul eléctrico - Botones/interactivos */
+	--accent-dark: #1E3A8A; /* Azul profundo - Cabeceras */
+	--accent-highlight: #F97316; /* Naranja científico - Ecuaciones/resaltados */
+	--accent-error: #EF4444; /* Rojo coral - Errores/alertas */
+	--accent-success: #22C55E; /* Verde éxito - Feedback positivo */
+
+	/* Grises y neutros */
+	--black: 15, 18, 25;
+	--gray: 156, 163, 175; /* gris medio #9CA3AF */
+	--gray-light: 229, 231, 235; /* gris claro #E5E7EB */
+	--gray-dark: 34, 41, 57;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--box-shadow:
+		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+		0 16px 32px rgba(var(--gray), 33%);
+}
+@font-face {
+	font-family: 'Atkinson';
+	src: url('/fonts/atkinson-regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Atkinson';
+	src: url('/fonts/atkinson-bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+body {
+	font-family: 'Atkinson', sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	background-size: 100% 600px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: rgb(var(--gray-dark));
+	font-size: 20px;
+	line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0 0 0.5rem 0;
+	color: rgb(var(--black));
+	line-height: 1.2;
+}
+h1 {
+	font-size: 3.052em;
+}
+h2 {
+	font-size: 2.441em;
+}
+h3 {
+	font-size: 1.953em;
+}
+h4 {
+	font-size: 1.563em;
+}
+h5 {
+	font-size: 1.25em;
+}
+strong,
+b {
+	font-weight: 700;
+}
+a {
+	color: var(--accent);
+}
+a:hover {
+	color: var(--accent);
+}
+p {
+	margin-bottom: 1em;
+}
+.prose p {
+	margin-bottom: 2em;
+}
+textarea {
+	width: 100%;
+	font-size: 16px;
+}
+input {
+	font-size: 16px;
+}
+table {
+	width: 100%;
+}
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+code {
+	padding: 2px 5px;
+	background-color: rgb(var(--gray-light));
+	border-radius: 2px;
+}
+pre {
+	padding: 1.5em;
+	border-radius: 8px;
+}
+pre > code {
+	all: unset;
+}
+blockquote {
+	border-left: 4px solid var(--accent);
+	padding: 0 0 0 20px;
+	margin: 0px;
+	font-size: 1.333em;
+}
+hr {
+	border: none;
+	border-top: 1px solid rgb(var(--gray-light));
+}
+.mcu-simulation-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(10px, 3vw, 20px);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.simulation-header {
+  text-align: center;
+  margin-bottom: clamp(20px, 5vw, 30px);
+}
+
+.simulation-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.simulation-header p {
+  color: #666;
+  font-size: clamp(14px, 2.5vw, 16px);
+  padding: 0 10px;
+}
+
+.simulation-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: clamp(15px, 4vw, 30px);
+  align-items: start;
+}
+
+/* Breakpoints responsivos */
+@media (max-width: 1024px) {
+  .simulation-layout {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .simulation-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .mcu-simulation-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mcu-simulation-container {
+    padding: 10px;
+  }
+  
+  .simulation-layout {
+    gap: 15px;
+  }
+}
+
+/* Panel de visualización */
+.visualization-panel {
+  background: white;
+  border-radius: 12px;
+  padding: clamp(15px, 3vw, 20px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  overflow: hidden;
+}
+
+/* Canvas responsivo */
+.canvas-container {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 3/2; /* Mantiene proporción 3:2 */
+  min-height: 300px;
+  max-height: 500px;
+}
+
+@media (max-width: 768px) {
+  .canvas-container {
+    aspect-ratio: 4/3; /* Proporción más cuadrada en móviles */
+    min-height: 250px;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .canvas-container {
+    aspect-ratio: 1/1; /* Cuadrado en pantallas muy pequeñas */
+    min-height: 200px;
+    max-height: 300px;
+  }
+}
+
+.playback-controls {
+  display: flex;
+  gap: clamp(5px, 2vw, 10px);
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .playback-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Panel de controles */
+.controls-panel {
+  background: white;
+  border-radius: 12px;
+  padding: clamp(15px, 3vw, 20px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 0; /* Permite que se comprima */
+}
+
+.control-section {
+  margin-bottom: clamp(20px, 4vw, 30px);
+  padding-bottom: clamp(15px, 3vw, 20px);
+  border-bottom: 1px solid #eee;
+}
+
+.control-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.control-section h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: clamp(16px, 3vw, 18px);
+}
+
+/* Controles de parámetros responsivos */
+.parameter-control {
+  display: grid;
+  grid-template-columns: 1fr auto 60px;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .parameter-control {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: left;
+  }
+  
+  .parameter-control label {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .parameter-control {
+    gap: 6px;
+  }
+}
+
+.parameter-control label {
+  font-weight: 500;
+  color: #555;
+  font-size: clamp(13px, 2.5vw, 14px);
+}
+
+.parameter-control input[type="range"] {
+  width: 100%;
+  min-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .parameter-control input[type="range"] {
+    margin: 5px 0;
+  }
+}
+
+.parameter-value {
+  min-width: 50px;
+  text-align: center;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: clamp(12px, 2vw, 14px);
+}
+
+@media (max-width: 768px) {
+  .parameter-value {
+    justify-self: start;
+    margin-top: 5px;
+  }
+}
+
+/* Botones responsivos */
+.btn {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: clamp(12px, 2.5vw, 14px);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-height: 44px; /* Tamaño mínimo touch-friendly */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:hover {
+  background: #2980b9;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .btn {
+    width: 100%;
+    min-height: 48px; /* Más grande en móviles */
+  }
+}
+
+.btn-play {
+  background: #27ae60;
+}
+
+.btn-play:hover {
+  background: #229954;
+}
+
+.btn-pause {
+  background: #f39c12;
+}
+
+.btn-pause:hover {
+  background: #d68910;
+}
+
+.btn-reset {
+  background: #e74c3c;
+}
+
+.btn-reset:hover {
+  background: #c0392b;
+}
+
+.btn-apply {
+  width: 100%;
+  background: #8e44ad;
+  margin-top: 10px;
+}
+
+.btn-apply:hover {
+  background: #7d3c98;
+}
+
+/* Controles de toggle responsivos */
+.toggle-controls {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 2vw, 10px);
+}
+
+@media (max-width: 480px) {
+  .toggle-controls {
+    gap: 12px;
+  }
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 0;
+  min-height: 44px; /* Touch-friendly */
+}
+
+.toggle input[type="checkbox"] {
+  margin: 0;
+  transform: scale(1.2); /* Más grande en todas las pantallas */
+}
+
+@media (max-width: 480px) {
+  .toggle input[type="checkbox"] {
+    transform: scale(1.4); /* Aún más grande en móviles */
+  }
+}
+
+.toggle span {
+  font-size: clamp(13px, 2.5vw, 14px);
+}
+
+/* Información teórica responsiva */
+.info-content {
+  font-size: clamp(12px, 2.5vw, 14px);
+  line-height: 1.5;
+}
+
+.formula {
+  background: #f8f9fa;
+  padding: clamp(8px, 2vw, 10px);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(11px, 2vw, 13px);
+  overflow-x: auto; /* Scroll horizontal si es necesario */
+}
+
+.formula strong {
+  color: #2c3e50;
+}
+
+/* Mejoras para pantallas muy pequeñas */
+@media (max-width: 320px) {
+  .mcu-simulation-container {
+    padding: 8px;
+  }
+  
+  .simulation-header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .simulation-header p {
+    font-size: 13px;
+  }
+  
+  .canvas-container {
+    min-height: 180px;
+    max-height: 250px;
+  }
+  
+  .controls-panel,
+  .visualization-panel {
+    padding: 12px;
+  }
+}
+
+/* Mejoras para tablets en orientación horizontal */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .simulation-layout {
+    grid-template-columns: 1.8fr 1fr;
+  }
+  
+  .canvas-container {
+    aspect-ratio: 16/9; /* Más panorámico en landscape */
+  }
+}
+
+/* Mejoras para pantallas muy anchas */
+@media (min-width: 1400px) {
+  .mcu-simulation-container {
+    max-width: 1400px;
+  }
+  
+  .simulation-layout {
+    grid-template-columns: 2.5fr 1fr;
+  }
+}
+
+/* Animaciones suaves para cambios de layout */
+.simulation-layout,
+.parameter-control,
+.playback-controls {
+  transition: all 0.3s ease;
+}
+
+/* Estados de enfoque mejorados para accesibilidad */
+.btn:focus,
+.toggle input:focus,
+.parameter-control input:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Scroll suave para contenido que desborde */
+.controls-panel {
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.controls-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.controls-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.controls-panel::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.controls-panel::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+	clip: rect(1px 1px 1px 1px);
+	/* maybe deprecated but we need to support legacy browsers */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* modern browsers, clip-path works inwards from each corner */
+	clip-path: inset(50%);
+	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
+	white-space: nowrap;
+}

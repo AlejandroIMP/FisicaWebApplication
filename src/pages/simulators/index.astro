@@ -1,0 +1,168 @@
+---
+import CalculatorLayout from "../../layouts/CalculatorLayout.astro";
+import { SIMULATORS_CINEMATICA } from "../../consts";
+import CalculatorCard from "../../components/CalculatorCard.astro";
+---
+
+<CalculatorLayout title="Calculadora" description="Calculadora de Física">
+  <div class="hero">
+    <h1>Simuladores de Física</h1>
+    <div class="hero-decoration"></div>
+  </div>
+
+  <div class="calculators-container">
+    <div class="intro-section">
+      <p>
+        Los simuladores de esta web están diseñados para ayudar a comprender distintos tipos de movimientos en física. Cada uno de ellos permite visualizar y analizar el comportamiento de un objeto bajo diferentes condiciones y fuerzas.
+      </p>
+      <p class="highlight">
+        Estas herramientas son útiles para estudiantes y profesionales que buscan entender mejor los conceptos de física a través de la simulación interactiva.
+      </p>
+    </div>
+    
+    <h2 class="calculator-grid__subtitle">Cinematica</h2>
+    <div class="calculator-grid">
+      {SIMULATORS_CINEMATICA.map((simulator) => (
+        <CalculatorCard
+          key={simulator.name}
+          title={simulator.name}
+          description={simulator.description}
+          url={simulator.url}
+          image={simulator.image}
+          buttonText={simulator.buttonText}
+        />
+      ))}
+    </div>
+    
+  </div>
+</CalculatorLayout>
+
+<style>
+  .calculator-grid__subtitle {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: rgba(var(--black), 0.8);
+  }
+  .calculator-grid__subtitle::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: var(--accent);
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-radius: 2px;
+  }
+  .calculator-grid__subtitle::before {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: var(--accent-dark);
+    margin: 0 auto;
+    margin-top: 1rem;
+    border-radius: 2px;
+  }
+  .hero {
+    position: relative;
+    padding: 4rem 0 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(var(--black), 0.03), rgba(var(--black), 0.06));
+    border-radius: 16px;
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+
+  .hero h1 {
+    position: relative;
+    /* z-index: 2; */
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  .hero-decoration {
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(135deg, rgba(var(--accent), 0.1), rgba(var(--accent-dark), 0.2));
+    transform: rotate(-15deg);
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    z-index: 1;
+  }
+
+  .calculators-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .intro-section {
+    margin-bottom: 3rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .intro-section p {
+    font-size: clamp(1rem, 1.1vw, 1.2rem);
+    line-height: 1.7;
+    color: rgba(var(--black), 0.85);
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .intro-section .highlight {
+    font-weight: 500;
+    color: var(--accent-dark);
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(var(--accent), 0.05), rgba(var(--accent-dark), 0.1));
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+  }
+
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 1rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .calculators-container {
+      width: 95%;
+      padding-bottom: 2rem;
+    }
+    
+    .intro-section {
+      margin-bottom: 2rem;
+    }
+    
+    .calculator-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1600px) {
+    .calculators-container {
+      max-width: 1400px;
+    }
+    
+    .calculator-grid {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+  }
+</style>
