@@ -1,5 +1,5 @@
-// Mostrar sección MRU o MRUV
-export  function mostrarSeccion(valor) {
+  // Mostrar sección MRU o MRUV
+  function mostrarSeccion(valor) {
     document.getElementById('seccion_mru').style.display = 'none';
     document.getElementById('seccion_mruv').style.display = 'none';
     if (valor === 'mru') {
@@ -10,25 +10,14 @@ export  function mostrarSeccion(valor) {
     }
     limpiarResultados();
   }
-export  function limpiarResultados() {
+
+  function limpiarResultados() {
     document.getElementById('resultado_mru').textContent = '';
     document.getElementById('resultado_mruv').textContent = '';
-    
-    // Restablecer la simulación
-    const auto = document.getElementById('auto');
-    if (auto) {
-      const contenedor = document.getElementById('simulacion');
-      if (contenedor) {
-        // Colocar el auto en el centro
-        const centerPoint = contenedor.clientWidth / 2;
-        auto.style.left = (centerPoint - (auto.offsetWidth / 2)) + 'px';
-        auto.style.transform = 'scaleX(1)'; // Orientación por defecto
-      }
-    }
   }
 
   // MRU: Mostrar campos según variable a calcular
-export  function mostrarCamposMRU() {
+  function mostrarCamposMRU() {
     const opcion = document.getElementById('mru_opcion').value;
     let html = '';
     if (opcion === 'x') {
@@ -59,47 +48,37 @@ export  function mostrarCamposMRU() {
     document.getElementById('mru_campos').innerHTML = html;
     limpiarResultados();
   }
+
   // Calcular MRU
-export  function calcularMRU() {
+  function calcularMRU() {
     const opcion = document.getElementById('mru_opcion').value;
     const x = parseFloat(document.getElementById('mru_x')?.value);
     const x0 = parseFloat(document.getElementById('mru_x0')?.value);
     const v = parseFloat(document.getElementById('mru_v')?.value);
     const t = parseFloat(document.getElementById('mru_t')?.value);
     let resultado = '';
-    let valorCalculado = 0;
-    let desplazamiento = 0;
-    
+
     if (opcion === 'x' && !isNaN(x0) && !isNaN(v) && !isNaN(t)) {
-      valorCalculado = x0 + v * t;
-      resultado = `Posición final: ${valorCalculado.toFixed(4)} m`;
-      desplazamiento = valorCalculado - x0;
+      resultado = `Posición final: ${x0 + v * t} m`;
     } else if (opcion === 'v' && !isNaN(x0) && !isNaN(x) && !isNaN(t)) {
-      valorCalculado = (x - x0) / t;
-      resultado = `Velocidad: ${valorCalculado.toFixed(4)} m/s`;
-      desplazamiento = x - x0;
+      resultado = `Velocidad: ${(x - x0) / t} m/s`;
     } else if (opcion === 't' && !isNaN(x0) && !isNaN(x) && !isNaN(v)) {
-      valorCalculado = (x - x0) / v;
-      resultado = `Tiempo: ${valorCalculado.toFixed(4)} s`;
-      desplazamiento = x - x0;
+      resultado = `Tiempo: ${(x - x0) / v} s`;
     } else if (opcion === 'x0' && !isNaN(x) && !isNaN(v) && !isNaN(t)) {
-      valorCalculado = x - v * t;
-      resultado = `Posición inicial: ${valorCalculado.toFixed(4)} m`;
-      desplazamiento = x - valorCalculado;
-    } else {
-      resultado = 'Completa todos los campos necesarios.';
+      resultado = `Posición inicial: ${x - v * t} m`;
     }
-    
     document.getElementById('resultado_mru').textContent = resultado;
-    
-    // Simular el movimiento si tenemos un desplazamiento válido
-    if (desplazamiento !== 0 && !isNaN(desplazamiento)) {
-      simularMovimiento(desplazamiento);
+
+    if (opcion === 'x' && !isNaN(x0) && !isNaN(v) && !isNaN(t)) {
+      const valor = x0 + v * t;
+      resultado = `Posición final: ${valor} m`;
+      simularMovimiento(valor - x0);
     }
+
   }
 
   // MRUV: Variables y fórmulas disponibles
-export  const formulas = {
+  const formulas = {
     f1: { // x = x0 + v0 t + 1/2 a t^2
       name: "x = x₀ + v₀ t + ½ a t²",
       variables: ['x', 'x0', 'v0', 'a', 't'],
@@ -166,7 +145,7 @@ export  const formulas = {
   };
 
   // Cuando se selecciona fórmula en MRUV, actualizar variables a calcular
-export  function actualizarVariablesMruv() {
+  function actualizarVariablesMruv() {
     const formulaSelect = document.getElementById('mruv_formula');
     const variableSelect = document.getElementById('mruv_variable');
     const formula = formulas[formulaSelect.value];
@@ -185,7 +164,7 @@ export  function actualizarVariablesMruv() {
   }
 
   // Mostrar inputs para MRUV según fórmula y variable a calcular
-export  function mostrarCamposMruv() {
+  function mostrarCamposMruv() {
     const formulaSelect = document.getElementById('mruv_formula').value;
     const variable = document.getElementById('mruv_variable').value;
     if (!formulaSelect || !variable) {
@@ -203,68 +182,36 @@ export  function mostrarCamposMruv() {
     document.getElementById('mruv_campos').innerHTML = html;
     limpiarResultados();
   }
+
   // Calcular MRUV
-export  function calcularMRUV() {
+  function calcularMRUV() {
     const formulaSelect = document.getElementById('mruv_formula').value;
     const variable = document.getElementById('mruv_variable').value;
     if (!formulaSelect || !variable) {
       document.getElementById('resultado_mruv').textContent = 'Selecciona fórmula y variable a calcular.';
       return;
     }
-    
     const formula = formulas[formulaSelect];
-    if (!formula) {
-      document.getElementById('resultado_mruv').textContent = 'Fórmula no válida. Por favor, selecciona una fórmula.';
-      return;
-    }
-    
     // Recolectar valores de inputs excepto la variable a calcular
     const vals = {};
-    let todosCamposCompletos = true;
-    let camposFaltantes = [];
-    
     for (const v of formula.variables) {
       if (v !== variable) {
         const input = document.getElementById('mruv_' + v);
         if (!input || input.value === '') {
-          todosCamposCompletos = false;
-          camposFaltantes.push(v);
-          continue;
-        }
-        
-        const valor = parseFloat(input.value);
-        if (isNaN(valor)) {
-          document.getElementById('resultado_mruv').textContent = `El valor para ${v} no es un número válido.`;
+          document.getElementById('resultado_mruv').textContent = 'Completa todos los campos necesarios.';
           return;
         }
-        
-        vals[v] = valor;
+        vals[v] = parseFloat(input.value);
       }
     }
-    
-    if (!todosCamposCompletos) {
-      document.getElementById('resultado_mruv').textContent = `Completa los campos: ${camposFaltantes.join(', ')}`;
-      return;
-    }
-    
     // Calcular
     let res;
     try {
-      // Comprobar posibles divisiones por cero o casos especiales
-      if ((variable === 't' || variable === 'a') && vals.a === 0) {
-        throw 'No se puede calcular con aceleración igual a cero';
-      }
-      if (variable === 't' && vals.v === 0) {
-        throw 'No se puede calcular con velocidad igual a cero';
-      }
-      
-      // Realizar el cálculo
       res = formula.calc[variable](vals);
-      
-      if (isNaN(res)) throw 'Resultado matemáticamente inválido';
-      if (!isFinite(res)) throw 'Resultado es infinito, verifica los valores';
-      
-      res = Number(res.toFixed(4));      // Agregar unidades del Sistema Internacional
+      if (isNaN(res)) throw 'Resultado inválido';
+      res = Number(res.toFixed(4));
+
+      // 🔽 Agregar unidades del Sistema Internacional
       let unidad = '';
       if (variable.includes('x') || variable === 'd') {
         unidad = 'm';
@@ -275,73 +222,67 @@ export  function calcularMRUV() {
       } else if (variable === 't') {
         unidad = 's';
       }
-      
+
       document.getElementById('resultado_mruv').textContent = `Resultado: ${variable} = ${res} ${unidad}`;
-      
-      // Simular el movimiento para diferentes variables
-      let desplazamiento = 0;
-      if (variable === 'x') {
-        // Si calculamos posición final, simulamos el desplazamiento desde x0
-        desplazamiento = res - vals.x0;
-      } else if (variable === 'd') {
-        // Si calculamos distancia, usamos el valor directamente
-        desplazamiento = res;
-      } else if (variable === 'x0') {
-        // Si calculamos posición inicial, el desplazamiento es desde x0 a x
-        desplazamiento = vals.x - res;
+      if (variable === 'x' || variable === 'd') {
+        simularMovimiento(res);
       }
-      
-      // Solo simulamos si hay un desplazamiento a mostrar
-      if (desplazamiento !== 0 && !isNaN(desplazamiento)) {
-        simularMovimiento(desplazamiento);
-      }    } catch (error) {
-      // Mostrar mensaje de error más específico si está disponible
-      const errorMsg = typeof error === 'string' ? error : 'Error en cálculo, revisa los valores.';
-      document.getElementById('resultado_mruv').textContent = errorMsg;
+    } catch {
+      document.getElementById('resultado_mruv').textContent = 'Error en cálculo, revisa los valores.';
     }
   }
 
-  
-export function simularMovimiento(distancia) {
-    const auto = document.getElementById('auto');
-    const contenedor = document.getElementById('simulacion');
-    const maxLeft = contenedor.clientWidth - auto.offsetWidth;
-    const centerPoint = contenedor.clientWidth / 2;
+function simularMovimiento(distancia) {
+  const auto = document.getElementById('auto');
+  const contenedor = document.getElementById('simulacion');
+  if (!auto || !contenedor) return;
 
-    // Posiciona el auto en el centro inicialmente
-    auto.style.left = centerPoint - (auto.offsetWidth / 2) + 'px';
-    
-    // Calcula la nueva posición a partir del centro
-    let newPosition = centerPoint + (distancia * 5) - (auto.offsetWidth / 2);
+  const escala = 5; // px por metro
+  const maxLeft = contenedor.clientWidth - auto.offsetWidth;
 
-    // Limita la posición para que no se salga del contenedor
-    if (newPosition < 0) newPosition = 0;
-    if (newPosition > maxLeft) newPosition = maxLeft;
+  let left = distancia * escala;
+  left = Math.max(0, Math.min(left, maxLeft));
 
-    // Mueve el auto
-    auto.style.left = newPosition + 'px';
+  // Reiniciar posición si es necesario
+  if (left === 0) {
+    auto.style.left = '0px';
+    void auto.offsetWidth; // Fuerza el reinicio de transición
+  }
 
-    // Voltea el auto si se mueve hacia atrás
-    if (distancia < 0) {
-      auto.style.transform = 'scaleX(-1)';
+  auto.style.left = left + 'px';
+  auto.style.transform = `scaleX(${distancia < 0 ? -1 : 1})`;
+}
+
+
+
+function animarResultado(valorFinal, unidad = '', duracion = 1500) {
+  const elemento = document.getElementById('resultadoFinal');
+  let inicio = null;
+
+  // Limpiamos clases anteriores
+  elemento.classList.remove('resultado-animado');
+
+  const animacion = (timestamp) => {
+    if (!inicio) inicio = timestamp;
+    const progreso = timestamp - inicio;
+    const porcentaje = Math.min(progreso / duracion, 1);
+    const valorAnimado = valorFinal * porcentaje;
+
+    elemento.textContent = `${valorAnimado.toFixed(2)} ${unidad}`;
+
+    if (porcentaje < 1) {
+      requestAnimationFrame(animacion);
     } else {
-      auto.style.transform = 'scaleX(1)';
+      // Al finalizar la animación, agregamos efecto de rebote o resaltado
+      elemento.classList.add('resultado-animado');
     }
-  }
+  };
 
-  // Función de inicialización
-  export function inicializarSimulacion() {
-    // Centrar el auto al cargar la página
-    limpiarResultados();
-    
-    // Asegurarse que la imagen del auto se ha cargado
-    const auto = document.getElementById('auto');
-    if (auto) {
-      auto.onload = function() {
-        limpiarResultados();
-      };
-    }
-  }
+  requestAnimationFrame(animacion);
+}
 
-  // Ejecutar inicialización cuando se cargue la página
-  window.addEventListener('DOMContentLoaded', inicializarSimulacion);
+// Función que puedes usar en vez de mostrarResultado normal:
+function mostrarResultado(valor, unidad) {
+  animarResultado(valor, unidad);
+}
+

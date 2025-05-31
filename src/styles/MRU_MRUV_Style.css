@@ -21,7 +21,7 @@ body {
   color: var(--text);
 }
 
-/* header {
+header {
   background: var(--primary);
   color: white;
   padding: 2rem 1rem;
@@ -32,7 +32,7 @@ body {
 header h1 {
   margin: 0;
   font-size: 2rem;
-} */
+}
 
 main {
   max-width: var(--max-width);
@@ -124,3 +124,95 @@ button:hover {
     width: 100%;
   }
 }
+
+#simulacion {
+  border: 2px dashed var(--primary);
+  background-image: linear-gradient(to right, #f0f4f8 25%, #cfe2f3 25%, #cfe2f3 50%, #f0f4f8 50%, #f0f4f8 75%, #cfe2f3 75%);
+  background-size: 40px 100%;
+  background-repeat: repeat-x;
+}
+
+#auto {
+  transition: left 1s ease-in-out, transform 0.5s ease;
+}
+
+.formulas-box {
+  background-color: #fdfde4;
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-top: 20px;
+  color: #333;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+}
+
+.formulas-box h3 {
+  margin-top: 0;
+  color: #d58500;
+  font-size: 18px;
+  text-align: center;
+}
+
+.formulas-box ul {
+  padding-left: 20px;
+}
+
+.formulas-box li {
+  margin-bottom: 5px;
+}
+
+
+.explicacion-box {
+  background-color: #d0e8ff; /* azul muy claro */
+  border: 2px solid #1e88e5; /* azul intenso */
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-top: 30px;         /* espacio arriba */
+  margin-bottom: 20px;
+  color: #1565c0;           /* azul oscuro */
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+
+.explicacion-box h3 {
+  margin-top: 0;
+  color: #f9a825;
+  font-size: 20px;
+  text-align: center;
+}
+
+.explicacion-box p, .explicacion-box ul {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.explicacion-box ul {
+  padding-left: 20px;
+}
+
+/* Ajuste para pantallas medianas y pequeñas */
+@media (max-width: 1200px) {
+  .explicacion-box {
+    max-width: 90vw;  /* en pantallas más pequeñas usar máximo 90% ancho */
+  }
+}
+
+/* Ajuste de fuente para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .explicacion-box {
+    font-size: 14px;
+    padding: 12px 15px;
+  }
+  .explicacion-box h3 {
+    font-size: 18px;
+  }
+}
+  
