@@ -1,17 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import { render } from 'astro:content';
+import { type CollectionEntry, getCollection } from 'astro:content';
 import ExercisePost from '../../layouts/ExercisePost.astro';
-
+import { render } from 'astro:content';
 export async function getStaticPaths() {
-  const exercises = await getCollection('exercise');
-  return exercises.map((exercise) => ({
-    params: { slug: exercise.id },
-    props: exercise,
-  }));
+	const exercises = await getCollection('exercise');
+	return exercises.map((exercise) => ({
+		params: { slug: exercise.id },
+		props: exercise,
+	}));
 }
-
 type Props = CollectionEntry<'exercise'>;
 
 const exercise = Astro.props;
@@ -19,5 +16,5 @@ const { Content } = await render(exercise);
 ---
 
 <ExercisePost {...exercise.data}>
-  <Content />
+	<Content />
 </ExercisePost>

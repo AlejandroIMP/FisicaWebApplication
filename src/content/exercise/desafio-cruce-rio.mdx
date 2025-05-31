@@ -1,0 +1,136 @@
+---
+title: "Desafío: Cruce de Río con Corriente"
+description: "Ejercicio complejo sobre navegación con velocidad relativa en presencia de corriente"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 30
+tags: ["velocidad relativa", "navegación", "vectores", "corriente"]
+topic: "cinematica"
+subtopic: "movimiento rectilíneo uniforme"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Un bote debe cruzar un río de 200 m de ancho. La velocidad del bote en agua tranquila es de 8 m/s y la corriente del río es de 3 m/s paralela a las orillas. Si el bote quiere llegar exactamente al punto opuesto (perpendicular), ¿en qué dirección debe apuntar? ¿Cuánto tiempo tardará en cruzar? Si en cambio apunta directamente al punto opuesto, ¿dónde llegará realmente?"
+  givens:
+    - "Ancho del río: d = 200 m"
+    - "Velocidad del bote en agua tranquila: v_bote = 8 m/s"
+    - "Velocidad de la corriente: v_corriente = 3 m/s (paralela a orillas)"
+    - "Objetivo: llegar perpendicularmente al punto opuesto"
+  unknowns:
+    - "Ángulo de dirección óptima (θ)"
+    - "Tiempo de cruce perpendicular (t₁)"
+    - "Desplazamiento si apunta directamente (d₂)"
+  formulas:
+    - "v_resultante = v_bote + v_corriente (suma vectorial)"
+    - "v_y = v_bote × sen(θ) (componente perpendicular)"
+    - "v_x = v_bote × cos(θ) - v_corriente (componente paralela)"
+    - "Para cruce perpendicular: v_x = 0"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Para cruce perpendicular: v_bote × cos(θ) = v_corriente"
+    - "Entonces: cos(θ) = 3/8 = 0.375, θ = arccos(0.375) ≈ 68°"
+    - "Componente perpendicular: v_y = 8 × sen(68°) ≈ 7.42 m/s"
+    - "Tiempo de cruce: t = 200/7.42 ≈ 27 s"
+    - "Si apunta directamente: desplazamiento = 3 × (200/8) = 75 m río abajo"
+    - "La velocidad resultante directa sería √(8² + 3²) = √73 ≈ 8.54 m/s"
+  acceptedPrecision: 1
+
+prerequisites:
+  - "Suma vectorial de velocidades"
+  - "Funciones trigonométricas"
+  - "Conceptos de velocidad relativa"
+  - "Descomposición de vectores en componentes"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 3"
+  - "Navegación Marítima - Principios Básicos"
+  - "Mecánica Vectorial - Beer & Johnston"
+
+relatedExercises:
+  - "ejemplo-mru-relativo"
+  - "ejemplo-proyectiles-horizontal"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Navegación con Corrientes
+
+El **cruce de ríos** es un problema clásico de **velocidad relativa** que requiere análisis vectorial.
+
+## Situaciones de Navegación
+
+### Caso 1: Cruce Perpendicular
+**Objetivo**: Llegar exactamente al punto opuesto
+- El bote debe compensar la corriente
+- La velocidad resultante es perpendicular a las orillas
+- Requiere apuntar "río arriba" en ángulo
+
+### Caso 2: Tiempo Mínimo
+**Objetivo**: Cruzar en el menor tiempo posible
+- El bote apunta directamente perpendicular
+- Acepta el desplazamiento por la corriente
+- Tiempo = ancho / velocidad_perpendicular
+
+### Caso 3: Dirección Arbitraria
+**Análisis general**: Cualquier ángulo de aproximación
+- Descomposición en componentes perpendicular y paralela
+- Cálculo de trayectoria resultante
+
+## Análisis Vectorial
+
+### Velocidades Involucradas
+1. **v⃗_bote**: Velocidad del bote respecto al agua
+2. **v⃗_corriente**: Velocidad del agua respecto a la orilla
+3. **v⃗_resultante**: Velocidad del bote respecto a la orilla
+
+### Ecuación Vectorial
+**v⃗_resultante = v⃗_bote + v⃗_corriente**
+
+### Componentes
+- **Perpendicular (y)**: v_y = v_bote × sen(θ)
+- **Paralela (x)**: v_x = v_bote × cos(θ) ± v_corriente
+
+## Estrategias de Solución
+
+### Para Cruce Perpendicular
+1. **Condición**: La componente paralela resultante debe ser cero
+2. **Ecuación**: v_bote × cos(θ) = v_corriente
+3. **Ángulo**: θ = arccos(v_corriente / v_bote)
+
+### Para Tiempo Mínimo
+1. **Dirección**: θ = 90° (perpendicular directo)
+2. **Tiempo**: t = ancho / v_bote
+3. **Desplazamiento**: d = v_corriente × t
+
+## Aplicaciones Reales
+
+### Navegación Marítima
+- **Barcos en corrientes oceánicas**
+- **Navegación en estuarios y ríos**
+- **Compensación por vientos laterales**
+
+### Aviación
+- **Vuelos con vientos cruzados**
+- **Aterrizajes en condiciones adversas**
+- **Navegación de precisión**
+
+### Deportes Acuáticos
+- **Natación en aguas abiertas**
+- **Remo y canotaje competitivo**
+- **Vela y regatas**
+
+## Consideraciones Prácticas
+
+### Limitaciones Físicas
+- La velocidad del bote debe ser mayor que la corriente
+- Si v_corriente > v_bote, el cruce perpendicular es imposible
+
+### Optimización
+- **Minimizar tiempo**: Dirección perpendicular
+- **Minimizar distancia**: Compensar corriente
+- **Minimizar energía**: Balance entre tiempo y potencia

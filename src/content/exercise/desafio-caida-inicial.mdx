@@ -1,0 +1,106 @@
+---
+title: "Desafío: Caída Libre con Velocidad Inicial"
+description: "Ejercicio de caída libre con velocidad inicial hacia arriba, cálculo de altura máxima y tiempo total"
+difficulty: "Medio"
+educationLevel: "Bachillerato"
+estimatedTime: 20
+tags: ["caída libre", "velocidad inicial", "altura máxima", "tiempo de vuelo"]
+topic: "cinematica"
+subtopic: "movimiento uniformemente acelerado"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Una pelota es lanzada verticalmente hacia arriba desde una altura de 10 m con una velocidad inicial de 25 m/s. ¿Cuál es la altura máxima que alcanza? ¿Cuánto tiempo tarda en regresar al suelo? ¿Con qué velocidad impacta el suelo?"
+  givens:
+    - "Altura inicial: h₀ = 10 m"
+    - "Velocidad inicial: v₀ = 25 m/s (hacia arriba)"
+    - "Aceleración de la gravedad: g = 9.8 m/s² (hacia abajo)"
+    - "Velocidad en el punto más alto: v = 0 m/s"
+  unknowns:
+    - "Altura máxima total (h_max)"
+    - "Tiempo total de vuelo (t_total)"
+    - "Velocidad de impacto (v_final)"
+  formulas:
+    - "v² = v₀² - 2g(h - h₀) (ecuación cinemática)"
+    - "h = h₀ + v₀t - ½gt² (ecuación de posición)"
+    - "v = v₀ - gt (ecuación de velocidad)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "En el punto más alto, la velocidad es cero: v = 0"
+    - "Usa v² = v₀² - 2g(h_max - h₀) con v = 0 para encontrar h_max"
+    - "La altura extra que sube es: Δh = v₀²/(2g) = 25²/(2×9.8)"
+    - "Para el tiempo total, usa h = h₀ + v₀t - ½gt² con h = 0 (suelo)"
+    - "Para la velocidad final, usa conservación de energía o v² = v₀² + 2gh₀"
+    - "El tiempo de subida hasta velocidad cero: t_subida = v₀/g = 25/9.8"
+  acceptedPrecision: 0.1
+
+prerequisites:
+  - "Ecuaciones cinemáticas del MRUV"
+  - "Caída libre básica"
+  - "Resolución de ecuaciones cuadráticas"
+  - "Principio de conservación de energía (opcional)"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 2"
+  - "Física General - Serway & Jewett, Capítulo 2"
+
+relatedExercises:
+  - "desafio-caida-libre"
+  - "ejemplo-mruv-aceleracion"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Caída Libre con Velocidad Inicial
+
+Este tipo de problema combina **lanzamiento vertical** hacia arriba con **caída libre**, creando un movimiento completo de subida y bajada.
+
+## Fases del Movimiento
+
+### 1. Fase de Ascenso
+- **Velocidad inicial**: v₀ > 0 (hacia arriba)
+- **Aceleración**: g (hacia abajo)
+- **Velocidad final**: v = 0 (en el punto más alto)
+
+### 2. Fase de Descenso
+- **Velocidad inicial**: v = 0 (desde el punto más alto)
+- **Aceleración**: g (hacia abajo)
+- **Velocidad final**: v_final (al impactar)
+
+## Estrategias de Solución
+
+### Método 1: Ecuaciones Cinemáticas
+Usar las ecuaciones del MRUV considerando que g es negativo si tomamos hacia arriba como positivo.
+
+### Método 2: Análisis por Fases
+1. Calcular tiempo y altura de subida
+2. Calcular tiempo y velocidad de bajada
+3. Sumar los tiempos totales
+
+### Método 3: Conservación de Energía
+La energía mecánica total se conserva (sin resistencia del aire).
+
+## Conceptos Importantes
+
+### Simetría del Movimiento
+- El tiempo de subida hasta la velocidad cero
+- El tiempo de bajada desde esa altura
+- La velocidad de paso por un punto es igual en subida y bajada
+
+### Altura Máxima
+**h_max = h₀ + v₀²/(2g)**
+
+### Velocidad de Impacto
+Si se lanza desde altura h₀:
+**v_final = √(v₀² + 2gh₀)**
+
+## Aplicaciones Prácticas
+
+- **Deportes**: Salto de altura, lanzamiento de balón
+- **Ingeniería**: Fuentes de agua, sistemas de eyección
+- **Seguridad**: Cálculo de impactos por objetos caídos

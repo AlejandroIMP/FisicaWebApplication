@@ -1,0 +1,154 @@
+---
+title: "Ejemplo: Lanzamiento Vertical - Encuentro de Objetos"
+description: "Ejercicio resuelto sobre dos objetos lanzados verticalmente que se encuentran en el aire"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 25
+tags: ["lanzamiento vertical", "encuentro", "caída libre", "simultaneidad"]
+topic: "cinematica"
+subtopic: "movimiento uniformemente acelerado"
+type: "example"
+status: "published"
+
+problem:
+  statement: "Desde lo alto de un edificio de 60 m de altura se lanza una pelota verticalmente hacia arriba con velocidad de 20 m/s. Al mismo tiempo, desde el suelo se lanza otra pelota verticalmente hacia arriba con velocidad de 30 m/s. ¿En qué momento se encontrarán las pelotas? ¿A qué altura del suelo ocurrirá el encuentro?"
+  givens:
+    - "Altura del edificio: h = 60 m"
+    - "Velocidad inicial pelota A (desde arriba): v₀ₐ = 20 m/s (hacia arriba)"
+    - "Velocidad inicial pelota B (desde abajo): v₀ᵦ = 30 m/s (hacia arriba)"
+    - "Aceleración de gravedad: g = 9.8 m/s²"
+    - "Ambas pelotas se lanzan simultáneamente"
+  unknowns:
+    - "Tiempo de encuentro (t)"
+    - "Altura de encuentro desde el suelo (y)"
+  formulas:
+    - "y = y₀ + v₀t - ½gt² (ecuación de posición)"
+    - "Para pelota A: yₐ = 60 + 20t - 4.9t²"
+    - "Para pelota B: yᵦ = 0 + 30t - 4.9t²"
+    - "En el encuentro: yₐ = yᵦ"
+
+solution:
+  approach: "Para resolver este problema de encuentro vertical, estableceremos las ecuaciones de posición para cada pelota y las igualaremos en el momento del encuentro. Tomamos como referencia el suelo (y = 0) y hacia arriba como dirección positiva."
+  steps:
+    - title: "Establecer ecuaciones de posición"
+      content: "Escribimos la ecuación de movimiento para cada pelota usando el mismo sistema de referencia"
+      formula: "Pelota A: yₐ = 60 + 20t - 4.9t²; Pelota B: yᵦ = 30t - 4.9t²"
+    - title: "Igualar posiciones en el encuentro"
+      content: "En el momento del encuentro, ambas pelotas estarán a la misma altura"
+      formula: "60 + 20t - 4.9t² = 30t - 4.9t²"
+    - title: "Simplificar y resolver para t"
+      content: "Los términos cuadráticos se cancelan, quedando una ecuación lineal"
+      formula: "60 + 20t = 30t → 60 = 10t → t = 6 s"
+    - title: "Calcular la altura de encuentro"
+      content: "Sustituimos t = 6 s en cualquiera de las ecuaciones de posición"
+      formula: "y = 30(6) - 4.9(6)² = 180 - 176.4 = 3.6 m"
+    - title: "Verificación con la otra ecuación"
+      content: "Comprobamos usando la ecuación de la pelota A"
+      formula: "yₐ = 60 + 20(6) - 4.9(6)² = 60 + 120 - 176.4 = 3.6 m ✓"
+  finalAnswer: "Las pelotas se encontrarán después de 6 segundos, a una altura de 3.6 m del suelo"
+  explanation: "Este problema ilustra cómo objetos con diferentes condiciones iniciales pueden encontrarse en el espacio. La cancelación de los términos cuadráticos ocurre porque ambas pelotas experimentan la misma aceleración gravitacional."
+
+prerequisites:
+  - "Ecuaciones cinemáticas del MRUV"
+  - "Lanzamiento vertical hacia arriba"
+  - "Sistemas de referencia y coordenadas"
+  - "Resolución de ecuaciones lineales"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 2"
+  - "Física General - Serway & Jewett, Capítulo 2"
+
+relatedExercises:
+  - "desafio-caida-inicial"
+  - "desafio-caida-libre"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Encuentro de Objetos en Movimiento Vertical
+
+El **encuentro de objetos** en movimiento vertical combina los conceptos de lanzamiento vertical y caída libre.
+
+## Características del Problema
+
+### Simultaneidad
+- **Condición crítica**: Ambos objetos se mueven al mismo tiempo
+- **Encuentro**: Ocurre cuando ambos están en la misma posición al mismo tiempo
+- **Ecuación clave**: y₁(t) = y₂(t)
+
+### Sistema de Referencia
+- **Origen**: Generalmente en el suelo (y = 0)
+- **Dirección positiva**: Hacia arriba
+- **Posiciones iniciales**: Pueden ser diferentes para cada objeto
+
+## Tipos de Encuentros Verticales
+
+### Caso 1: Ambos Lanzados Hacia Arriba
+- Uno desde el suelo, otro desde altura
+- Se encuentran mientras ambos están subiendo o uno bajando
+- **Característica**: Términos cuadráticos se cancelan si misma aceleración
+
+### Caso 2: Uno Sube, Otro Cae
+- Un objeto lanzado hacia arriba
+- Otro soltado simultáneamente desde altura
+- **Análisis**: Velocidades iniciales y posiciones diferentes
+
+### Caso 3: Encuentro en Caída
+- Ambos objetos en fase descendente
+- Diferentes velocidades iniciales hacia abajo
+- **Aplicación**: Objetos soltados desde diferentes alturas
+
+## Metodología de Solución
+
+### Paso 1: Definir Sistema de Referencia
+- Establecer origen y dirección positiva
+- Identificar posiciones iniciales de cada objeto
+- Verificar signos de velocidades y aceleración
+
+### Paso 2: Escribir Ecuaciones de Posición
+**Forma general**: y = y₀ + v₀t + ½at²
+- Para cada objeto por separado
+- Usar el mismo sistema de referencia
+- Considerar signos correctos
+
+### Paso 3: Establecer Condición de Encuentro
+**Igualar posiciones**: y₁(t) = y₂(t)
+- Resolver la ecuación resultante
+- Puede ser lineal o cuadrática según el caso
+
+### Paso 4: Verificar y Calcular
+- Sustituir tiempo de encuentro
+- Calcular posición de encuentro
+- Verificar con ambas ecuaciones
+
+## Análisis Físico
+
+### Cancelación de Términos
+Si ambos objetos tienen la misma aceleración (g):
+- Los términos ½gt² se cancelan
+- Queda ecuación lineal en t
+- **Simplificación matemática significativa**
+
+### Velocidades en el Encuentro
+En el momento del encuentro:
+- **v₁ = v₀₁ - gt**
+- **v₂ = v₀₂ - gt**
+- Las velocidades generalmente son diferentes
+
+## Aplicaciones Prácticas
+
+### Deportes
+- **Baloncesto**: Pase y salto simultáneos
+- **Voleibol**: Saque y bloqueo
+- **Malabarismo**: Múltiples objetos en el aire
+
+### Ingeniería
+- **Sistemas de eyección**: Lanzadores sincronizados
+- **Balística**: Interceptación de proyectiles
+- **Robótica**: Coordinación de movimientos
+
+### Seguridad
+- **Cálculo de impactos**: Objetos en caída
+- **Sistemas de rescate**: Interceptación aérea
+- **Prevención de accidentes**: Trayectorias de objetos

@@ -1,0 +1,107 @@
+---
+title: "Desafío: Movimiento Circular - Satélite en Órbita"
+description: "Ejercicio sobre movimiento circular de un satélite con cálculo de velocidad orbital y período"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 25
+tags: ["satélite", "órbita", "velocidad orbital", "gravedad", "movimiento circular"]
+topic: "cinematica"
+subtopic: "movimiento circular"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Un satélite artificial orbita la Tierra a una altura de 400 km sobre la superficie. Si el radio de la Tierra es 6370 km y la aceleración de la gravedad en la superficie es 9.8 m/s², calcula: a) La velocidad orbital del satélite, b) El período de la órbita, c) La aceleración centrípeta del satélite."
+  givens:
+    - "Altura de la órbita: h = 400 km = 4×10⁵ m"
+    - "Radio de la Tierra: R_T = 6370 km = 6.37×10⁶ m"
+    - "Radio orbital: r = R_T + h = 6.77×10⁶ m"
+    - "Aceleración gravitacional en superficie: g₀ = 9.8 m/s²"
+    - "Movimiento circular uniforme"
+  unknowns:
+    - "Velocidad orbital (v)"
+    - "Período orbital (T)"
+    - "Aceleración centrípeta (aᶜ)"
+  formulas:
+    - "g(r) = g₀(R_T/r)² (gravedad a distancia r)"
+    - "aᶜ = g(r) (la gravedad proporciona la fuerza centrípeta)"
+    - "v = √(g(r)×r) (velocidad orbital)"
+    - "T = 2πr/v (período orbital)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "El radio orbital es r = R_T + h = 6.37×10⁶ + 0.4×10⁶ = 6.77×10⁶ m"
+    - "La gravedad a altura h es: g(r) = 9.8 × (6.37/6.77)² ≈ 8.64 m/s²"
+    - "Para órbita circular: la fuerza gravitacional = fuerza centrípeta"
+    - "Velocidad orbital: v = √(g(r) × r) = √(8.64 × 6.77×10⁶)"
+    - "El período se calcula: T = 2πr/v"
+    - "Convierte el resultado del período a minutos para verificar (~90-95 min)"
+  acceptedPrecision: 100
+
+prerequisites:
+  - "Movimiento circular uniforme"
+  - "Ley de gravitación universal"
+  - "Fuerzas centrípetas"
+  - "Notación científica y cálculos numéricos"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 13"
+  - "Mecánica Clásica - Goldstein, Capítulo 3"
+  - "Astrofísica - Chaisson & McMillan"
+
+relatedExercises:
+  - "ejemplo-circular-uniforme"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Satélites en Órbita Circular
+
+Los **satélites artificiales** son un ejemplo perfecto de movimiento circular uniforme donde la fuerza gravitacional actúa como fuerza centrípeta.
+
+## Principio Físico
+
+En una órbita circular estable:
+**Fuerza gravitacional = Fuerza centrípeta**
+
+### Ecuación de Equilibrio
+**mg(r) = mv²/r**
+
+Donde g(r) es la aceleración gravitacional a la distancia r del centro de la Tierra.
+
+## Variación de la Gravedad con la Altura
+
+La gravedad disminuye con la altura según:
+**g(r) = g₀(R_T/r)²**
+
+- A nivel del mar: g = 9.8 m/s²
+- A 400 km: g ≈ 8.64 m/s²
+- A 36,000 km: g ≈ 0.22 m/s²
+
+## Velocidades Orbitales Típicas
+
+- **Órbita baja (400 km)**: ~7.7 km/s
+- **Órbita geoestacionaria (36,000 km)**: ~3.1 km/s
+- **Escape terrestre**: ~11.2 km/s
+
+## Tipos de Órbitas
+
+### Por Altura
+- **LEO** (Low Earth Orbit): 200-2000 km
+- **MEO** (Medium Earth Orbit): 2000-35,786 km  
+- **GEO** (Geostationary Orbit): 35,786 km
+
+### Por Función
+- **Comunicaciones**: Geoestacionaria
+- **Observación terrestre**: Polar, baja
+- **GPS**: MEO (~20,000 km)
+- **Exploración**: Elípticas, de transferencia
+
+## Leyes de Kepler
+
+1. **Primera Ley**: Las órbitas son elipses
+2. **Segunda Ley**: Conservación del momento angular
+3. **Tercera Ley**: T² ∝ r³ (período vs radio)

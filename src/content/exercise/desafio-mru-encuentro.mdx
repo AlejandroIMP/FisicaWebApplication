@@ -1,0 +1,70 @@
+---
+title: "Desafío MRU: Encuentro de Móviles"
+description: "Ejercicio de encuentro entre dos móviles con movimiento rectilíneo uniforme"
+difficulty: "Medio"
+educationLevel: "Bachillerato"
+estimatedTime: 20
+tags: ["MRU", "encuentro", "velocidad relativa", "tiempo"]
+topic: "cinematica"
+subtopic: "movimiento rectilíneo uniforme"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Dos automóviles parten simultáneamente desde dos ciudades separadas por 420 km. El primer automóvil viaja hacia el este a 80 km/h, mientras que el segundo viaja hacia el oeste a 100 km/h. ¿En qué momento se encontrarán? ¿A qué distancia de la primera ciudad?"
+  givens:
+    - "Distancia inicial entre ciudades: d = 420 km"
+    - "Velocidad del primer automóvil: v₁ = 80 km/h (hacia el este)"
+    - "Velocidad del segundo automóvil: v₂ = 100 km/h (hacia el oeste)"
+    - "Ambos parten simultáneamente"
+  unknowns:
+    - "Tiempo de encuentro (t)"
+    - "Posición de encuentro desde la primera ciudad (x)"
+  formulas:
+    - "x = v₁ × t (posición del primer móvil)"
+    - "x = d - v₂ × t (posición del segundo móvil)"
+    - "v_relativa = v₁ + v₂ (velocidades opuestas)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Los automóviles se acercan entre sí, por lo que sus velocidades se suman"
+    - "En el encuentro, ambos móviles estarán en la misma posición"
+    - "Usa la velocidad relativa: v_rel = 80 + 100 = 180 km/h"
+    - "El tiempo será: t = distancia / velocidad_relativa"
+    - "La posición será: x = v₁ × t"
+  acceptedPrecision: 0.1
+
+prerequisites:
+  - "Movimiento rectilíneo uniforme"
+  - "Conceptos de velocidad relativa"
+  - "Resolución de ecuaciones lineales"
+
+reference:
+  - "Física General - Serway & Jewett, Capítulo 2"
+  - "Mecánica Clásica - Goldstein"
+
+relatedExercises:
+  - "ejemplo-mru"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Análisis del Problema
+
+Este ejercicio involucra el **encuentro de dos móviles** que se mueven en direcciones opuestas con velocidades constantes.
+
+## Estrategia de Solución
+
+Para resolver este tipo de problemas:
+1. Establecer un sistema de referencia
+2. Escribir las ecuaciones de posición para cada móvil
+3. Igualar las posiciones en el momento del encuentro
+4. Resolver para encontrar el tiempo y la posición
+
+## Conceptos Clave
+
+- **Velocidad relativa**: Cuando dos objetos se mueven en direcciones opuestas, sus velocidades se suman
+- **Punto de encuentro**: Posición donde ambos móviles coinciden en el mismo instante

@@ -1,0 +1,730 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+type Props = CollectionEntry<'exercise'>['data'];
+
+const { 
+  title, 
+  description, 
+  pubDate, 
+  updatedDate, 
+  heroImage, 
+  author,
+  difficulty,
+  educationLevel,
+  estimatedTime,
+  tags,
+  topic,
+  subtopic,
+  type,
+  status,
+  problem,
+  solution,
+  interactive,
+  interactiveConfig,
+  prerequisites,
+  reference,
+  relatedExercises
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <Header />
+    <main class="exercise-main">
+      <article class="exercise-article">
+        <!-- Header del ejercicio -->
+        <div class="exercise-header">
+          {heroImage && (
+            <div class="hero-image">
+              <img src={heroImage} alt={title} />
+            </div>
+          )}
+          
+          <div class="exercise-meta-header">
+            <div class="exercise-badges">
+              {type === 'example' ? (
+                <span class="badge type-badge example">Ejercicio Resuelto</span>
+              ) : (
+                <span class="badge type-badge challenge">Ejercicio para Resolver</span>
+              )}
+              
+              {difficulty && (
+                <span class={`badge difficulty-badge ${difficulty.toLowerCase()}`}>
+                  {difficulty}
+                </span>
+              )}
+              
+              {educationLevel && (
+                <span class="badge education-badge">
+                  {educationLevel}
+                </span>
+              )}
+            </div>
+            
+            <h1 class="exercise-title">{title}</h1>
+            <p class="exercise-description">{description}</p>
+            
+            <div class="exercise-info">
+              <div class="info-row">
+                {topic && <span class="info-item"><strong>Tema:</strong> {topic}</span>}
+                {subtopic && <span class="info-item"><strong>Subtema:</strong> {subtopic}</span>}
+                {estimatedTime && <span class="info-item"><strong>Tiempo estimado:</strong> {estimatedTime} min</span>}
+              </div>
+              
+              <div class="info-row">
+                <span class="info-item">
+                  <strong>Publicado:</strong> <FormattedDate date={pubDate} />
+                </span>
+                {updatedDate && (
+                  <span class="info-item">
+                    <strong>Actualizado:</strong> <FormattedDate date={updatedDate} />
+                  </span>
+                )}
+                {author && <span class="info-item"><strong>Autor:</strong> {author}</span>}
+              </div>
+            </div>
+            
+            {tags && tags.length > 0 && (
+              <div class="tags-container">
+                {tags.map(tag => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Conocimientos previos -->
+        {prerequisites && prerequisites.length > 0 && (
+          <section class="prerequisites-section">
+            <h2>Conocimientos Previos Necesarios</h2>
+            <ul class="prerequisites-list">
+              {prerequisites.map(prereq => (
+                <li>{prereq}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <!-- Planteamiento del problema -->
+        <section class="problem-section">
+          <h2>Planteamiento del Problema</h2>
+          <div class="problem-statement">
+            <p>{problem.statement}</p>
+          </div>
+          
+          {problem.givens && problem.givens.length > 0 && (
+            <div class="problem-subsection">
+              <h3>Datos dados:</h3>
+              <ul class="data-list">
+                {problem.givens.map(given => (
+                  <li>{given}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {problem.unknowns && problem.unknowns.length > 0 && (
+            <div class="problem-subsection">
+              <h3>Incógnitas:</h3>
+              <ul class="data-list">
+                {problem.unknowns.map(unknown => (
+                  <li>{unknown}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {problem.formulas && problem.formulas.length > 0 && (
+            <div class="problem-subsection">
+              <h3>Fórmulas relevantes:</h3>
+              <ul class="formulas-list">
+                {problem.formulas.map(formula => (
+                  <li class="formula">{formula}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {problem.images && problem.images.length > 0 && (
+            <div class="problem-images">
+              {problem.images.map(image => (
+                <img src={image} alt="Diagrama del problema" class="problem-image" />
+              ))}
+            </div>
+          )}
+        </section>
+
+        <!-- Contenido del ejercicio (MDX) -->
+        <section class="exercise-content">
+          <slot />
+        </section>
+
+        <!-- Solución (solo para ejercicios resueltos) -->
+        {type === 'example' && solution && (
+          <section class="solution-section">
+            <h2>Solución</h2>
+            
+            {solution.approach && (
+              <div class="solution-approach">
+                <h3>Enfoque general:</h3>
+                <p>{solution.approach}</p>
+              </div>
+            )}
+            
+            {solution.steps && solution.steps.length > 0 && (
+              <div class="solution-steps">
+                <h3>Pasos de la solución:</h3>
+                <ol class="steps-list">
+                  {solution.steps.map((step, index) => (
+                    <li class="solution-step">
+                      <h4>{step.title}</h4>
+                      <div class="step-content">
+                        <p>{step.content}</p>
+                        {step.formula && (
+                          <div class="step-formula">{step.formula}</div>
+                        )}
+                        {step.image && (
+                          <img src={step.image} alt={`Paso ${index + 1}`} class="step-image" />
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+            
+            {solution.finalAnswer && (
+              <div class="final-answer">
+                <h3>Respuesta final:</h3>
+                <div class="answer-box">
+                  {solution.finalAnswer}
+                </div>
+              </div>
+            )}
+            
+            {solution.explanation && (
+              <div class="solution-explanation">
+                <h3>Explicación adicional:</h3>
+                <p>{solution.explanation}</p>
+              </div>
+            )}
+            
+            {solution.video && (
+              <div class="solution-video">
+                <h3>Video explicativo:</h3>
+                <a href={solution.video} target="_blank" class="video-link">
+                  Ver video explicativo
+                </a>
+              </div>
+            )}
+          </section>
+        )}
+
+        <!-- Ejercicio interactivo -->
+        {interactive && interactiveConfig && (
+          <section class="interactive-section">
+            <h2>Ejercicio Interactivo</h2>
+            <div id="interactive-exercise" class="interactive-container">
+              <!-- Aquí se cargaría el componente interactivo -->
+              <p>Ejercicio interactivo disponible</p>
+              {interactiveConfig.hints && interactiveConfig.hints.length > 0 && (
+                <div class="hints-container">
+                  <h3>Pistas disponibles:</h3>
+                  <div class="hints-list">
+                    {interactiveConfig.hints.map((hint, index) => (
+                      <div class="hint" data-hint-index={index}>
+                        <button class="hint-button">Pista {index + 1}</button>
+                        <div class="hint-content" style="display: none;">{hint}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        <!-- Referencias y ejercicios relacionados -->
+        <footer class="exercise-footer">
+          {reference && reference.length > 0 && (
+            <div class="references">
+              <h3>Referencias:</h3>
+              <ul>
+                {reference.map(ref => (
+                  <li>{ref}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {relatedExercises && relatedExercises.length > 0 && (
+            <div class="related-exercises">
+              <h3>Ejercicios relacionados:</h3>
+              <ul>
+                {relatedExercises.map(exercise => (
+                  <li>
+                    <a href={`/exercise/${exercise}/`}>{exercise}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </footer>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .exercise-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    line-height: 1.7;
+  }
+
+  .exercise-article {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Header del ejercicio */
+  .exercise-header {
+    position: relative;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .exercise-meta-header {
+    padding: 2rem;
+  }
+
+  .exercise-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+  }
+
+  .type-badge.example {
+    background-color: #2563eb;
+  }
+
+  .type-badge.challenge {
+    background-color: #dc2626;
+  }
+
+  .difficulty-badge.facil {
+    background-color: #16a34a;
+  }
+
+  .difficulty-badge.medio {
+    background-color: #ea580c;
+  }
+
+  .difficulty-badge.dificil {
+    background-color: #dc2626;
+  }
+
+  .education-badge {
+    background-color: #7c3aed;
+  }
+
+  .exercise-title {
+    margin: 0 0 1rem 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1.2;
+  }
+
+  .exercise-description {
+    font-size: 1.2rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+  }
+
+  .exercise-info {
+    margin-bottom: 1.5rem;
+  }
+
+  .info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .info-item {
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background-color: #f3f4f6;
+    color: #374151;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  /* Secciones */
+  .prerequisites-section,
+  .problem-section,
+  .exercise-content,
+  .solution-section,
+  .interactive-section {
+    padding: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .prerequisites-section h2,
+  .problem-section h2,
+  .solution-section h2,
+  .interactive-section h2 {
+    color: #1f2937;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  .problem-statement {
+    background-color: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+    margin-bottom: 1.5rem;
+  }
+
+  .problem-subsection {
+    margin-bottom: 1.5rem;
+  }
+
+  .problem-subsection h3 {
+    color: #374151;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .data-list,
+  .prerequisites-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+
+  .data-list li,
+  .prerequisites-list li {
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+  }
+
+  .formulas-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .formula {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+  }
+
+  .problem-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .problem-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Solución */
+  .solution-approach,
+  .solution-explanation {
+    margin-bottom: 2rem;
+  }
+
+  .solution-steps {
+    margin-bottom: 2rem;
+  }
+
+  .steps-list {
+    counter-reset: step-counter;
+    list-style: none;
+    padding: 0;
+  }
+
+  .solution-step {
+    counter-increment: step-counter;
+    margin-bottom: 2rem;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .solution-step::before {
+    content: counter(step-counter);
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background-color: #3b82f6;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  .solution-step h4 {
+    margin: 0 0 1rem 0;
+    color: #1f2937;
+    font-size: 1.25rem;
+  }
+
+  .step-formula {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+  }
+
+  .step-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+
+  .final-answer {
+    margin-top: 2rem;
+  }
+
+  .answer-box {
+    background-color: #ecfdf5;
+    border: 2px solid #16a34a;
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    color: #15803d;
+  }
+
+  /* Ejercicio interactivo */
+  .interactive-container {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 2rem;
+  }
+
+  .hints-container {
+    margin-top: 2rem;
+  }
+
+  .hint {
+    margin-bottom: 1rem;
+  }
+
+  .hint-button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  .hint-button:hover {
+    background-color: #2563eb;
+  }
+
+  .hint-content {
+    background-color: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Footer */
+  .exercise-footer {
+    padding: 2rem;
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .references,
+  .related-exercises {
+    margin-bottom: 1.5rem;
+  }
+
+  .references h3,
+  .related-exercises h3 {
+    color: #374151;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .references ul,
+  .related-exercises ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+  }
+
+  .related-exercises a {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+
+  .related-exercises a:hover {
+    text-decoration: underline;
+  }
+
+  /* Contenido MDX */
+  .exercise-content :global(h1),
+  .exercise-content :global(h2),
+  .exercise-content :global(h3) {
+    color: #1f2937;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .exercise-content :global(p) {
+    margin-bottom: 1rem;
+    color: #4b5563;
+  }
+
+  .exercise-content :global(pre) {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .exercise-content :global(code) {
+    background-color: #f1f5f9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+  }
+
+  .exercise-content :global(blockquote) {
+    border-left: 4px solid #3b82f6;
+    background-color: #f8fafc;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .exercise-main {
+      padding: 1rem;
+    }
+
+    .exercise-title {
+      font-size: 2rem;
+    }
+
+    .info-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .prerequisites-section,
+    .problem-section,
+    .exercise-content,
+    .solution-section,
+    .interactive-section {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Script para manejar las pistas de ejercicios interactivos
+  document.addEventListener('DOMContentLoaded', () => {
+    const hintButtons = document.querySelectorAll('.hint-button');
+    
+    hintButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const hint = button.parentElement;
+        if (!hint) return;
+        
+        const content = hint.querySelector('.hint-content') as HTMLElement;
+        if (!content) return;
+        
+        if (content.style.display === 'none' || content.style.display === '') {
+          content.style.display = 'block';
+          if (button.textContent) {
+            button.textContent = button.textContent.replace('Pista', 'Ocultar pista');
+          }
+        } else {
+          content.style.display = 'none';
+          if (button.textContent) {
+            button.textContent = button.textContent.replace('Ocultar pista', 'Pista');
+          }
+        }
+      });
+    });
+  });
+</script>

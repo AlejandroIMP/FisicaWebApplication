@@ -1,0 +1,109 @@
+---
+title: "Ejemplo MRU: Velocidad Relativa en Autopista"
+description: "Ejercicio resuelto sobre velocidad relativa entre vehículos en movimiento rectilíneo uniforme"
+difficulty: "Medio"
+educationLevel: "Bachillerato"
+estimatedTime: 15
+tags: ["MRU", "velocidad relativa", "adelantamiento", "autopista"]
+topic: "cinematica"
+subtopic: "movimiento rectilíneo uniforme"
+type: "example"
+status: "published"
+
+problem:
+  statement: "En una autopista, un automóvil A viaja a 100 km/h y un automóvil B viaja a 80 km/h en la misma dirección. Si inicialmente B está 500 m adelante de A, ¿cuánto tiempo tardará A en alcanzar a B? ¿Qué distancia habrá recorrido A cuando lo alcance?"
+  givens:
+    - "Velocidad del automóvil A: vₐ = 100 km/h = 27.78 m/s"
+    - "Velocidad del automóvil B: vᵦ = 80 km/h = 22.22 m/s"
+    - "Distancia inicial entre vehículos: d₀ = 500 m (B adelante)"
+    - "Ambos viajan en la misma dirección"
+  unknowns:
+    - "Tiempo de encuentro (t)"
+    - "Distancia recorrida por A (xₐ)"
+  formulas:
+    - "v_relativa = vₐ - vᵦ (velocidades en la misma dirección)"
+    - "xₐ = vₐ × t (distancia de A)"
+    - "xᵦ = d₀ + vᵦ × t (distancia de B desde origen)"
+
+solution:
+  approach: "Para resolver este problema de velocidad relativa, utilizaremos el concepto de que A debe 'ganar' la distancia inicial de ventaja de B. La velocidad relativa nos indica qué tan rápido se reduce la distancia entre ambos vehículos."
+  steps:
+    - title: "Convertir velocidades a m/s"
+      content: "Convertimos las velocidades de km/h a m/s para trabajar con unidades consistentes"
+      formula: "vₐ = 100 × (1000/3600) = 27.78 m/s; vᵦ = 80 × (1000/3600) = 22.22 m/s"
+    - title: "Calcular la velocidad relativa"
+      content: "Como ambos viajan en la misma dirección, la velocidad relativa es la diferencia"
+      formula: "v_rel = vₐ - vᵦ = 27.78 - 22.22 = 5.56 m/s"
+    - title: "Calcular el tiempo de encuentro"
+      content: "El tiempo necesario para que A 'gane' los 500 m de ventaja inicial"
+      formula: "t = d₀/v_rel = 500 m / 5.56 m/s = 90 s = 1.5 min"
+    - title: "Calcular la distancia recorrida por A"
+      content: "Durante el tiempo de encuentro, A habrá recorrido"
+      formula: "xₐ = vₐ × t = 27.78 m/s × 90 s = 2500 m = 2.5 km"
+    - title: "Verificación"
+      content: "Verificamos que ambos vehículos estén en la misma posición"
+      formula: "Posición de B: 500 + 22.22 × 90 = 500 + 2000 = 2500 m ✓"
+  finalAnswer: "A tardará 90 segundos (1.5 minutos) en alcanzar a B, y habrá recorrido 2.5 km cuando lo logre"
+  explanation: "La velocidad relativa de 5.56 m/s (20 km/h) significa que A se acerca a B a esta velocidad. Es como si B estuviera estacionario y A se acercara a 20 km/h para cubrir los 500 m iniciales."
+
+prerequisites:
+  - "Movimiento rectilíneo uniforme"
+  - "Conceptos de velocidad relativa"
+  - "Conversión de unidades (km/h a m/s)"
+  - "Interpretación de problemas de encuentro"
+
+reference:
+  - "Física General - Serway & Jewett, Capítulo 2"
+  - "Mecánica - Alonso & Finn, Capítulo 1"
+
+relatedExercises:
+  - "ejemplo-mru"
+  - "desafio-mru-encuentro"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Velocidad Relativa
+
+La **velocidad relativa** es la velocidad de un objeto medida respecto a otro objeto en movimiento.
+
+## Conceptos Fundamentales
+
+### Velocidad Relativa en la Misma Dirección
+- **Misma dirección**: v_rel = |vₐ - vᵦ|
+- **Direcciones opuestas**: v_rel = vₐ + vᵦ
+
+### Sistema de Referencia
+La velocidad siempre depende del **sistema de referencia** elegido:
+- Respecto al suelo (referencia fija)
+- Respecto a otro vehículo (referencia móvil)
+
+## Aplicaciones Prácticas
+
+### En el Transporte
+- **Adelantamientos**: Cálculo de tiempo y distancia necesarios
+- **Separación de seguridad**: Distancias mínimas entre vehículos
+- **Navegación aérea**: Velocidad respecto al aire vs. respecto al suelo
+
+### En la Vida Cotidiana
+- **Ascensores y escaleras mecánicas**
+- **Barcos y corrientes de agua**
+- **Aviones y vientos**
+
+## Estrategias de Solución
+
+1. **Definir claramente** qué velocidades son respecto a qué sistema
+2. **Establecer** las direcciones positivas y negativas
+3. **Calcular** la velocidad relativa apropiada
+4. **Aplicar** las ecuaciones del MRU con esta velocidad
+
+## Casos Especiales
+
+### Encuentro Frontal
+Dos objetos se acercan desde direcciones opuestas:
+**t_encuentro = distancia_inicial/(v₁ + v₂)**
+
+### Persecución
+Un objeto más rápido alcanza a uno más lento:
+**t_alcance = distancia_inicial/(v_rápido - v_lento)**

@@ -1,0 +1,119 @@
+---
+title: "Desafío: Movimiento Circular Uniformemente Acelerado"
+description: "Ejercicio sobre movimiento circular con aceleración angular constante en una rueda que arranca"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 28
+tags: ["movimiento circular", "aceleración angular", "MCUA", "rueda"]
+topic: "cinematica"
+subtopic: "movimiento circular"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Una rueda de 40 cm de radio parte del reposo y acelera angularmente a razón constante de 2 rad/s² durante 6 segundos. Después mantiene velocidad angular constante durante 4 segundos más. Calcula: a) La velocidad angular al final de la aceleración, b) El ángulo total girado en los primeros 6 segundos, c) El ángulo total girado en todo el proceso, d) La velocidad lineal de un punto en el borde al final del proceso."
+  givens:
+    - "Radio de la rueda: r = 40 cm = 0.4 m"
+    - "Velocidad angular inicial: ω₀ = 0 rad/s (parte del reposo)"
+    - "Aceleración angular: α = 2 rad/s² (primeros 6 s)"
+    - "Tiempo de aceleración: t₁ = 6 s"
+    - "Tiempo de velocidad constante: t₂ = 4 s"
+  unknowns:
+    - "Velocidad angular final de aceleración (ω₁)"
+    - "Ángulo girado en aceleración (θ₁)"
+    - "Ángulo total girado (θ_total)"
+    - "Velocidad lineal final (v)"
+  formulas:
+    - "ω = ω₀ + αt (velocidad angular con aceleración)"
+    - "θ = ω₀t + ½αt² (ángulo con aceleración angular)"
+    - "θ = ωt (ángulo con velocidad angular constante)"
+    - "v = ωr (velocidad lineal)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Fase 1 (aceleración): ω₁ = 0 + 2 × 6 = 12 rad/s"
+    - "Fase 1: θ₁ = 0 + ½ × 2 × 6² = 36 rad"
+    - "Fase 2 (velocidad constante): θ₂ = 12 × 4 = 48 rad"
+    - "Ángulo total: θ_total = θ₁ + θ₂ = 36 + 48 = 84 rad"
+    - "Velocidad lineal: v = ωr = 12 × 0.4 = 4.8 m/s"
+    - "Para convertir ángulos a vueltas: 1 vuelta = 2π rad ≈ 6.28 rad"
+  acceptedPrecision: 0.1
+
+prerequisites:
+  - "Movimiento circular uniforme"
+  - "Analogías entre movimiento lineal y angular"
+  - "Ecuaciones cinemáticas del MRUV aplicadas al movimiento circular"
+  - "Relación entre magnitudes lineales y angulares"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 9"
+  - "Mecánica Clásica - Goldstein, Capítulo 1"
+  - "Física General - Serway & Jewett, Capítulo 10"
+
+relatedExercises:
+  - "ejemplo-circular-uniforme"
+  - "ejemplo-mruv-aceleracion"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Movimiento Circular Uniformemente Acelerado (MCUA)
+
+El **MCUA** es la versión rotacional del MRUV, donde la aceleración angular permanece constante.
+
+## Analogías Lineales vs. Angulares
+
+| Magnitud Lineal | Magnitud Angular | Relación |
+|----------------|------------------|----------|
+| Posición (x) | Ángulo (θ) | θ = x/r |
+| Velocidad (v) | Velocidad angular (ω) | v = ωr |
+| Aceleración (a) | Aceleración angular (α) | a = αr |
+
+## Ecuaciones del MCUA
+
+### Análogas a las del MRUV
+1. **ω = ω₀ + αt** (velocidad angular)
+2. **θ = ω₀t + ½αt²** (ángulo girado)
+3. **ω² = ω₀² + 2αθ** (ecuación cinemática angular)
+
+### Relaciones Lineales-Angulares
+- **Velocidad lineal**: v = ωr
+- **Aceleración tangencial**: aₜ = αr
+- **Aceleración centrípeta**: aᶜ = ω²r
+
+## Aplicaciones del MCUA
+
+### Maquinaria Industrial
+- **Motores**: Arranque y parada controlados
+- **Turbinas**: Aceleración hasta velocidad operativa
+- **Centrifugadoras**: Procesos de separación
+
+### Vehículos
+- **Ruedas**: Aceleración y frenado
+- **Transmisiones**: Cambios de velocidad
+- **Volantes de inercia**: Almacenamiento de energía
+
+### Deportes y Recreación
+- **Deportes de rotación**: Patinaje artístico, gimnasia
+- **Juegos mecánicos**: Ruedas de la fortuna, carruseles
+
+## Conceptos Importantes
+
+### Aceleración Total en MCUA
+Un punto en el borde experimenta:
+- **Aceleración tangencial**: aₜ = αr (cambia la rapidez)
+- **Aceleración centrípeta**: aᶜ = ω²r (cambia la dirección)
+- **Aceleración total**: a = √(aₜ² + aᶜ²)
+
+### Conversión de Unidades Angulares
+- **1 revolución** = 2π radianes = 360°
+- **1 rad/s** = 60/(2π) rpm ≈ 9.55 rpm
+- **1 rpm** = 2π/60 rad/s ≈ 0.105 rad/s
+
+### Gráficas en MCUA
+- **ω vs t**: Línea recta (pendiente = α)
+- **θ vs t**: Parábola (concavidad según signo de α)
+- **α vs t**: Línea horizontal (constante)

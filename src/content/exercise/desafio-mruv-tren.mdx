@@ -1,0 +1,131 @@
+---
+title: "Desafío MRUV: Aceleración y Frenado de Tren"
+description: "Ejercicio complejo sobre un tren que acelera, mantiene velocidad constante y luego frena hasta detenerse"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 35
+tags: ["MRUV", "fases múltiples", "aceleración", "frenado", "tren"]
+topic: "cinematica"
+subtopic: "movimiento uniformemente acelerado"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Un tren parte del reposo y acelera uniformemente a 0.8 m/s² durante 2 minutos. Luego mantiene velocidad constante durante 5 minutos. Finalmente, frena uniformemente a -1.2 m/s² hasta detenerse completamente. Calcula: a) La velocidad máxima alcanzada, b) La distancia total recorrida, c) El tiempo total del viaje, d) La velocidad promedio del viaje completo."
+  givens:
+    - "Velocidad inicial: v₀ = 0 m/s (parte del reposo)"
+    - "Fase 1 - Aceleración: a₁ = 0.8 m/s², t₁ = 2 min = 120 s"
+    - "Fase 2 - Velocidad constante: t₂ = 5 min = 300 s"
+    - "Fase 3 - Frenado: a₃ = -1.2 m/s², v_final = 0 m/s"
+  unknowns:
+    - "Velocidad máxima (v_max)"
+    - "Distancia total (d_total)"
+    - "Tiempo total (T_total)"
+    - "Velocidad promedio (v_promedio)"
+  formulas:
+    - "v = v₀ + at (ecuación de velocidad)"
+    - "x = v₀t + ½at² (ecuación de posición con aceleración)"
+    - "x = vt (ecuación de posición con velocidad constante)"
+    - "v_promedio = distancia_total / tiempo_total"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Fase 1: v_max = 0 + 0.8 × 120 = 96 m/s"
+    - "Fase 1: x₁ = ½ × 0.8 × 120² = 5,760 m"
+    - "Fase 2: x₂ = 96 × 300 = 28,800 m"
+    - "Fase 3: Tiempo de frenado: t₃ = (0 - 96)/(-1.2) = 80 s"
+    - "Fase 3: x₃ = 96 × 80 + ½ × (-1.2) × 80² = 3,840 m"
+    - "Total: x_total = 5,760 + 28,800 + 3,840 = 38,400 m"
+    - "Tiempo total: T = 120 + 300 + 80 = 500 s"
+    - "Velocidad promedio: v_prom = 38,400/500 = 76.8 m/s"
+  acceptedPrecision: 10
+
+prerequisites:
+  - "Ecuaciones cinemáticas del MRUV"
+  - "Movimiento rectilíneo uniforme"
+  - "Análisis de movimiento por fases"
+  - "Conceptos de velocidad promedio"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 2"
+  - "Mecánica del Transporte Ferroviario"
+  - "Física Aplicada - Tippens"
+
+relatedExercises:
+  - "ejemplo-mruv-aceleracion"
+  - "desafio-mruv-frenado"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Movimiento en Múltiples Fases
+
+Este problema ilustra un **movimiento complejo** que combina diferentes tipos de movimiento en secuencia.
+
+## Análisis por Fases
+
+### Fase 1: Aceleración Uniforme (MRUV)
+- **Tipo**: Movimiento uniformemente acelerado
+- **Características**: v₀ = 0, a = constante > 0
+- **Ecuaciones aplicables**: v = at, x = ½at²
+
+### Fase 2: Velocidad Constante (MRU)
+- **Tipo**: Movimiento rectilíneo uniforme
+- **Características**: v = constante, a = 0
+- **Ecuaciones aplicables**: x = vt
+
+### Fase 3: Desaceleración Uniforme (MRUV)
+- **Tipo**: Movimiento uniformemente desacelerado
+- **Características**: v_final = 0, a = constante < 0
+- **Ecuaciones aplicables**: v = v₀ + at, x = v₀t + ½at²
+
+## Metodología de Solución
+
+### 1. Analizar Cada Fase Independientemente
+- Identificar el tipo de movimiento
+- Determinar las variables conocidas y desconocidas
+- Aplicar las ecuaciones correspondientes
+
+### 2. Conectar las Fases
+- La velocidad final de una fase = velocidad inicial de la siguiente
+- La posición final de una fase = posición inicial de la siguiente
+- Los tiempos se suman para obtener el tiempo total
+
+### 3. Calcular Magnitudes Globales
+- **Distancia total**: Suma de distancias de todas las fases
+- **Tiempo total**: Suma de tiempos de todas las fases
+- **Velocidad promedio**: Distancia total / Tiempo total
+
+## Aplicaciones en Transporte
+
+### Trenes y Metro
+- **Aceleración**: Al salir de estaciones
+- **Velocidad constante**: En tramos largos
+- **Frenado**: Al aproximarse a estaciones
+
+### Automóviles
+- **Aceleración**: En semáforos y autopistas
+- **Crucero**: En velocidad de autopista
+- **Frenado**: En zonas urbanas y paradas
+
+### Aviación
+- **Despegue**: Aceleración en pista
+- **Crucero**: Velocidad constante
+- **Aterrizaje**: Desaceleración controlada
+
+## Conceptos Importantes
+
+### Velocidad Promedio vs. Velocidad Media
+- **Velocidad promedio**: Distancia total / Tiempo total
+- **Velocidad media**: Promedio aritmético de velocidades (NO es lo mismo)
+
+### Gráficas v-t
+- **Fase 1**: Línea recta con pendiente positiva
+- **Fase 2**: Línea horizontal
+- **Fase 3**: Línea recta con pendiente negativa
+
+### Área bajo la Curva
+El **área bajo la gráfica v-t** representa la **distancia recorrida**.

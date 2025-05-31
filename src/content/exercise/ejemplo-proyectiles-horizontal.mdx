@@ -1,0 +1,92 @@
+---
+title: "Ejemplo: Movimiento de Proyectiles - Tiro Horizontal"
+description: "Ejercicio resuelto de tiro horizontal con cálculo de alcance y velocidad final"
+difficulty: "Dificil"
+educationLevel: "Bachillerato"
+estimatedTime: 25
+tags: ["proyectiles", "tiro horizontal", "alcance", "velocidad", "gravedad"]
+topic: "cinematica"
+subtopic: "movimiento de proyectiles"
+type: "example"
+status: "published"
+
+problem:
+  statement: "Una pelota es lanzada horizontalmente desde una altura de 20 m con una velocidad inicial de 15 m/s. ¿Cuánto tiempo permanece en el aire? ¿Cuál es el alcance horizontal? ¿Con qué velocidad impacta el suelo?"
+  givens:
+    - "Altura inicial: h = 20 m"
+    - "Velocidad inicial horizontal: v₀ₓ = 15 m/s"
+    - "Velocidad inicial vertical: v₀ᵧ = 0 m/s (tiro horizontal)"
+    - "Aceleración de la gravedad: g = 9.8 m/s²"
+  unknowns:
+    - "Tiempo de vuelo (t)"
+    - "Alcance horizontal (x)"
+    - "Velocidad final (v)"
+  formulas:
+    - "y = h - ½gt² (movimiento vertical)"
+    - "x = v₀ₓ × t (movimiento horizontal)"
+    - "vᵧ = gt (velocidad vertical final)"
+    - "v = √(vₓ² + vᵧ²) (velocidad resultante)"
+
+solution:
+  approach: "En el movimiento de proyectiles, analizamos separadamente el movimiento horizontal (MRU) y vertical (MRUV). El tiempo de vuelo se determina por el movimiento vertical, y el alcance por el horizontal."
+  steps:
+    - title: "Calcular el tiempo de vuelo"
+      content: "El proyectil toca el suelo cuando y = 0. Usamos la ecuación vertical:"
+      formula: "0 = 20 - ½(9.8)t² → ½(9.8)t² = 20 → t² = 40/9.8 → t = √(4.08) = 2.02 s"
+    - title: "Calcular el alcance horizontal"
+      content: "En el movimiento horizontal, la velocidad es constante"
+      formula: "x = v₀ₓ × t = 15 m/s × 2.02 s = 30.3 m"
+    - title: "Calcular la velocidad vertical al impacto"
+      content: "La componente vertical de la velocidad al final del vuelo"
+      formula: "vᵧ = gt = 9.8 × 2.02 = 19.8 m/s"
+    - title: "Calcular la velocidad total al impacto"
+      content: "La velocidad resultante es la combinación vectorial de las componentes horizontal y vertical"
+      formula: "v = √(vₓ² + vᵧ²) = √(15² + 19.8²) = √(225 + 392) = √617 = 24.8 m/s"
+  finalAnswer: "La pelota permanece 2.02 s en el aire, alcanza 30.3 m horizontalmente, e impacta con una velocidad de 24.8 m/s"
+  explanation: "En el tiro horizontal, la componente horizontal de la velocidad permanece constante (no hay aceleración horizontal), mientras que la componente vertical parte de cero y aumenta debido a la gravedad. El tiempo de vuelo depende únicamente de la altura inicial."
+
+prerequisites:
+  - "Movimiento rectilíneo uniforme (MRU)"
+  - "Movimiento uniformemente acelerado (MRUV)"
+  - "Composición vectorial de velocidades"
+  - "Independencia de movimientos perpendiculares"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 3"
+  - "Física General - Serway & Jewett, Capítulo 4"
+
+relatedExercises:
+  - "desafio-caida-libre"
+  - "ejemplo-mruv-aceleracion"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Movimiento de Proyectiles
+
+El **movimiento de proyectiles** combina un movimiento horizontal uniforme con un movimiento vertical uniformemente acelerado.
+
+## Principios Fundamentales
+
+1. **Independencia de movimientos**: Los movimientos horizontal y vertical son independientes
+2. **Movimiento horizontal**: MRU (velocidad constante)
+3. **Movimiento vertical**: MRUV (aceleración constante = g)
+
+## Tipos de Lanzamiento
+
+- **Tiro horizontal**: v₀ᵧ = 0, solo velocidad inicial horizontal
+- **Tiro oblicuo**: v₀ₓ ≠ 0 y v₀ᵧ ≠ 0, velocidad inicial con ángulo
+- **Lanzamiento vertical**: v₀ₓ = 0, solo velocidad inicial vertical
+
+## Ecuaciones Paramétricas
+
+**Horizontal**: x = v₀ₓt  
+**Vertical**: y = h + v₀ᵧt - ½gt²
+
+## Aplicaciones
+
+- Balística
+- Deportes (baloncesto, fútbol, golf)
+- Ingeniería (puentes, cañones de agua)
+- Exploración espacial

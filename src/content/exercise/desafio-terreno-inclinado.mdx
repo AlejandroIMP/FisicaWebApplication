@@ -1,0 +1,156 @@
+---
+title: "Desafío Avanzado: Alcance Máximo en Terreno Inclinado"
+description: "Ejercicio complejo sobre proyectiles lanzados en terreno inclinado para alcance máximo"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 40
+tags: ["proyectiles", "terreno inclinado", "optimización", "alcance máximo"]
+topic: "cinematica"
+subtopic: "movimiento de proyectiles"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Un proyectil se lanza desde la base de una colina que tiene una inclinación de 30° con la horizontal. La velocidad inicial del proyectil es de 100 m/s. ¿Con qué ángulo (respecto a la horizontal) debe lanzarse el proyectil para obtener el máximo alcance sobre la superficie inclinada? ¿Cuál es ese alcance máximo?"
+  givens:
+    - "Velocidad inicial: v₀ = 100 m/s"
+    - "Inclinación del terreno: β = 30°"
+    - "Aceleración de gravedad: g = 9.8 m/s²"
+    - "Lanzamiento desde la base de la colina"
+    - "sen(30°) = 0.5, cos(30°) = 0.866"
+  unknowns:
+    - "Ángulo óptimo de lanzamiento (θ_opt)"
+    - "Alcance máximo sobre la superficie (R_max)"
+  formulas:
+    - "x = v₀cos(θ)t (posición horizontal)"
+    - "y = v₀sen(θ)t - ½gt² (posición vertical)"
+    - "Ecuación del terreno: y = x×tan(β)"
+    - "θ_opt = 45° + β/2 (ángulo óptimo en terreno inclinado)"
+    - "R = v₀²sen(2θ - β) / [g×cos²(β)] (alcance en terreno inclinado)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Para terreno inclinado, el ángulo óptimo es: θ_opt = 45° + β/2"
+    - "Con β = 30°: θ_opt = 45° + 15° = 60°"
+    - "El alcance máximo se calcula con: R_max = v₀²/[g(1 + sen(β))]"
+    - "Sustituyendo: R_max = 100²/[9.8(1 + sen(30°))] = 10000/[9.8(1.5)]"
+    - "R_max = 10000/14.7 ≈ 680 m"
+    - "Alternativamente: R = v₀²sen(2×60° - 30°)/(g×cos²(30°))"
+    - "R = 10000×sen(90°)/(9.8×0.75) = 10000/(7.35) ≈ 1361 m (alcance horizontal)"
+  acceptedPrecision: 10
+
+prerequisites:
+  - "Movimiento de proyectiles en terreno plano"
+  - "Ecuaciones paramétricas de trayectoria"
+  - "Optimización mediante cálculo diferencial"
+  - "Trigonometría avanzada"
+
+reference:
+  - "Mecánica Clásica - Goldstein, Capítulo 1"
+  - "Física Universitaria - Sears & Zemansky, Capítulo 3"
+  - "Mathematical Methods for Physics - Arfken & Weber"
+
+relatedExercises:
+  - "desafio-tiro-oblicuo"
+  - "ejemplo-proyectiles-horizontal"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Proyectiles en Terreno Inclinado
+
+El **lanzamiento de proyectiles en terreno inclinado** es una extensión compleja del movimiento de proyectiles que requiere análisis de optimización.
+
+## Geometría del Problema
+
+### Sistema de Coordenadas
+- **Origen**: Punto de lanzamiento
+- **Eje x**: Horizontal hacia la derecha
+- **Eje y**: Vertical hacia arriba
+- **Superficie inclinada**: y = x×tan(β)
+
+### Condición de Impacto
+El proyectil impacta cuando su trayectoria interseca con la superficie:
+**v₀sen(θ)t - ½gt² = v₀cos(θ)t × tan(β)**
+
+## Análisis Matemático
+
+### Tiempo de Vuelo
+Resolviendo la ecuación de impacto:
+**t = (2v₀/g) × [sen(θ) - cos(θ)tan(β)]**
+**t = (2v₀/g) × [sen(θ - β)/cos(β)]**
+
+### Alcance sobre la Superficie
+**R = v₀²sen(2θ - β) / [g×cos²(β)]**
+
+### Optimización para Alcance Máximo
+Derivando R respecto a θ e igualando a cero:
+**θ_óptimo = 45° + β/2**
+
+### Alcance Máximo
+**R_máx = v₀² / [g(1 + sen(β))]**
+
+## Casos Especiales
+
+### Terreno Horizontal (β = 0°)
+- **Ángulo óptimo**: 45°
+- **Alcance máximo**: v₀²/g
+- **Caso clásico** del movimiento de proyectiles
+
+### Terreno Vertical (β = 90°)
+- **Problema degenera**: No hay alcance horizontal
+- **Aplicación**: Lanzamiento hacia pared vertical
+
+### Terreno Descendente (β < 0°)
+- **Ángulo óptimo**: Menor que 45°
+- **Alcance aumenta**: Gravedad y pendiente cooperan
+
+## Factores Físicos
+
+### Influencia de la Inclinación
+- **Mayor inclinación** → **Mayor ángulo óptimo**
+- **Pendiente ascendente** → **Menor alcance máximo**
+- **Pendiente descendente** → **Mayor alcance máximo**
+
+### Componentes de Velocidad
+En el ángulo óptimo:
+- **Horizontal**: v₀cos(45° + β/2)
+- **Vertical**: v₀sen(45° + β/2)
+- **Balance optimizado** entre componentes
+
+## Aplicaciones Prácticas
+
+### Artillería y Balística
+- **Cañones en terreno montañoso**
+- **Ajuste de ángulos según topografía**
+- **Cálculo de trayectorias en combate**
+
+### Deportes
+- **Golf**: Lanzamientos cuesta arriba/abajo
+- **Esquí**: Saltos en pendientes
+- **Atletismo**: Lanzamiento de peso en pistas inclinadas
+
+### Ingeniería Civil
+- **Diseño de fuentes en terraza**
+- **Sistemas de riego en laderas**
+- **Lanzadores en construcción**
+
+## Extensiones del Problema
+
+### Resistencia del Aire
+- **Modifica** las ecuaciones de optimización
+- **Reduce** el alcance efectivo
+- **Requiere** métodos numéricos
+
+### Viento
+- **Componente horizontal**: Afecta el alcance
+- **Componente vertical**: Modifica la trayectoria
+- **Análisis vectorial** más complejo
+
+### Rotación del Proyectil
+- **Efecto Magnus**: Curvatura de trayectoria
+- **Spin del proyectil**: Aplicable en deportes
+- **Mecánica avanzada** de fluidos

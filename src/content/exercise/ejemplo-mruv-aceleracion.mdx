@@ -1,0 +1,80 @@
+---
+title: "Ejemplo MRUV: Aceleración de un Automóvil"
+description: "Ejercicio resuelto sobre movimiento rectilíneo uniformemente acelerado con cálculo de velocidad final y distancia"
+difficulty: "Medio"
+educationLevel: "Bachillerato"
+estimatedTime: 18
+tags: ["MRUV", "aceleración", "velocidad", "distancia", "tiempo"]
+topic: "cinematica"
+subtopic: "movimiento uniformemente acelerado"
+type: "example"
+status: "published"
+
+problem:
+  statement: "Un automóvil parte del reposo y acelera uniformemente a razón de 2.5 m/s² durante 8 segundos. ¿Qué velocidad alcanza al final de este tiempo? ¿Qué distancia recorre durante la aceleración?"
+  givens:
+    - "Velocidad inicial: v₀ = 0 m/s (parte del reposo)"
+    - "Aceleración: a = 2.5 m/s²"
+    - "Tiempo: t = 8 s"
+    - "Movimiento rectilíneo uniformemente acelerado"
+  unknowns:
+    - "Velocidad final (v)"
+    - "Distancia recorrida (x)"
+  formulas:
+    - "v = v₀ + at (ecuación de velocidad)"
+    - "x = v₀t + ½at² (ecuación de posición)"
+    - "v² = v₀² + 2ax (ecuación cinemática)"
+
+solution:
+  approach: "Este es un problema clásico de MRUV donde conocemos la velocidad inicial, aceleración y tiempo. Utilizaremos las ecuaciones cinemáticas para encontrar la velocidad final y la distancia recorrida."
+  steps:
+    - title: "Calcular la velocidad final"
+      content: "Aplicamos la primera ecuación cinemática con los datos conocidos"
+      formula: "v = v₀ + at = 0 + (2.5 m/s²)(8 s) = 20 m/s"
+    - title: "Calcular la distancia recorrida"
+      content: "Usamos la ecuación de posición para el MRUV"
+      formula: "x = v₀t + ½at² = 0 + ½(2.5 m/s²)(8 s)² = ½(2.5)(64) = 80 m"
+    - title: "Verificación usando la tercera ecuación"
+      content: "Podemos verificar nuestro resultado usando la ecuación que relaciona velocidad, aceleración y distancia"
+      formula: "v² = v₀² + 2ax → (20)² = 0² + 2(2.5)(80) → 400 = 400 ✓"
+  finalAnswer: "El automóvil alcanza una velocidad de 20 m/s y recorre una distancia de 80 m"
+  explanation: "En el MRUV, la velocidad aumenta linealmente con el tiempo, mientras que la distancia aumenta cuadráticamente. Por eso vemos que en 8 segundos, la velocidad es 8 × 2.5 = 20 m/s, pero la distancia no es simplemente velocidad × tiempo, sino que incluye el factor ½at²."
+
+prerequisites:
+  - "Conceptos de velocidad y aceleración"
+  - "Ecuaciones cinemáticas del MRUV"
+  - "Diferencia entre MRU y MRUV"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 2"
+  - "Física para Ciencias e Ingeniería - Serway & Jewett"
+
+relatedExercises:
+  - "desafio-caida-libre"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Movimiento Rectilíneo Uniformemente Acelerado (MRUV)
+
+El **MRUV** es un tipo de movimiento donde la aceleración permanece constante, lo que significa que la velocidad cambia uniformemente con el tiempo.
+
+## Características del MRUV
+
+- **Aceleración constante**: a = constante ≠ 0
+- **Velocidad variable**: La velocidad cambia linealmente con el tiempo
+- **Trayectoria rectilínea**: El movimiento ocurre en línea recta
+
+## Ecuaciones Fundamentales
+
+Las tres ecuaciones cinemáticas del MRUV son:
+1. **v = v₀ + at** (relaciona velocidad, tiempo y aceleración)
+2. **x = v₀t + ½at²** (relaciona posición, tiempo y aceleración)
+3. **v² = v₀² + 2ax** (relaciona velocidad, posición y aceleración)
+
+## Aplicaciones Comunes
+
+- Automóviles acelerando o frenando
+- Objetos en caída libre
+- Proyectiles (en cada componente por separado)

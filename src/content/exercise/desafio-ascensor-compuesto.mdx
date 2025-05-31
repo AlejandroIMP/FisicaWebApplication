@@ -1,0 +1,161 @@
+---
+title: "Desafío Integral: Movimiento Compuesto - Ascensor en Movimiento"
+description: "Ejercicio complejo que combina MRU, MRUV y movimiento relativo en un ascensor acelerado"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 35
+tags: ["movimiento compuesto", "ascensor", "movimiento relativo", "aceleración", "gravedad efectiva"]
+topic: "cinematica"
+subtopic: "movimiento compuesto"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Dentro de un ascensor que sube acelerando a 2 m/s², una persona lanza horizontalmente una pelota con velocidad de 5 m/s cuando el ascensor se encuentra a 1.5 m del suelo y lleva una velocidad de 4 m/s hacia arriba. La pelota se lanza desde una altura de 1.2 m dentro del ascensor. ¿Cuánto tiempo permanece la pelota en el aire (relativo al ascensor)? ¿Dónde cae la pelota respecto al suelo del edificio? ¿Cuál es la velocidad de la pelota respecto al suelo del edificio al momento del impacto?"
+  givens:
+    - "Aceleración del ascensor: a_asc = 2 m/s² (hacia arriba)"
+    - "Velocidad inicial del ascensor: v_asc = 4 m/s (hacia arriba)"
+    - "Altura inicial del ascensor: h_asc = 1.5 m (desde el suelo del edificio)"
+    - "Velocidad horizontal de la pelota: v₀ₓ = 5 m/s (respecto al ascensor)"
+    - "Altura de lanzamiento en el ascensor: h₀ = 1.2 m"
+    - "Aceleración de gravedad: g = 9.8 m/s²"
+  unknowns:
+    - "Tiempo de vuelo relativo al ascensor (t)"
+    - "Posición final respecto al suelo del edificio (x_edificio, y_edificio)"
+    - "Velocidad final respecto al suelo del edificio (v_final)"
+  formulas:
+    - "g_efectiva = g + a_asc = 11.8 m/s² (gravedad efectiva en el ascensor)"
+    - "Movimiento vertical en ascensor: y = h₀ - ½g_efectiva×t²"
+    - "Movimiento horizontal en ascensor: x = v₀ₓ×t"
+    - "Altura total respecto edificio: H = h_asc + v_asc×t + ½a_asc×t² + altura_relativa"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Dentro del ascensor, la pelota experimenta gravedad efectiva: g_eff = g + a_asc = 11.8 m/s²"
+    - "Tiempo de caída en el ascensor: 0 = 1.2 - ½×11.8×t² → t = √(2×1.2/11.8) ≈ 0.451 s"
+    - "Alcance horizontal en ascensor: x = 5 × 0.451 ≈ 2.26 m"
+    - "Altura del ascensor al final: h_final = 1.5 + 4×0.451 + ½×2×0.451² ≈ 3.51 m"
+    - "Velocidad vertical pelota respecto suelo: v_y = -11.8×0.451 + (4 + 2×0.451) ≈ -0.42 m/s"
+    - "Velocidad horizontal pelota respecto suelo: v_x = 5 m/s"
+    - "Velocidad final: v = √(5² + 0.42²) ≈ 5.02 m/s"
+  acceptedPrecision: 0.1
+
+prerequisites:
+  - "Movimiento relativo y sistemas de referencia"
+  - "Principio de equivalencia (gravedad efectiva)"
+  - "Composición de movimientos"
+  - "Transformaciones entre sistemas de referencia"
+
+reference:
+  - "Mecánica Clásica - Goldstein, Capítulo 4"
+  - "Física Universitaria - Sears & Zemansky, Capítulo 4"
+  - "Principios de Física - Halliday, Resnick & Walker"
+
+relatedExercises:
+  - "ejemplo-proyectiles-horizontal"
+  - "ejemplo-mruv-aceleracion"
+  - "ejemplo-mru-relativo"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Movimiento en Sistemas de Referencia Acelerados
+
+Este problema ilustra el **movimiento compuesto** donde se combinan múltiples tipos de movimiento en diferentes sistemas de referencia.
+
+## Sistemas de Referencia
+
+### Sistema del Ascensor (No Inercial)
+- **Característica**: Acelerado respecto al suelo
+- **Gravedad efectiva**: g_eff = g + a_ascensor
+- **Fuerzas ficticias**: Aparecen debido a la aceleración del sistema
+
+### Sistema del Edificio (Inercial)
+- **Característica**: Fijo respecto a la Tierra
+- **Gravedad normal**: g = 9.8 m/s²
+- **Marco de referencia**: Considerado inercial para este problema
+
+## Análisis del Movimiento
+
+### En el Sistema del Ascensor
+La pelota experimenta:
+1. **Movimiento horizontal**: MRU con v₀ₓ = 5 m/s
+2. **Movimiento vertical**: MRUV con g_eff = 11.8 m/s²
+3. **Sin velocidad vertical inicial**: (lanzamiento horizontal)
+
+### Transformación al Sistema del Edificio
+Las velocidades se transforman según:
+- **Horizontal**: v_x_edificio = v_x_ascensor = 5 m/s
+- **Vertical**: v_y_edificio = v_y_ascensor + v_ascensor(t)
+
+## Conceptos Físicos Fundamentales
+
+### Principio de Equivalencia
+- **En sistema acelerado**: No se puede distinguir entre gravedad real y fuerza ficticia
+- **Gravedad efectiva**: Suma vectorial de aceleración gravitacional y del sistema
+- **Aplicación**: Interior de vehículos, ascensores, aviones
+
+### Fuerzas Ficticias
+En el sistema del ascensor aparece una **fuerza ficticia** hacia abajo:
+**F_ficticia = m × a_ascensor**
+
+Esta se suma a la gravedad real, produciendo la gravedad efectiva.
+
+### Composición de Movimientos
+El movimiento total resulta de la **superposición**:
+1. **Movimiento relativo** al ascensor
+2. **Movimiento del ascensor** respecto al edificio
+
+## Metodología de Solución
+
+### Paso 1: Analizar en el Sistema Acelerado
+- Calcular la gravedad efectiva
+- Resolver el movimiento de proyectil modificado
+- Obtener tiempo y posición relativos
+
+### Paso 2: Transformar al Sistema Inercial
+- Añadir el movimiento del ascensor
+- Considerar posición y velocidad del ascensor
+- Obtener magnitudes absolutas
+
+### Paso 3: Verificar Coherencia
+- Comprobar conservación de energía
+- Verificar continuidad de trayectorias
+- Validar límites físicos
+
+## Aplicaciones Prácticas
+
+### Transporte
+- **Aviones**: Movimiento de objetos durante maniobras
+- **Trenes**: Efectos en curvas y aceleraciones
+- **Barcos**: Movimiento en oleaje
+
+### Exploración Espacial
+- **Estaciones espaciales**: Microgravedad aparente
+- **Naves en aceleración**: Gravedad artificial
+- **Maniobras orbitales**: Cambios de referencia
+
+### Experimentos Científicos
+- **Laboratorios móviles**: Compensación de movimientos
+- **Mediciones de precisión**: Corrección de aceleraciones
+- **Calibración de instrumentos**: En plataformas móviles
+
+## Extensiones del Problema
+
+### Rotación del Sistema
+- **Fuerza centrífuga**: En sistemas rotatorios
+- **Fuerza de Coriolis**: En sistemas con rotación
+- **Complejidad adicional**: Múltiples fuerzas ficticias
+
+### Aceleración Variable
+- **Ascensor con aceleración cambiante**
+- **Movimiento más realista**
+- **Análisis numérico**: Cuando no hay solución analítica
+
+### Resistencia del Aire
+- **Modifica la trayectoria**: Especialmente a altas velocidades
+- **Dependiente del sistema**: Diferente en cada referencia
+- **Cálculo complejo**: Requiere métodos avanzados

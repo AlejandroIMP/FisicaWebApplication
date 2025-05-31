@@ -1,0 +1,80 @@
+---
+title: "Desafío MRUV: Distancia de Frenado"
+description: "Ejercicio sobre cálculo de distancia de frenado y tiempo de detención de un vehículo"
+difficulty: "Medio"
+educationLevel: "Bachillerato"
+estimatedTime: 22
+tags: ["MRUV", "frenado", "desaceleración", "seguridad vial"]
+topic: "cinematica"
+subtopic: "movimiento uniformemente acelerado"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Un automóvil circula a 90 km/h cuando el conductor observa un obstáculo y aplica los frenos. Si la desaceleración máxima que pueden producir los frenos es de 8 m/s², ¿qué distancia mínima necesita para detenerse completamente? ¿Cuánto tiempo tarda en detenerse?"
+  givens:
+    - "Velocidad inicial: v₀ = 90 km/h = 25 m/s"
+    - "Velocidad final: v = 0 m/s (se detiene)"
+    - "Desaceleración: a = -8 m/s² (negativa porque frena)"
+    - "Movimiento rectilíneo uniformemente desacelerado"
+  unknowns:
+    - "Distancia de frenado (x)"
+    - "Tiempo de frenado (t)"
+  formulas:
+    - "v = v₀ + at (ecuación de velocidad)"
+    - "v² = v₀² + 2ax (ecuación cinemática)"
+    - "x = v₀t + ½at² (ecuación de posición)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Primero convierte la velocidad de km/h a m/s: 90 km/h × (1000 m/km) × (1 h/3600 s) = 25 m/s"
+    - "La aceleración es negativa porque el auto está frenando: a = -8 m/s²"
+    - "Para encontrar la distancia, usa: v² = v₀² + 2ax, donde v = 0"
+    - "Para encontrar el tiempo, usa: v = v₀ + at, donde v = 0"
+    - "Reorganiza las ecuaciones para despejar las incógnitas"
+  acceptedPrecision: 0.1
+
+prerequisites:
+  - "Ecuaciones cinemáticas del MRUV"
+  - "Conversión de unidades (km/h a m/s)"
+  - "Concepto de aceleración negativa (desaceleración)"
+  - "Aplicaciones de la física en seguridad vial"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 2"
+  - "Manual de Seguridad Vial - Normas de Tránsito"
+
+relatedExercises:
+  - "ejemplo-mruv-aceleracion"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Análisis del Frenado
+
+El **frenado de vehículos** es una aplicación crítica del MRUV en la seguridad vial.
+
+## Factores que Afectan el Frenado
+
+1. **Velocidad inicial**: A mayor velocidad, mayor distancia de frenado
+2. **Coeficiente de fricción**: Depende del estado de los neumáticos y la carretera
+3. **Masa del vehículo**: Vehículos más pesados requieren más distancia
+4. **Condiciones climáticas**: Lluvia, hielo, etc. reducen la fricción
+
+## Importancia en Seguridad Vial
+
+La **distancia de frenado** es fundamental para:
+- Determinar distancias de seguimiento seguras
+- Establecer límites de velocidad
+- Diseñar zonas de frenado de emergencia
+- Calcular responsabilidades en accidentes
+
+## Ecuación Clave
+
+La distancia de frenado se calcula con:
+**x = v₀²/(2|a|)**
+
+Donde |a| es el valor absoluto de la desaceleración.

@@ -1,0 +1,100 @@
+---
+title: "Desafío de Caída Libre"
+description: "Ejercicio para resolver sobre caída libre con cálculo de altura y velocidad final"
+difficulty: "Medio"
+educationLevel: "Bachillerato"
+estimatedTime: 25
+tags: ["caída libre", "gravedad", "velocidad", "altura"]
+topic: "cinematica"
+subtopic: "movimiento uniformemente acelerado"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Una pelota se deja caer desde lo alto de un edificio. Si tarda 4 segundos en llegar al suelo, ¿desde qué altura se dejó caer? ¿Cuál es la velocidad con la que impacta el suelo? (Considera g = 9.8 m/s²)"
+  givens:
+    - "Tiempo de caída: t = 4 s"
+    - "Velocidad inicial: v₀ = 0 m/s (se deja caer)"
+    - "Aceleración de la gravedad: g = 9.8 m/s²"
+    - "Movimiento de caída libre (sin resistencia del aire)"
+  unknowns:
+    - "Altura del edificio (h)"
+    - "Velocidad final al impactar el suelo (v)"
+  formulas:
+    - "h = v₀t + ½gt² (ecuación de posición)"
+    - "v = v₀ + gt (ecuación de velocidad)"
+    - "v² = v₀² + 2gh (ecuación cinemática)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Recuerda que la velocidad inicial es cero porque la pelota se deja caer"
+    - "Utiliza la ecuación h = ½gt² para calcular la altura"
+    - "Para la velocidad final, usa v = gt ya que v₀ = 0"
+    - "Verifica tus resultados usando la tercera ecuación cinemática"
+  acceptedPrecision: 0.1
+
+prerequisites:
+  - "Ecuaciones de movimiento uniformemente acelerado"
+  - "Concepto de aceleración gravitacional"
+  - "Caída libre y sus características"
+  - "Manejo de unidades en el sistema internacional"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 2"
+  - "Física para Ciencias e Ingeniería - Serway & Jewett"
+
+relatedExercises:
+  - "ejemplo-mru"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+heroImage: "/cinematica.webp"
+---
+
+## Instrucciones para Resolver
+
+Este es un problema de **caída libre**, un caso especial de movimiento uniformemente acelerado donde:
+
+- La aceleración es constante e igual a g (9.8 m/s²)
+- La velocidad inicial puede ser cero (objeto dejado caer) o diferente de cero (objeto lanzado)
+- No se considera la resistencia del aire
+
+### Pasos Sugeridos
+
+1. **Identifica los datos conocidos y las incógnitas**
+2. **Selecciona las ecuaciones apropiadas**
+3. **Sustituye los valores conocidos**
+4. **Resuelve para cada incógnita**
+5. **Verifica tus resultados**
+
+### Ecuaciones de Caída Libre
+
+Para un objeto en caída libre, las ecuaciones cinemáticas se simplifican:
+
+```
+h = v₀t + ½gt²
+v = v₀ + gt  
+v² = v₀² + 2gh
+```
+
+Donde:
+- **h** = altura o distancia recorrida
+- **v₀** = velocidad inicial
+- **v** = velocidad final
+- **g** = aceleración gravitacional (9.8 m/s²)
+- **t** = tiempo
+
+### Estrategia de Resolución
+
+> **Sugerencia**: Comienza por la ecuación que relaciona directamente los datos que tienes con la incógnita que buscas.
+
+¿Qué ecuación usarías primero para encontrar la altura? ¿Y para la velocidad final?
+
+### Reflexión
+
+Una vez que resuelvas el problema, piensa en:
+- ¿Qué pasaría si el edificio fuera más alto?
+- ¿Cómo cambiarían los resultados en la Luna (g = 1.6 m/s²)?
+- ¿Es realista despreciar la resistencia del aire para esta altura?

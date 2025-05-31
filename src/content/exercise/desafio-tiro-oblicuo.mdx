@@ -1,0 +1,99 @@
+---
+title: "Desafío: Tiro Oblicuo - Alcance Máximo"
+description: "Ejercicio sobre lanzamiento oblicuo con cálculo de alcance máximo y altura máxima"
+difficulty: "Dificil"
+educationLevel: "Universidad"
+estimatedTime: 30
+tags: ["tiro oblicuo", "alcance máximo", "altura máxima", "ángulo óptimo"]
+topic: "cinematica"
+subtopic: "movimiento de proyectiles"
+type: "challenge"
+status: "published"
+
+problem:
+  statement: "Un proyectil es lanzado desde el suelo con una velocidad inicial de 50 m/s formando un ángulo de 37° con la horizontal. Calcula: a) El tiempo total de vuelo, b) La altura máxima alcanzada, c) El alcance horizontal, d) La velocidad con que impacta el suelo."
+  givens:
+    - "Velocidad inicial: v₀ = 50 m/s"
+    - "Ángulo de lanzamiento: θ = 37°"
+    - "Aceleración de la gravedad: g = 9.8 m/s²"
+    - "Altura inicial: h₀ = 0 m (lanzado desde el suelo)"
+    - "sen(37°) = 0.6, cos(37°) = 0.8"
+  unknowns:
+    - "Tiempo total de vuelo (t_total)"
+    - "Altura máxima (h_max)"
+    - "Alcance horizontal (R)"
+    - "Velocidad de impacto (v_final)"
+  formulas:
+    - "v₀ₓ = v₀ cos(θ) (componente horizontal inicial)"
+    - "v₀ᵧ = v₀ sen(θ) (componente vertical inicial)"
+    - "t_subida = v₀ᵧ/g (tiempo hasta altura máxima)"
+    - "h_max = v₀ᵧ²/(2g) (altura máxima)"
+    - "R = v₀²sen(2θ)/g (alcance para lanzamiento desde suelo)"
+
+interactive: true
+interactiveConfig:
+  inputType: "numeric"
+  hints:
+    - "Descompón la velocidad inicial: v₀ₓ = 50 × 0.8 = 40 m/s, v₀ᵧ = 50 × 0.6 = 30 m/s"
+    - "El tiempo total de vuelo es el doble del tiempo de subida: t_total = 2 × v₀ᵧ/g"
+    - "La altura máxima se alcanza cuando vᵧ = 0"
+    - "Para el alcance, puedes usar R = v₀²sen(2θ)/g o R = v₀ₓ × t_total"
+    - "La velocidad de impacto tiene la misma magnitud que la inicial (energía)"
+    - "Recuerda que sen(2×37°) = sen(74°) ≈ 0.96"
+  acceptedPrecision: 0.5
+
+prerequisites:
+  - "Descomposición vectorial de velocidades"
+  - "Funciones trigonométricas básicas"
+  - "Ecuaciones cinemáticas del MRUV"
+  - "Movimiento de proyectiles en tiro horizontal"
+
+reference:
+  - "Física Universitaria - Sears & Zemansky, Capítulo 3"
+  - "Mecánica Clásica - Goldstein, Capítulo 1"
+  - "Física para Ciencias e Ingeniería - Serway & Jewett"
+
+relatedExercises:
+  - "ejemplo-proyectiles-horizontal"
+
+pubDate: 2025-05-31
+author: "Profesor de Física"
+---
+
+# Tiro Oblicuo
+
+El **tiro oblicuo** es el caso más general del movimiento de proyectiles, donde el objeto se lanza con un ángulo respecto a la horizontal.
+
+## Análisis del Movimiento
+
+### Descomposición de la Velocidad
+- **Horizontal**: v₀ₓ = v₀ cos(θ) (constante durante todo el vuelo)
+- **Vertical**: v₀ᵧ = v₀ sen(θ) (cambia debido a la gravedad)
+
+### Fases del Movimiento
+1. **Ascenso**: El proyectil sube hasta que vᵧ = 0
+2. **Altura máxima**: Punto más alto de la trayectoria
+3. **Descenso**: El proyectil cae de vuelta al suelo
+
+## Parámetros Importantes
+
+### Tiempo de Vuelo
+**t_total = 2v₀sen(θ)/g** (para lanzamiento desde el suelo)
+
+### Altura Máxima
+**h_max = v₀²sen²(θ)/(2g)**
+
+### Alcance Máximo
+**R = v₀²sen(2θ)/g**
+
+## Ángulo Óptimo
+
+Para **alcance máximo** en terreno plano: **θ = 45°**
+- sen(2×45°) = sen(90°) = 1 (valor máximo)
+
+## Aplicaciones Prácticas
+
+- **Deportes**: Lanzamiento de jabalina, golf, baloncesto
+- **Militar**: Balística, artillería
+- **Ingeniería**: Diseño de fuentes, sistemas de riego
+- **Exploración espacial**: Trayectorias de sondas
