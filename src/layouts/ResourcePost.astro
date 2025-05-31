@@ -42,10 +42,11 @@ const {
   <head>
     <BaseHead title={title} description={description} />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
-  </head>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+
   </head>
 
-  <body class="bg-gray-50">
+  <body class="resource-body">
     <Header />
     
     <!-- Hero Section -->
@@ -65,32 +66,32 @@ const {
       difficulty={difficulty}
     />
     
-    <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <main class="resource-main">
       <!-- Additional metadata -->
       {(author || source) && (
-        <div class="text-sm text-gray-500 space-y-1 mb-8">
+        <div class="resource-metadata">
           {author && (
-            <div class="flex items-center">
+            <div class="metadata-item">
               👤 Por: 
               {authorLink ? (
-                <a href={authorLink} class="ml-1 text-blue-600 hover:text-blue-800">
+                <a href={authorLink} class="metadata-link">
                   {author}
                 </a>
               ) : (
-                <span class="ml-1">{author}</span>
+                <span class="metadata-text">{author}</span>
               )}
             </div>
           )}
           
           {source && (
-            <div class="flex items-center">
+            <div class="metadata-item">
               📖 Fuente: 
               {sourceLink ? (
-                <a href={sourceLink} class="ml-1 text-blue-600 hover:text-blue-800">
+                <a href={sourceLink} class="metadata-link">
                   {source}
                 </a>
               ) : (
-                <span class="ml-1">{source}</span>
+                <span class="metadata-text">{source}</span>
               )}
             </div>
           )}
@@ -126,8 +127,65 @@ const {
 
     <Footer />
   <style>
-    main {
-      width: 720px;
+    /* Base styles */
+    .resource-body {
+      background-color: #f9fafb; /* bg-gray-50 */
+    }
+
+    /* Main container */
+    .resource-main {
+      max-width: 56rem; /* max-w-4xl = 896px */
+      margin: 0 auto; /* mx-auto */
+      padding: 2rem 1rem; /* py-8 px-4 */
+      width: 720px; /* existing custom width */
+    }
+
+    /* Resource metadata */
+    .resource-metadata {
+      font-size: 0.875rem; /* text-sm */
+      color: #6b7280; /* text-gray-500 */
+      margin-bottom: 2rem; /* mb-8 */
+    }
+
+    .resource-metadata > div:not(:last-child) {
+      margin-bottom: 0.25rem; /* space-y-1 */
+    }
+
+    .metadata-item {
+      display: flex; /* flex */
+      align-items: center; /* items-center */
+    }
+
+    .metadata-link {
+      margin-left: 0.25rem; /* ml-1 */
+      color: #2563eb; /* text-blue-600 */
+      text-decoration: none;
+    }
+
+    .metadata-link:hover {
+      color: #1e40af; /* hover:text-blue-800 */
+    }
+
+    .metadata-text {
+      margin-left: 0.25rem; /* ml-1 */
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .resource-main {
+        width: 100%;
+        padding: 1rem 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .resource-main {
+        padding: 0.75rem 0.5rem;
+      }
+      
+      .resource-metadata {
+        font-size: 0.8rem;
+      }
     }
   </style>
   </body>

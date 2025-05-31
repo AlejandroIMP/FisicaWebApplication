@@ -1,0 +1,197 @@
+---
+title: Tiro Parabólico
+description: Analiza el movimiento parabólico, combinación de movimiento horizontal uniforme y vertical uniformemente acelerado.
+pubDate: 'Mayo 31 2025'
+heroImage: '/images/resource/cinematica/tiro-horizontal.webp'
+tags: ['Tiro Parabólico', 'Cinemática', 'Física', 'Proyectiles', 'Movimiento Bidimensional']
+author: 'Alejandro Sunuc'
+authorLink: 'https://github.com/AlejandroIMP'
+source: 'Physica Platform'
+sourceLink: 'https://github.com/AlejandroIMP'
+difficulty: 'Dificil'
+topic: 'cinematica'
+type: 'texto'
+resourceType: 'article'
+---
+
+# Tiro Parabólico
+
+El tiro parabólico es un movimiento bidimensional que resulta de la composición de dos movimientos simultáneos e independientes: un movimiento rectilíneo uniforme en la dirección horizontal y un movimiento rectilíneo uniformemente acelerado en la dirección vertical debido a la gravedad.
+
+## Características del Tiro Parabólico
+
+- **Trayectoria**: Parábola
+- **Movimiento horizontal**: MRU (velocidad constante)
+- **Movimiento vertical**: MRUA (aceleración gravitacional)
+- **Aceleración**: Solo en dirección vertical ($g = 9.8 \text{ m/s}^2$)
+- **Velocidad inicial**: Puede descomponerse en componentes horizontal y vertical
+
+## Componentes de la Velocidad Inicial
+
+### Velocidad Inicial Horizontal
+$$v_{0x} = v_0 \cos \theta$$
+
+### Velocidad Inicial Vertical
+$$v_{0y} = v_0 \sin \theta$$
+
+### Magnitud de la Velocidad Inicial
+$$v_0 = \sqrt{v_{0x}^2 + v_{0y}^2}$$
+
+### Ángulo de Lanzamiento
+$$\theta = \arctan\left(\frac{v_{0y}}{v_{0x}}\right)$$
+
+## Ecuaciones del Movimiento
+
+### Movimiento Horizontal (MRU)
+$$x = x_0 + v_{0x} \cdot t$$
+$$v_x = v_{0x} = \text{constante}$$
+
+### Movimiento Vertical (MRUA)
+$$y = y_0 + v_{0y} \cdot t - \frac{1}{2}g \cdot t^2$$
+$$v_y = v_{0y} - g \cdot t$$
+
+### Ecuación de la Trayectoria
+Eliminando el tiempo de las ecuaciones paramétricas:
+$$y = y_0 + x \tan \theta - \frac{gx^2}{2v_0^2 \cos^2 \theta}$$
+
+## Magnitudes Características
+
+### Tiempo de Vuelo (T)
+Para lanzamiento desde el mismo nivel ($y_0 = y_f$):
+$$T = \frac{2v_0 \sin \theta}{g}$$
+
+### Alcance Máximo (R)
+$$R = \frac{v_0^2 \sin(2\theta)}{g}$$
+
+**Nota**: El alcance máximo se obtiene con $\theta = 45°$
+
+### Altura Máxima (H)
+$$H = \frac{v_0^2 \sin^2 \theta}{2g}$$
+
+### Tiempo para Alcanzar Altura Máxima
+$$t_{max} = \frac{v_0 \sin \theta}{g} = \frac{T}{2}$$
+
+## Velocidad en Cualquier Instante
+
+### Componentes de la Velocidad
+$$v_x = v_{0x} = v_0 \cos \theta$$
+$$v_y = v_{0y} - gt = v_0 \sin \theta - gt$$
+
+### Magnitud de la Velocidad
+$$v = \sqrt{v_x^2 + v_y^2}$$
+
+### Dirección de la Velocidad
+$$\phi = \arctan\left(\frac{v_y}{v_x}\right)$$
+
+## Ejemplos Prácticos
+
+### Problema 1: Proyectil Lanzado desde el Suelo
+Un proyectil se lanza con velocidad inicial de 30 m/s a 37° sobre la horizontal. Calcular:
+a) Tiempo de vuelo
+b) Alcance máximo
+c) Altura máxima
+
+**Solución:**
+Datos: $v_0 = 30$ m/s, $\theta = 37°$, $g = 9.8$ m/s²
+
+a) $T = \frac{2v_0 \sin \theta}{g} = \frac{2 \times 30 \times \sin(37°)}{9.8} = 3.67 \text{ s}$
+
+b) $R = \frac{v_0^2 \sin(2\theta)}{g} = \frac{30^2 \times \sin(74°)}{9.8} = 88.3 \text{ m}$
+
+c) $H = \frac{v_0^2 \sin^2 \theta}{2g} = \frac{30^2 \times \sin^2(37°)}{2 \times 9.8} = 16.7 \text{ m}$
+
+### Problema 2: Tiro desde una Altura
+Una pelota se lanza horizontalmente desde una altura de 20 m con velocidad de 15 m/s. Calcular:
+a) Tiempo de caída
+b) Alcance horizontal
+c) Velocidad al impactar
+
+**Solución:**
+Datos: $v_{0x} = 15$ m/s, $v_{0y} = 0$, $y_0 = 20$ m
+
+a) $y = y_0 + v_{0y}t - \frac{1}{2}gt^2 \Rightarrow 0 = 20 - \frac{1}{2} \times 9.8 \times t^2$
+   $t = \sqrt{\frac{2 \times 20}{9.8}} = 2.02 \text{ s}$
+
+b) $x = v_{0x} \times t = 15 \times 2.02 = 30.3 \text{ m}$
+
+c) $v_y = -gt = -9.8 \times 2.02 = -19.8 \text{ m/s}$
+   $v = \sqrt{15^2 + (-19.8)^2} = 24.9 \text{ m/s}$
+
+## Tipos de Tiro Parabólico
+
+### Tiro Oblicuo
+- Ángulo de lanzamiento: $0° < \theta < 90°$
+- Componentes horizontal y vertical de velocidad inicial
+
+### Tiro Horizontal
+- Ángulo de lanzamiento: $\theta = 0°$
+- $v_{0y} = 0$, solo componente horizontal inicial
+
+### Tiro Vertical
+- Ángulo de lanzamiento: $\theta = 90°$
+- $v_{0x} = 0$, solo componente vertical inicial
+
+## Aplicaciones del Tiro Parabólico
+
+### Deportes
+- **Baloncesto**: Trayectoria del balón hacia la canasta
+- **Fútbol**: Tiros parabólicos y pases largos
+- **Golf**: Análisis de la trayectoria de la pelota
+- **Atletismo**: Lanzamiento de jabalina, disco, martillo
+
+### Militar y Balística
+- **Artillería**: Cálculo de trayectorias de proyectiles
+- **Balística forense**: Análisis de trayectorias de balas
+- **Misiles**: Trayectorias balísticas
+
+### Ingeniería
+- **Fuentes de agua**: Diseño de chorros parabólicos
+- **Sistemas de riego**: Aspersores con alcance controlado
+- **Seguridad vial**: Análisis de accidentes de tráfico
+
+## Factores que Afectan el Tiro Parabólico
+
+### Resistencia del Aire
+En condiciones reales, la resistencia del aire:
+- Reduce el alcance
+- Disminuye la altura máxima
+- Modifica la forma de la trayectoria
+
+### Efecto del Viento
+- **Viento a favor**: Aumenta el alcance
+- **Viento en contra**: Disminuye el alcance
+- **Viento lateral**: Desvía la trayectoria
+
+### Altitud
+- A mayor altitud, menor resistencia del aire
+- Afecta la aceleración gravitacional
+
+## Análisis Energético
+
+### Energía Cinética
+$$E_k = \frac{1}{2}m(v_x^2 + v_y^2)$$
+
+### Energía Potencial
+$$E_p = mgh$$
+
+### Conservación de la Energía
+$$E_{total} = E_k + E_p = \text{constante}$$
+
+## Gráficas del Tiro Parabólico
+
+### Gráfica y vs x (Trayectoria)
+- Forma parabólica
+- Máximo en el punto más alto
+- Simétrica respecto al eje vertical que pasa por la altura máxima
+
+### Gráficas de Velocidad vs Tiempo
+- $v_x$ vs $t$: Línea horizontal
+- $v_y$ vs $t$: Línea recta con pendiente negativa
+
+### Gráficas de Posición vs Tiempo
+- $x$ vs $t$: Línea recta
+- $y$ vs $t$: Parábola invertida
+
+## Conclusión
+
+El tiro parabólico es uno de los movimientos más importantes en física, combinando conceptos de MRU y MRUA. Su comprensión es fundamental para muchas aplicaciones prácticas en deportes, ingeniería y ciencias aplicadas. El análisis independiente de las componentes horizontal y vertical permite resolver problemas complejos de manera sistemática y precisa.

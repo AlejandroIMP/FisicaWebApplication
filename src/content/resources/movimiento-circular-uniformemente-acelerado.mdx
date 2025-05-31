@@ -1,0 +1,188 @@
+---
+title: Movimiento Circular Uniformemente Acelerado (MCUA)
+description: Comprende el movimiento circular con aceleración angular constante, incluyendo ecuaciones y aplicaciones prácticas.
+pubDate: 'Mayo 31 2025'
+heroImage: '/images/resource/cinematica/mcua.webp'
+tags: ['MCUA', 'Cinemática', 'Física', 'Movimiento Circular', 'Aceleración Angular']
+author: 'Alejandro Sunuc'
+authorLink: 'https://github.com/AlejandroIMP'
+source: 'Physica Platform'
+sourceLink: 'https://github.com/AlejandroIMP'
+difficulty: 'Dificil'
+topic: 'cinematica'
+type: 'texto'
+resourceType: 'article'
+---
+
+# Movimiento Circular Uniformemente Acelerado (MCUA)
+
+El Movimiento Circular Uniformemente Acelerado es aquel en el que un objeto se desplaza en una trayectoria circular con aceleración angular constante. En este tipo de movimiento, tanto la rapidez como la dirección de la velocidad cambian con el tiempo.
+
+## Características del MCUA
+
+- **Trayectoria**: Circular
+- **Aceleración angular**: Constante ($\alpha = \text{constante}$)
+- **Velocidad angular**: Variable linealmente con el tiempo
+- **Velocidad tangencial**: Variable
+- **Aceleración total**: Combinación de aceleración centrípeta y tangencial
+
+## Ecuaciones Cinemáticas Angulares del MCUA
+
+### 1. Velocidad Angular
+$$\omega = \omega_0 + \alpha \cdot t$$
+
+### 2. Posición Angular
+$$\theta = \theta_0 + \omega_0 \cdot t + \frac{1}{2}\alpha \cdot t^2$$
+
+### 3. Ecuación de Velocidad Angular al Cuadrado
+$$\omega^2 = \omega_0^2 + 2\alpha(\theta - \theta_0)$$
+
+### 4. Ecuación de Posición Angular Promedio
+$$\theta = \theta_0 + \frac{\omega_0 + \omega}{2} \cdot t$$
+
+Donde:
+- $\omega$ = velocidad angular final
+- $\omega_0$ = velocidad angular inicial
+- $\alpha$ = aceleración angular constante
+- $t$ = tiempo transcurrido
+- $\theta$ = posición angular final
+- $\theta_0$ = posición angular inicial
+
+## Magnitudes Lineales en MCUA
+
+### Velocidad Tangencial
+$$v = \omega \cdot r = (\omega_0 + \alpha t) \cdot r$$
+
+### Aceleración Tangencial
+$$a_t = \alpha \cdot r$$
+
+### Aceleración Centrípeta
+$$a_c = \frac{v^2}{r} = \omega^2 \cdot r$$
+
+### Aceleración Total
+$$\vec{a} = \vec{a_t} + \vec{a_c}$$
+$$|\vec{a}| = \sqrt{a_t^2 + a_c^2}$$
+
+## Relaciones entre Magnitudes Angulares y Lineales
+
+| Magnitud Angular | Magnitud Lineal | Relación |
+|------------------|-----------------|----------|
+| $\theta$ | $s$ | $s = r \cdot \theta$ |
+| $\omega$ | $v$ | $v = r \cdot \omega$ |
+| $\alpha$ | $a_t$ | $a_t = r \cdot \alpha$ |
+
+## Tipos de MCUA
+
+### Aceleración Angular Positiva
+- La velocidad angular aumenta
+- El objeto gira cada vez más rápido
+- Ejemplo: Motor arrancando
+
+### Aceleración Angular Negativa (Desaceleración)
+- La velocidad angular disminuye
+- El objeto gira cada vez más lento
+- Ejemplo: Motor frenando
+
+## Gráficas del MCUA
+
+### Gráfica α vs t
+- Línea horizontal (aceleración angular constante)
+
+### Gráfica ω vs t
+- Línea recta con pendiente igual a $\alpha$
+- El área bajo la curva representa el desplazamiento angular
+
+### Gráfica θ vs t
+- Parábola (función cuadrática)
+- La pendiente representa la velocidad angular instantánea
+
+## Ejemplos Prácticos
+
+### Problema 1: Motor de Arranque
+Un motor parte del reposo y acelera angularmente a $5 \text{ rad/s}^2$ durante 8 segundos. Calcular:
+a) Velocidad angular final
+b) Desplazamiento angular
+c) Número de revoluciones
+
+**Solución:**
+a) $\omega = \omega_0 + \alpha t = 0 + 5 \times 8 = 40 \text{ rad/s}$
+b) $\theta = \omega_0 t + \frac{1}{2}\alpha t^2 = 0 + \frac{1}{2} \times 5 \times 8^2 = 160 \text{ rad}$
+c) Revoluciones = $\frac{\theta}{2\pi} = \frac{160}{2\pi} = 25.5 \text{ rev}$
+
+### Problema 2: Rueda Frenando
+Una rueda gira a 300 rpm y se frena uniformemente hasta detenerse en 10 segundos. Calcular:
+a) Velocidad angular inicial en rad/s
+b) Aceleración angular
+c) Desplazamiento angular durante el frenado
+
+**Solución:**
+a) $\omega_0 = 300 \times \frac{2\pi}{60} = 31.4 \text{ rad/s}$
+b) $\alpha = \frac{\omega - \omega_0}{t} = \frac{0 - 31.4}{10} = -3.14 \text{ rad/s}^2$
+c) $\theta = \omega_0 t + \frac{1}{2}\alpha t^2 = 31.4 \times 10 + \frac{1}{2} \times (-3.14) \times 10^2 = 157 \text{ rad}$
+
+## Aplicaciones del MCUA
+
+### Ingeniería Mecánica
+- **Motores**: Análisis de arranque y frenado
+- **Turbinas**: Control de velocidad de rotación
+- **Transmisiones**: Cambios de velocidad angular
+
+### Tecnología
+- **Discos duros**: Aceleración y desaceleración del plato
+- **Centrifugadoras**: Procesos de aceleración controlada
+- **Lavadoras**: Ciclos de centrifugado
+
+### Deportes
+- **Patinaje artístico**: Giros con aceleración angular
+- **Gimnasia**: Movimientos rotacionales complejos
+- **Ciclismo**: Análisis de pedaleo
+
+## Energía en MCUA
+
+### Energía Cinética Rotacional
+$$E_k = \frac{1}{2}I\omega^2$$
+
+### Trabajo Rotacional
+$$W = \tau \cdot \theta$$
+
+### Potencia Rotacional
+$$P = \tau \cdot \omega$$
+
+Donde $I$ es el momento de inercia y $\tau$ es el torque.
+
+## Diferencias entre MCU y MCUA
+
+| Aspecto | MCU | MCUA |
+|---------|-----|------|
+| Aceleración angular | $\alpha = 0$ | $\alpha = \text{constante} \neq 0$ |
+| Velocidad angular | Constante | Variable |
+| Aceleración tangencial | $a_t = 0$ | $a_t = \alpha r$ |
+| Ecuación de θ | $\theta = \omega t$ | $\theta = \omega_0 t + \frac{1}{2}\alpha t^2$ |
+
+## Casos Especiales
+
+### Arranque desde el Reposo
+- $\omega_0 = 0$
+- $\omega = \alpha t$
+- $\theta = \frac{1}{2}\alpha t^2$
+
+### Frenado hasta Detenerse
+- $\omega = 0$ (final)
+- $\alpha < 0$ (negativa)
+- $t = -\frac{\omega_0}{\alpha}$ (tiempo de frenado)
+
+## Analogías con MRUA
+
+El MCUA es análogo al MRUA en movimiento lineal:
+
+| MRUA Lineal | MCUA Angular |
+|-------------|--------------|
+| $x$ | $\theta$ |
+| $v$ | $\omega$ |
+| $a$ | $\alpha$ |
+| $m$ | $I$ |
+| $F$ | $\tau$ |
+
+## Conclusión
+
+El MCUA es fundamental para entender muchos sistemas rotacionales en ingeniería y física. Su dominio es esencial para el análisis de máquinas rotatorias, sistemas de transmisión y fenómenos naturales que involucran rotación acelerada. Las ecuaciones del MCUA proporcionan herramientas poderosas para predecir y controlar el comportamiento de sistemas rotacionales complejos.

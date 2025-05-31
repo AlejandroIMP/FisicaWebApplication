@@ -1,0 +1,216 @@
+---
+title: Tiro Vertical
+description: Estudia el movimiento vertical de proyectiles lanzados hacia arriba o dejados caer, incluyendo caída libre y lanzamiento vertical.
+pubDate: 'Mayo 31 2025'
+heroImage: '/images/resource/cinematica/tiro-vertical.webp'
+tags: ['Tiro Vertical', 'Cinemática', 'Física', 'Caída Libre', 'Gravedad']
+author: 'Alejandro Sunuc'
+authorLink: 'https://github.com/AlejandroIMP'
+source: 'Physica Platform'
+sourceLink: 'https://github.com/AlejandroIMP'
+difficulty: 'Medio'
+topic: 'cinematica'
+type: 'texto'
+resourceType: 'article'
+---
+
+# Tiro Vertical
+
+El tiro vertical es un tipo especial de movimiento rectilíneo uniformemente acelerado (MRUA) que ocurre en la dirección vertical bajo la influencia exclusiva de la gravedad. Incluye tanto la caída libre como el lanzamiento vertical hacia arriba.
+
+## Características del Tiro Vertical
+
+- **Trayectoria**: Línea recta vertical
+- **Aceleración**: Constante e igual a la gravedad ($g = 9.8 \text{ m/s}^2$)
+- **Dirección de la aceleración**: Siempre hacia abajo
+- **Resistencia del aire**: Despreciable (aproximación ideal)
+- **Movimiento unidimensional**: Solo en el eje vertical
+
+## Tipos de Tiro Vertical
+
+### 1. Caída Libre
+- **Velocidad inicial**: $v_0 = 0$ (objeto soltado)
+- **Dirección inicial**: Sin velocidad inicial
+- **Aceleración**: $g$ hacia abajo
+
+### 2. Lanzamiento Vertical hacia Arriba
+- **Velocidad inicial**: $v_0 > 0$ (hacia arriba)
+- **Dirección inicial**: Hacia arriba
+- **Aceleración**: $g$ hacia abajo (opuesta a la velocidad inicial)
+
+### 3. Lanzamiento Vertical hacia Abajo
+- **Velocidad inicial**: $v_0 > 0$ (hacia abajo)
+- **Dirección inicial**: Hacia abajo
+- **Aceleración**: $g$ hacia abajo (misma dirección que la velocidad inicial)
+
+## Ecuaciones del Tiro Vertical
+
+### Sistema de Coordenadas
+- **Eje Y positivo**: Hacia arriba
+- **Aceleración gravitacional**: $a = -g = -9.8 \text{ m/s}^2$
+
+### Ecuaciones Cinemáticas
+
+#### Velocidad
+$$v = v_0 - gt$$
+
+#### Posición
+$$y = y_0 + v_0 t - \frac{1}{2}gt^2$$
+
+#### Velocidad al Cuadrado
+$$v^2 = v_0^2 - 2g(y - y_0)$$
+
+#### Posición Promedio
+$$y = y_0 + \frac{v_0 + v}{2} \cdot t$$
+
+## Análisis del Lanzamiento Vertical hacia Arriba
+
+### Tiempo de Subida
+Tiempo que tarda en alcanzar la altura máxima ($v = 0$):
+$$t_{subida} = \frac{v_0}{g}$$
+
+### Altura Máxima
+$$h_{max} = \frac{v_0^2}{2g}$$
+
+### Tiempo Total de Vuelo
+Para regresar al mismo nivel de lanzamiento:
+$$t_{total} = 2t_{subida} = \frac{2v_0}{g}$$
+
+### Velocidad de Regreso
+Al regresar al punto de lanzamiento:
+$$v_{regreso} = -v_0$$
+
+## Ejemplos Prácticos
+
+### Problema 1: Caída Libre
+Un objeto se deja caer desde una altura de 45 m. Calcular:
+a) Tiempo de caída
+b) Velocidad al tocar el suelo
+
+**Solución:**
+Datos: $y_0 = 45$ m, $v_0 = 0$, $y = 0$ m
+
+a) $y = y_0 + v_0 t - \frac{1}{2}gt^2$
+   $0 = 45 + 0 - \frac{1}{2} \times 9.8 \times t^2$
+   $t = \sqrt{\frac{2 \times 45}{9.8}} = 3.03 \text{ s}$
+
+b) $v = v_0 - gt = 0 - 9.8 \times 3.03 = -29.7 \text{ m/s}$
+   Velocidad = $29.7 \text{ m/s}$ hacia abajo
+
+### Problema 2: Lanzamiento Vertical hacia Arriba
+Un objeto se lanza verticalmente hacia arriba con velocidad inicial de 20 m/s desde el suelo. Calcular:
+a) Altura máxima
+b) Tiempo de subida
+c) Tiempo total de vuelo
+
+**Solución:**
+Datos: $v_0 = 20$ m/s, $y_0 = 0$
+
+a) $h_{max} = \frac{v_0^2}{2g} = \frac{20^2}{2 \times 9.8} = 20.4 \text{ m}$
+
+b) $t_{subida} = \frac{v_0}{g} = \frac{20}{9.8} = 2.04 \text{ s}$
+
+c) $t_{total} = \frac{2v_0}{g} = \frac{2 \times 20}{9.8} = 4.08 \text{ s}$
+
+### Problema 3: Lanzamiento desde una Altura
+Una pelota se lanza verticalmente hacia arriba desde una ventana a 15 m de altura con velocidad inicial de 10 m/s. Calcular:
+a) Altura máxima sobre el suelo
+b) Tiempo para alcanzar la altura máxima
+c) Tiempo total hasta tocar el suelo
+
+**Solución:**
+Datos: $y_0 = 15$ m, $v_0 = 10$ m/s
+
+a) Altura adicional: $\Delta h = \frac{v_0^2}{2g} = \frac{10^2}{2 \times 9.8} = 5.1 \text{ m}$
+   Altura máxima total: $h_{max} = 15 + 5.1 = 20.1 \text{ m}$
+
+b) $t_{max} = \frac{v_0}{g} = \frac{10}{9.8} = 1.02 \text{ s}$
+
+c) Para tocar el suelo: $y = 0$
+   $0 = 15 + 10t - \frac{1}{2} \times 9.8 \times t^2$
+   $4.9t^2 - 10t - 15 = 0$
+   Resolviendo: $t = 3.06 \text{ s}$
+
+## Gráficas del Tiro Vertical
+
+### Lanzamiento Vertical hacia Arriba
+
+#### Gráfica y vs t
+- Parábola invertida
+- Máximo en $t = \frac{v_0}{g}$
+- Simétrica respecto al tiempo de altura máxima
+
+#### Gráfica v vs t
+- Línea recta con pendiente $-g$
+- Intercepto en $v_0$
+- Cruza el eje del tiempo en $t = \frac{v_0}{g}$
+
+#### Gráfica a vs t
+- Línea horizontal en $a = -g$
+
+### Caída Libre
+
+#### Gráfica y vs t
+- Parábola que decrece
+- Pendiente inicial cero
+- Concavidad hacia abajo
+
+#### Gráfica v vs t
+- Línea recta que pasa por el origen
+- Pendiente $-g$
+
+## Aplicaciones del Tiro Vertical
+
+### Deportes
+- **Salto en altura**: Análisis de la fase de vuelo
+- **Basquetbol**: Saltos para remates y rebotes
+- **Voleibol**: Saltos para ataques y bloqueos
+- **Gimnasia**: Movimientos verticales en ejercicios
+
+### Seguridad y Ingeniería
+- **Caída de objetos**: Análisis de riesgos en construcción
+- **Sistemas de elevación**: Ascensores y montacargas
+- **Paracaidismo**: Cálculo de velocidades terminales
+- **Arquitectura**: Diseño de edificios altos
+
+### Experimentos Físicos
+- **Torre de Pisa**: Experimentos históricos de Galileo
+- **Cámara de vacío**: Demostración de caída libre
+- **Péndulos**: Análisis de movimientos oscilatorios
+
+## Factores que Afectan el Tiro Vertical Real
+
+### Resistencia del Aire
+- **Velocidad terminal**: Velocidad límite en caída libre prolongada
+- **Coeficiente de arrastre**: Depende de la forma del objeto
+- **Densidad del aire**: Varía con la altitud
+
+### Variación de la Gravedad
+- **Altitud**: $g$ disminuye ligeramente con la altura
+- **Latitud**: $g$ varía ligeramente según la ubicación geográfica
+- **Masa del planeta**: Afecta la aceleración gravitacional
+
+## Comparación entre Tipos de Movimiento Vertical
+
+| Tipo | Velocidad Inicial | Altura Máxima | Tiempo de Vuelo |
+|------|-------------------|---------------|-----------------|
+| Caída libre | $v_0 = 0$ | $h_0$ (altura inicial) | $t = \sqrt{\frac{2h_0}{g}}$ |
+| Lanzamiento hacia arriba | $v_0 > 0$ | $h_0 + \frac{v_0^2}{2g}$ | $t = \frac{2v_0}{g} + \sqrt{\frac{2h_0}{g}}$ |
+| Lanzamiento hacia abajo | $v_0 > 0$ (hacia abajo) | $h_0$ (inicial) | $t < \sqrt{\frac{2h_0}{g}}$ |
+
+## Energía en el Tiro Vertical
+
+### Conservación de la Energía Mecánica
+$$E_m = E_k + E_p = \frac{1}{2}mv^2 + mgy = \text{constante}$$
+
+### En el Punto más Alto
+- Energía cinética: $E_k = 0$
+- Energía potencial: $E_p = mgh_{max}$
+
+### En el Punto de Lanzamiento/Llegada
+- Energía cinética: $E_k = \frac{1}{2}mv_0^2$
+- Energía potencial: $E_p = mgy_0$
+
+## Conclusión
+
+El tiro vertical es un movimiento fundamental que combina conceptos básicos de cinemática con la acción constante de la gravedad. Su comprensión es esencial para entender fenómenos naturales y aplicaciones tecnológicas que involucran movimiento vertical. El dominio de sus ecuaciones y principios proporciona las bases para el análisis de movimientos más complejos en dos y tres dimensiones.
