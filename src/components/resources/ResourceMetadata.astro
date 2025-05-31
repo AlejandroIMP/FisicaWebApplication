@@ -4,7 +4,7 @@ import type { DifficultyLevel, TopicType, ResourceContentType } from '../../cons
 interface Props {
   readingTime?: string;
   lastUpdated?: Date;
-  difficulty?: string;
+  difficulty?: DifficultyLevel;
 }
 
 const { readingTime, lastUpdated, difficulty } = Astro.props;

@@ -417,7 +417,7 @@ const {
           if (navigator.share) {
             await navigator.share({
               title: document.title,
-              text: document.querySelector('meta[name="description"]')?.content || '',
+              text: (document.querySelector('meta[name="description"]') as HTMLMetaElement)?.content || '',
               url: window.location.href
             });
             
@@ -431,13 +431,15 @@ const {
             await navigator.clipboard.writeText(window.location.href);
             
             // Update button text temporarily
-            const originalText = shareButton.querySelector('.button-text').textContent ;
-            shareButton.querySelector('.button-text').textContent = '¡Copiado!';
+            const buttonTextElement = shareButton.querySelector('.button-text');
+            const originalText = buttonTextElement?.textContent || 'Compartir';
+            if (buttonTextElement) buttonTextElement.textContent = '¡Copiado!';
             shareButton.classList.remove('loading');
             shareButton.classList.add('success');
             
             setTimeout(() => {
-              shareButton.querySelector('.button-text').textContent = originalText;
+              const textElement = shareButton.querySelector('.button-text');
+              if (textElement) textElement.textContent = originalText;
               shareButton.classList.remove('success');
             }, 2000);
           }
