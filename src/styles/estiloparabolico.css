@@ -1,10 +1,10 @@
 :root {
-    --accent: #2563EB;              /* Azul botón */
-    --accent-dark: #1E3A8A;         /* Azul cabecera */
-    --accent-highlight: #F97316;    /* Naranja ecuaciones */
-    --accent-error: #EF4444;        /* Rojo error */
-    --accent-success: #22C55E;      /* Verde éxito */
-    
+    --accent: #2563EB;
+    --accent-dark: #1E3A8A;
+    --accent-highlight: #F97316;
+    --accent-error: #EF4444;
+    --accent-success: #22C55E;
+
     --gray: 156, 163, 175;
     --gray-light: 229, 231, 235;
     --gray-dark: 34, 41, 57;
@@ -17,136 +17,216 @@
         0 16px 32px rgba(var(--gray), 0.33);
     }
 
-    * {
-    box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
-    font-family: "Segoe UI", sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #f9fafb;
-    color: rgb(var(--black));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f9fafb;
+        color: rgb(var(--black));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     h1 {
-    background-color: var(--accent-dark); /* azul fuerte */
-    color: white;
-    font-weight: bold;
-    font-size: 1.8rem;
-    padding: 1rem 2rem;
-    text-align: center;
-    width: 100%;
-    box-shadow: var(--box-shadow);
+        width: 100%;
+        background-color: var(--accent-dark);
+        color: white;
+        text-align: center;
+        padding: 1rem 0;
+        margin-bottom: 1.5rem;
+        box-shadow: var(--box-shadow);
+        font-size: 2rem;
     }
 
+    /* --- Layout de dos columnas --- */
+    .calculator {
+        display: flex;
+        align-items: flex-start;
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 1rem;
+        flex-wrap: wrap; 
+    }
+
+    .calc-panel {
+        flex: 1;
+        text-align: left;
+    }
     label {
-    font-weight: 600;
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    color: rgb(var(--gray-dark));
+        font-weight: 600;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        color: rgb(var(--gray-dark));
+        display: block;
     }
 
     select,
     input[type="number"] {
-    width: 100%;
-    max-width: 500px;
-    padding: 0.7rem;
-    font-size: 1rem;
-    border: 2px solid rgba(var(--gray-light), 1);
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    transition: border-color 0.3s;
+        width: 100%;
+        max-width: 500px;
+        padding: 0.7rem;
+        font-size: 1rem;
+        border: 2px solid rgba(var(--gray-light),1);
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.3s;
     }
 
     select:focus,
     input:focus {
-    border-color: var(--accent);
-    outline: none;
+        border-color: var(--accent);
+        outline: none;
     }
 
     button {
-    background-color: var(--accent);
-    color: white;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    margin-top: 1rem;
-    box-shadow: 0 4px 12px rgba(var(--gray), 0.2);
-    transition: background-color 0.3s ease;
+        background-color: var(--accent);
+        color: white;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(var(--gray), 0.2);
+        transition: background-color 0.3s;
+        margin-top: 1rem;
     }
 
     button:hover {
-    background-color: var(--accent-dark);
+        background-color: var(--accent-dark);
     }
 
-    #inputs {
-    width: 100%;
-    max-width: 500px;
-    }
-
-    #inputs div {
-    margin-bottom: 1rem;
-    }
-
-    input::placeholder {
-    color: rgba(var(--gray), 0.7);
-    }
-
-    /* Estilo del resultado */
     #resultado {
-    margin-top: 30px;
-    max-width: 500px;
-    width: 100%;
-    padding: 20px;
-    border-radius: 0.75rem;
-    background-color: rgba(34, 197, 94, 0.1);
-    border-left: 6px solid var(--accent-success);
-    color: var(--accent-dark);
-    font-size: 1.25rem;
-    font-weight: 600;
-    box-shadow: var(--box-shadow);
-    position: relative;
-    word-wrap: break-word;
+        margin-top: 30px;
+        max-width: 500px;
+        width: 100%;
+        padding: 20px;
+        border-radius: 0.75rem;
+        background-color: rgba(34,197,94,0.1);
+        border-left: 6px solid var(--accent-success);
+        color: var(--accent-dark);
+        font-size: 1.25rem;
+        font-weight: 600;
+        box-shadow: var(--box-shadow);
+        position: relative;
     }
 
     #resultado::before {
-    content: "✅ Resultado:";
-    color: var(--accent-success);
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
+        content: "✅ Resultado:";
+        color: var(--accent-success);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
     }
 
-    /* Línea divisoria */
     hr {
-    width: 100%;
-    max-width: 500px;
-    border: none;
-    border-top: 1px solid rgba(var(--gray), 0.2);
-    margin: 2rem 0;
+        width: 100%;
+        max-width: 500px;
+        border: none;
+        border-top: 1px solid rgba(var(--gray),0.2);
+        margin: 2rem 0;
     }
 
-    /* Responsividad */
-    @media (max-width: 600px) {
+    /* Espaciado y tipografía en el panel de fórmulas */
+        .formulas-panel {
+        flex: 1 1 300px;
+        min-width: 260px;
+        max-width: 400px;
+    }
+    .formulas-panel ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    .formulas-panel li {
+        list-style: none;
+        margin-bottom: 1.0rem;       /* espacio entre fórmulas */
+    }
+
+    .formulas-panel li strong {
+        display: block;
+        font-size: 1.0rem;
+        margin-bottom: 0.3rem;       /* espacio bajo el nombre */
+        color: var(--accent-dark);
+    }
+
+    .formulas-panel li p {
+        margin: 0 0 0.5rem;          /* espacio entre descripción y fórmula */
+        color: rgb(var(--gray-dark));
+        font-size: 0.80rem;
+        line-height: 1.4;
+    }
+
+    .formulas-panel li code {
+        display: block;
+        background: rgba(var(--gray-light), 0.5);
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        font-family: monospace;
+        font-size: 0.95rem;
+    }
+
+/* --- Animación del proyectil parabólico --- */
+    #animacion-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;    /* Ancho máximo de la animación */
+    height: 300px;       /* Alto fijo: 300px ≃ “altura máxima” */
+    margin: 30px auto 0; /* Separación arriba, centrado horizontal */
+    background: linear-gradient(to top, #e0f2fe, #f8fafc);
+    border: 2px solid rgba(var(--gray-light), 0.5);
+    border-radius: 1rem;
+    overflow: hidden;
+    }
+
+    #proyectil {
+    position: absolute;
+    bottom: 0;            /* Parte inferior del contenedor */
+    left: 0;              /* Empezamos en x=0 */
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-highlight);
+    border-radius: 50%;
+    opacity: 0;           /* Invisible al cargar */
+    /* No colocamos transition predeterminada aquí,
+        porque moveremos con JS en cada fotograma */
+    }
+    
+@media (max-width: 768px) {
+    .calculator {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .formulas-panel {
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .calc-panel {
+        width: 100%;
+    }
+    }
+
+    @media (max-width: 480px) {
     h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+        padding: 1rem 0.5rem;
     }
 
     select,
-    input[type="number"],
+    input,
     button {
         font-size: 1rem;
+        padding: 0.6rem;
     }
 
-    #resultado {
-        font-size: 1.1rem;
+    .formulas-panel code {
+        font-size: 0.9rem;
     }
 }

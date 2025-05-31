@@ -1,70 +1,125 @@
 ---
-import CalculatorHeader from "../../../components/calculator/CalculatorHeader.astro";
 import CalculatorLayout from "../../../layouts/CalculatorLayout.astro";
-import "../../../styles/calculator-theme.css";
-import "../../../styles/tiros-calculator.css";
+import "../../../styles/estilovertical.css";
 ---
 
 <CalculatorLayout title="Calculadora de Tiro Vertical" description="Calcula variables de movimientos de tiro vertical como altura máxima, tiempo de subida y más">
-    <div class="tiro-calculator">
-      <CalculatorHeader 
-        title="Tiro Vertical"
-        description="Selecciona la variable que deseas calcular y completa los valores conocidos"
-        icon="⬆️⬇️"
-      />
-      <div>
+  <h1>Calculadora de Tiro Vertical</h1>
+  <div class="calculator">
 
-        <label for="selectVariable">Selecciona la variable a calcular:</label>
-        <select id="selectVariable" class="tiro-select">
-            <option value="">-- Selecciona --</option>
-            <option value="h_t">Altura en t (h(t))</option>
-            <option value="v_t">Velocidad en t (v(t))</option>
-            <option value="h_max">Altura máxima (h_max)</option>
-            <option value="t_subida">Tiempo de subida (t_subida)</option>
-            <option value="t_total">Tiempo total de vuelo (t_total)</option>
-            <option value="v0">Velocidad inicial (v₀)</option>
-            <option value="h0">Altura inicial (h₀)</option>
-            <option value="g">Gravedad (g)</option>
-            <option value="t">Tiempo (t)</option>
-        </select>
-      </div>
-      <div>
-        <label for="selectFormula">Selecciona la fórmula:</label><br/>
-        <select id="selectFormula" class="tiro-select">
-          <option value="">-- Primero selecciona variable --</option>
-        </select>
-      </div>
+    <div class="calc-panel">
+  <label for="selectVariable">Selecciona la variable a calcular:</label>
+  <select id="selectVariable">
+    <option value="">-- Selecciona --</option>
+    <option value="h_t">Altura en t (h(t))</option>
+    <option value="v_t">Velocidad en t (v(t))</option>
+    <option value="h_max">Altura máxima (h_max)</option>
+    <option value="t_subida">Tiempo de subida (t_subida)</option>
+    <option value="t_total">Tiempo total de vuelo (t_total)</option>
+    <option value="v0">Velocidad inicial (v₀)</option>
+    <option value="h0">Altura inicial (h₀)</option>
+    <option value="g">Gravedad (g)</option>
+    <option value="t">Tiempo (t)</option>
+  </select>
 
-  <hr class="tiro-divider">
+  <br><br>
 
-  <div id="inputs" class="tiro-inputs">
-    <div data-key="h" class="tiro-input-group" style="display:none;"><label>h (m):</label><input type="number" id="h" class="tiro-input" step="any"></div>
-    <div data-key="h0" class="tiro-input-group" style="display:none;"><label>h₀ (m):</label><input type="number" id="h0" class="tiro-input" step="any"></div>
-    <div data-key="h_max" class="tiro-input-group" style="display:none;"><label>hₘₐₓ (m):</label><input type="number" id="h_max" class="tiro-input" step="any"></div>
-    <div data-key="v0" class="tiro-input-group" style="display:none;"><label>v₀ (m/s):</label><input type="number" id="v0" class="tiro-input" step="any"></div>
-    <div data-key="vt" class="tiro-input-group" style="display:none;"><label>v(t) (m/s):</label><input type="number" id="vt" class="tiro-input" step="any"></div>
-    <div data-key="t" class="tiro-input-group" style="display:none;"><label>t (s):</label><input type="number" id="t" class="tiro-input" step="any"></div>
-    <div data-key="g" class="tiro-input-group" style="display:none;"><label>g (m/s²):</label><input type="number" id="g" class="tiro-input" step="any" placeholder="9.8"></div>
+  <label for="selectFormula">Selecciona la fórmula:</label>
+  <select id="selectFormula">
+    <option value="">-- Primero selecciona variable --</option>
+  </select>
+
+  <hr>
+
+  <div id="inputs">
+    <div data-key="h"  style="display:none;"><label>h (m):</label><input type="number" id="h" step="any"><br></div>
+    <div data-key="h0" style="display:none;"><label>h₀ (m):</label><input type="number" id="h0" step="any"><br></div>
+    <div data-key="h_max" style="display:none;"><label>hₘₐₓ (m):</label><input type="number" id="h_max" step="any"><br></div>
+    <div data-key="v0" style="display:none;"><label>v₀ (m/s):</label><input type="number" id="v0" step="any"><br></div>
+    <div data-key="vt" style="display:none;"><label>v(t) (m/s):</label><input type="number" id="vt" step="any"><br></div>
+    <div data-key="t"  style="display:none;"><label>t (s):</label><input type="number" id="t" step="any"><br></div>
+    <div data-key="g"  style="display:none;"><label>g (m/s²):</label><input type="number" id="g" step="any" placeholder="9.8"><br></div>
   </div>
 
-  <button id="calcularBtn" class="tiro-button">Calcular</button>
-  <div id="resultado" class="tiro-resultado" style="display:none;"></div>
-  <script src="../../../utils/calculators/mainvertical.js"></script>
-  <script is:inline>
-    document.addEventListener('DOMContentLoaded', function() {
-      const calcularBtn = document.getElementById('calcularBtn');
-      if (calcularBtn) {
-        calcularBtn.addEventListener('click', function(event) {
-          // Prevenir comportamiento por defecto que podría estar causando problemas
-          event.preventDefault();
-          if (typeof calcular === 'function') {
-            calcular();
-          } else {
-            console.error('La función calcular no está definida');
-          }
-        });
-      }
-    });
-  </script>
-    </div>
+  <button onclick="calcular()">Calcular</button>
+  <div id="resultado"></div>
+
+  <div id="animacion-container">
+    <div id="proyectil"></div>
+    
+  </div>
+
+  </div>
+<div class="formulas-panel">
+  <h2>Fórmulas del Tiro Vertical</h2>
+  <ul>
+    <li>
+      <strong>Altura en función del tiempo</strong>
+      <p>Altura del objeto en un instante t:</p>
+      <code>h(t) = h₀ + v₀·t − ½·g·t²</code>
+    </li>
+
+    <li>
+      <strong>Velocidad en función del tiempo</strong>
+      <p>Velocidad vertical en el instante t:</p>
+      <code>v(t) = v₀ − g·t</code>
+    </li>
+
+    <li>
+      <strong>Altura máxima</strong>
+      <p>Altura máxima desde una altura inicial:</p>
+      <code>h_max = h₀ + v₀² / (2·g)</code>
+      <p>Si h₀ = 0:</p>
+      <code>h_max = v₀² / (2·g)</code>
+    </li>
+
+    <li>
+      <strong>Tiempo de subida</strong>
+      <p>Tiempo para alcanzar la altura máxima:</p>
+      <code>t_subida = v₀ / g</code>
+    </li>
+
+    <li>
+      <strong>Tiempo total de vuelo</strong>
+      <p>Cuando parte desde h₀ = 0:</p>
+      <code>t_total = 2·v₀ / g</code>
+      <p>Desde una altura inicial:</p>
+      <code>t_total = (v₀ + √(v₀² + 2·g·h₀)) / g</code>
+    </li>
+
+    <li>
+      <strong>Cálculo de velocidad inicial</strong>
+      <p>Desde la altura máxima:</p>
+      <code>v₀ = √(2·g·h_max)</code>
+      <p>Desde posiciones y tiempo:</p>
+      <code>v₀ = (h − h₀ + ½·g·t²)/t</code>
+      <p>Usando velocidad final:</p>
+      <code>v₀ = g·t + v(t)</code>
+    </li>
+
+    <li>
+      <strong>Cálculo de altura inicial</strong>
+      <p>Usando posición, tiempo y velocidad inicial:</p>
+      <code>h₀ = h − v₀·t + ½·g·t²</code>
+    </li>
+
+    <li>
+      <strong>Cálculo de la gravedad</strong>
+      <p>Usando posición, tiempo y velocidad inicial:</p>
+      <code>g = 2·(h − h₀ + v₀·t) / t²</code>
+    </li>
+
+    <li>
+      <strong>Cálculo del tiempo</strong>
+      <p>Usando velocidad inicial:</p>
+      <code>t = v₀ / g</code>
+      <p>Usando posición y altura inicial:</p>
+      <code>t = √((2·(h − h₀))/g)</code>
+    </li>
+  </ul>
+</div>
+
+  </div>
+
+    <script src="../../../scripts/cinematica/calculadora-js/mainvertical.js"></script>
 </CalculatorLayout>
