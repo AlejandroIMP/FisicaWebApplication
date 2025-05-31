@@ -1,0 +1,152 @@
+---
+title: Movimiento Circular Uniforme (MCU)
+description: Explora el movimiento circular uniforme, donde un objeto se desplaza en una trayectoria circular con velocidad angular constante.
+pubDate: 'Mayo 31 2025'
+heroImage: '/images/resource/cinematica/mcu.webp'
+tags: ['MCU', 'Cinemática', 'Física', 'Movimiento Circular', 'Velocidad Angular']
+author: 'Alejandro Sunuc'
+authorLink: 'https://github.com/AlejandroIMP'
+source: 'Physica Platform'
+sourceLink: 'https://github.com/AlejandroIMP'
+difficulty: 'Medio'
+topic: 'cinematica'
+type: 'texto'
+resourceType: 'article'
+---
+
+# Movimiento Circular Uniforme (MCU)
+
+El Movimiento Circular Uniforme es aquel en el que un objeto se desplaza a lo largo de una trayectoria circular con rapidez constante. Aunque la rapidez es constante, la velocidad cambia continuamente debido al cambio en la dirección del movimiento.
+
+## Características del MCU
+
+- **Trayectoria**: Circular
+- **Rapidez**: Constante (magnitud de la velocidad)
+- **Velocidad**: Variable en dirección, constante en magnitud
+- **Aceleración centrípeta**: Constante en magnitud, dirigida hacia el centro
+- **Período**: Tiempo constante para completar una vuelta
+
+## Magnitudes Angulares
+
+### Posición Angular (θ)
+$$\theta = \omega t + \theta_0$$
+
+### Velocidad Angular (ω)
+$$\omega = \frac{\Delta \theta}{\Delta t} = \frac{2\pi}{T} = 2\pi f$$
+
+### Aceleración Angular (α)
+En MCU: $\alpha = 0$ (velocidad angular constante)
+
+## Magnitudes Lineales
+
+### Velocidad Tangencial (v)
+$$v = \omega \cdot r$$
+
+### Aceleración Centrípeta (ac)
+$$a_c = \frac{v^2}{r} = \omega^2 \cdot r$$
+
+### Relación entre Magnitudes Angulares y Lineales
+- Desplazamiento: $s = r \cdot \theta$
+- Velocidad: $v = r \cdot \omega$
+- Aceleración: $a_c = r \cdot \omega^2$
+
+## Ecuaciones Fundamentales del MCU
+
+### Período (T)
+Tiempo necesario para completar una revolución completa:
+$$T = \frac{2\pi}{\omega} = \frac{2\pi r}{v}$$
+
+### Frecuencia (f)
+Número de revoluciones por unidad de tiempo:
+$$f = \frac{1}{T} = \frac{\omega}{2\pi} = \frac{v}{2\pi r}$$
+
+### Relación Período-Frecuencia
+$$f \cdot T = 1$$
+
+## Fuerza Centrípeta
+
+En el MCU, la fuerza centrípeta es necesaria para mantener el objeto en su trayectoria circular:
+
+$$F_c = m \cdot a_c = m \cdot \frac{v^2}{r} = m \cdot \omega^2 \cdot r$$
+
+Esta fuerza siempre apunta hacia el centro de la circunferencia.
+
+## Ejemplos Prácticos
+
+### Problema 1: Rueda de la Fortuna
+Una rueda de la fortuna de radio 15 m gira con período de 30 s. Calcular:
+a) Velocidad angular
+b) Velocidad tangencial
+c) Aceleración centrípeta
+
+**Solución:**
+a) $\omega = \frac{2\pi}{T} = \frac{2\pi}{30} = 0.209 \text{ rad/s}$
+b) $v = \omega r = 0.209 \times 15 = 3.14 \text{ m/s}$
+c) $a_c = \omega^2 r = (0.209)^2 \times 15 = 0.655 \text{ m/s}^2$
+
+### Problema 2: Satélite en Órbita
+Un satélite orbita la Tierra a 400 km de altura con velocidad de 7.66 km/s. Si el radio terrestre es 6400 km, calcular:
+a) Radio orbital
+b) Período orbital
+c) Frecuencia
+
+**Solución:**
+a) $r = R_{Tierra} + h = 6400 + 400 = 6800 \text{ km}$
+b) $T = \frac{2\pi r}{v} = \frac{2\pi \times 6800}{7.66} = 5574 \text{ s} = 1.55 \text{ h}$
+c) $f = \frac{1}{T} = \frac{1}{5574} = 1.79 \times 10^{-4} \text{ Hz}$
+
+## Aplicaciones del MCU
+
+- **Astronomía**: Movimiento de planetas y satélites
+- **Ingeniería mecánica**: Diseño de engranajes y poleas
+- **Electrotecnia**: Motores eléctricos y generadores
+- **Centrifugadoras**: Separación de sustancias
+- **Parques de diversiones**: Juegos mecánicos
+
+## Gráficas del MCU
+
+### Gráfica θ vs t
+- Línea recta con pendiente $\omega$
+- La pendiente representa la velocidad angular
+
+### Gráfica ω vs t
+- Línea horizontal (velocidad angular constante)
+
+### Gráfica de Velocidad vs Tiempo
+- Para las componentes x e y: funciones sinusoidales
+- $v_x = -v \sin(\omega t)$
+- $v_y = v \cos(\omega t)$
+
+## Conceptos Relacionados
+
+### Velocidad vs Rapidez
+- **Rapidez**: Magnitud constante en MCU
+- **Velocidad**: Vector que cambia de dirección continuamente
+
+### Aceleración en MCU
+- **Aceleración tangencial**: Cero (rapidez constante)
+- **Aceleración centrípeta**: Constante en magnitud, variable en dirección
+
+### Sistemas de Referencia
+- **Inercial**: Para observar la aceleración centrípeta
+- **Rotatorio**: Aparecen fuerzas ficticias (centrífuga)
+
+## Diferencias entre Movimiento Lineal y Circular
+
+| Magnitud | Lineal | Circular |
+|----------|--------|----------|
+| Posición | $x$ | $\theta$ |
+| Velocidad | $v$ | $\omega$ |
+| Aceleración | $a$ | $\alpha$ |
+| Inercia | $m$ | $I$ (momento de inercia) |
+
+## Aplicaciones Tecnológicas
+
+- **GPS**: Cálculo de órbitas satelitales
+- **Robótica**: Brazos robóticos con movimiento circular
+- **Automotive**: Análisis de curvas y peraltes
+- **Aeronáutica**: Maniobras circulares de aeronaves
+
+## Conclusión
+
+El MCU es fundamental para comprender muchos fenómenos físicos y aplicaciones tecnológicas. Su estudio proporciona las bases para entender movimientos más complejos como el movimiento circular uniformemente acelerado y los movimientos compuestos que combinan traslación y rotación.
